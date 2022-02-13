@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="Apache-2.0"
+[[mods]]
+modId="shieldexp"
+version="${file.jarVersion}"
+displayName="Shield Expansion"
+logoFile="shieldexp.png"
+credits="LudoCrypt, Nekomaster, NeoNote, EB Mario"
+authors="LudoCrypt, Nekomaster, NeoNote, EB Mario"
+description='''
+s hielad super de shield ahahah im hilarouis
+'''
+[[dependencies.shieldexp]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.shieldexp]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
