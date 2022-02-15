@@ -2,6 +2,7 @@ buildscript {
   repositories {
     maven { url = 'https://maven.minecraftforge.net' }
     maven { url = 'https://plugins.gradle.org/m2/' }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
     mavenCentral()
   }
 
@@ -88,8 +89,8 @@ jar {
 }
 
 mixin {
-    add sourceSets.main, 'shieldexp.refmap.json'
-    config 'shieldexp.mixins.json'
+  add sourceSets.main, 'shieldexp.refmap.json'
+  config 'shieldexp.mixins.json'
 }
 
 jar.finalizedBy('reobfJar')
@@ -135,36 +136,47 @@ publishing {
   }
 }
 
-// Modrinth publishing
-import com.modrinth.minotaur.TaskModrinthUpload
-
-task publishModrinth (type: TaskModrinthUpload) {
-  onlyIf {
-    System.getenv('MODRINTH')
-  }
-
-  token = System.getenv('MODRINTH')
-  projectId = config.MODRINTH_ID
-  versionNumber = project.version
-  uploadFile = jar
-  addGameVersion(config.MINECRAFT_VERSION)
-  addLoader('forge')
+task publishModrinth() {
+  println('Modrinth publishing is not setup yet!')
 }
 
-// Curseforge publishing
-curseforge {
-  apiKey = System.getenv('CURSEFORGE') ?: 'If you\'re seeing this, you haven\'t set your "CURSEFORGE" environment variable'
+tasks.curseforge.configure {
+  actions.clear()
+  doLast {
+    println('Modrinth publishing is not setup yet!')
+  }
+}
+
+// // Modrinth publishing
+// import com.modrinth.minotaur.TaskModrinthUpload
+
+// task publishModrinth (type: TaskModrinthUpload) {
+//   onlyIf {
+//     System.getenv('MODRINTH')
+//   }
+
+//   token = System.getenv('MODRINTH')
+//   projectId = config.MODRINTH_ID
+//   versionNumber = project.version
+//   uploadFile = jar
+//   addGameVersion(config.MINECRAFT_VERSION)
+//   addLoader('forge')
+// }
+
+// // Curseforge publishing
+// curseforge {
+//   apiKey = System.getenv('CURSEFORGE') ?: 'If you\'re seeing this, you haven\'t set your "CURSEFORGE" environment variable'
   
-  project {
-    id = config.CURSEFORGE_ID
-    changelog = 'No changelog specified.'
-    releaseType = 'release'
-    addGameVersion config.MINECRAFT_VERSION
-    mainArtifact (jar) { 
-      displayName = "${project.version}"
-    }
-  }
-}
+//   project {
+//     id = config.CURSEFORGE_ID
+//     changelog = 'No changelog specified.'
+//     releaseType = 'release'
+//     addGameVersion config.MINECRAFT_VERSION
+//     mainArtifact (jar) { 
+//       displayName = "${project.version}"
+//     }
+//   }
+// }
 
 // Config parse function
 def parseConfig(File config) {
