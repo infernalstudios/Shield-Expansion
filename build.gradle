@@ -1,7 +1,7 @@
 buildscript {
   repositories {
     maven { url = 'https://maven.minecraftforge.net' }
-	maven { url = 'https://plugins.gradle.org/m2/' }
+    maven { url = 'https://plugins.gradle.org/m2/' }
     mavenCentral()
   }
 
@@ -9,7 +9,7 @@ buildscript {
     classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
     classpath group: 'gradle.plugin.com.matthewprenger',  name: 'CurseGradle', version: '1.4.0'
-    classpath group: 'org.spongepowered',  name: 'mixingradle', version: '0.7.+'
+    classpath group: 'org.spongepowered',  name: 'mixingradle', version: '0.7+'
   }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -89,8 +89,8 @@ jar {
 }
 
 mixin {
-    add sourceSets.main, 'shieldexp.refmap.json'
-    config 'shieldexp.mixins.json'
+  add sourceSets.main, 'shieldexp.refmap.json'
+  config 'shieldexp.mixins.json'
 }
 
 jar.finalizedBy('reobfJar')
@@ -136,42 +136,47 @@ publishing {
   }
 }
 
-eclipse {
-    afterEvaluate {
-        synchronizationTasks createSrgToMcp, createMcpToSrg
-    }
+task publishModrinth() {
+  println('Modrinth publishing is not setup yet!')
 }
 
-// Modrinth publishing
-import com.modrinth.minotaur.TaskModrinthUpload
-
-task publishModrinth (type: TaskModrinthUpload) {
-  onlyIf {
-    System.getenv('MODRINTH')
+tasks.curseforge.configure {
+  actions.clear()
+  doLast {
+    println('Modrinth publishing is not setup yet!')
   }
-
-  token = System.getenv('MODRINTH')
-  projectId = config.MODRINTH_ID
-  versionNumber = project.version
-  uploadFile = jar
-  addGameVersion(config.MINECRAFT_VERSION)
-  addLoader('forge')
 }
 
-// Curseforge publishing
-curseforge {
-  apiKey = System.getenv('CURSEFORGE') ?: 'If you\'re seeing this, you haven\'t set your "CURSEFORGE" environment variable'
+// // Modrinth publishing
+// import com.modrinth.minotaur.TaskModrinthUpload
+
+// task publishModrinth (type: TaskModrinthUpload) {
+//   onlyIf {
+//     System.getenv('MODRINTH')
+//   }
+
+//   token = System.getenv('MODRINTH')
+//   projectId = config.MODRINTH_ID
+//   versionNumber = project.version
+//   uploadFile = jar
+//   addGameVersion(config.MINECRAFT_VERSION)
+//   addLoader('forge')
+// }
+
+// // Curseforge publishing
+// curseforge {
+//   apiKey = System.getenv('CURSEFORGE') ?: 'If you\'re seeing this, you haven\'t set your "CURSEFORGE" environment variable'
   
-  project {
-    id = config.CURSEFORGE_ID
-    changelog = 'No changelog specified.'
-    releaseType = 'release'
-    addGameVersion config.MINECRAFT_VERSION
-    mainArtifact (jar) { 
-      displayName = "${project.version}"
-    }
-  }
-}
+//   project {
+//     id = config.CURSEFORGE_ID
+//     changelog = 'No changelog specified.'
+//     releaseType = 'release'
+//     addGameVersion config.MINECRAFT_VERSION
+//     mainArtifact (jar) { 
+//       displayName = "${project.version}"
+//     }
+//   }
+// }
 
 // Config parse function
 def parseConfig(File config) {
