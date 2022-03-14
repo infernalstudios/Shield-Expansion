@@ -5,6 +5,7 @@ license="Apache-2.0"
 modId="shieldexp"
 version="${file.jarVersion}"
 displayName="Shield Expansion"
+updateJSONURL="https://infernalstudios.org/api/mods/shieldexpansion/forge"
 logoFile="Shield_Expansion_Banner.png"
 authors="Infernal Studios"
 description='''
