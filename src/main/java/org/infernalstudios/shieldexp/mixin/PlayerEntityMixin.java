@@ -14,7 +14,7 @@
  */
 package org.infernalstudios.shieldexp.mixin;
 
-import org.infernalstudios.shieldexp.access.PlayerEntityAccess;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +34,7 @@ import net.minecraft.util.CooldownTracker;
 import net.minecraft.world.World;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityAccess {
+public abstract class PlayerEntityMixin extends LivingEntity implements LivingEntityAccess {
 
 	@Unique
 	private static final DataParameter<Integer> PARRY_COOLDOWN = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);

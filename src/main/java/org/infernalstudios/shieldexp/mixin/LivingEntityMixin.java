@@ -14,12 +14,13 @@
  */
 package org.infernalstudios.shieldexp.mixin;
 
-import org.infernalstudios.shieldexp.access.PlayerEntityAccess;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -29,6 +30,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -51,10 +53,10 @@ public abstract class LivingEntityMixin extends Entity {
 			PlayerEntity player = (PlayerEntity) (Object) this;
 			if (useItem.isShield(player)) {
 				if (!this.level.isClientSide) {
-					if (PlayerEntityAccess.get(player).getBlockedCooldown() <= 0) {
+					if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
 						player.getCooldowns().addCooldown(useItem.getItem(), 20);
 					}
-					PlayerEntityAccess.get(player).setParryCooldown(0);
+					LivingEntityAccess.get(player).setParryCooldown(0);
 				}
 			}
 		}
@@ -65,8 +67,8 @@ public abstract class LivingEntityMixin extends Entity {
 		if ((Object) this instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) (Object) this;
 			if (stack.isShield(player)) {
-				if (PlayerEntityAccess.get(player).getBlockedCooldown() <= 0) {
-					PlayerEntityAccess.get(player).setParryCooldown(5);
+				if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
+					LivingEntityAccess.get(player).setParryCooldown(5);
 				}
 			}
 		}
@@ -75,6 +77,11 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "isBlocking", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void shieldexp$isBlocking(CallbackInfoReturnable<Boolean> ci) {
 		ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem) - this.useItemRemaining >= 0);
+	}
+
+	@Redirect(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DamageSource;isProjectile()Z"))
+	private boolean shieldexp$hurt(DamageSource damageSource) {
+		return false;
 	}
 
 }

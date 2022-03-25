@@ -14,7 +14,7 @@
  */
 package org.infernalstudios.shieldexp.access;
 
-public interface PlayerEntityAccess {
+public interface LivingEntityAccess {
 
 	public int getParryCooldown();
 
@@ -24,8 +24,8 @@ public interface PlayerEntityAccess {
 
 	public void setBlockedCooldown(int block);
 
-	public static PlayerEntityAccess get(Object object) {
-		return (PlayerEntityAccess) object;
+	public static LivingEntityAccess get(Object object) {
+		return (LivingEntityAccess) object;
 	}
 
 }

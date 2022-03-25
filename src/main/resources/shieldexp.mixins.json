@@ -5,6 +5,7 @@
 	"refmap": "shieldexp.refmap.json",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+		"HoverTextMixins",
 		"LivingEntityMixin",
 		"PlayerEntityMixin"
 	],
