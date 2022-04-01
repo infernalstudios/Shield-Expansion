@@ -46,27 +46,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements LivingEn
 		super(entityType, world);
 	}
 
-	@Inject(method = "blockUsingShield", at = @At("HEAD"))
-	private void shieldexp$blockUsingShield(LivingEntity attacker, CallbackInfo ci) {
-		// TODO: Configure 'Attacking Cooldown Percentage'
-		float attackCooldown = 1.0F; // 100%
-		if (this.getUseItem().isShield(this)) {
-			if (this.random.nextFloat() < attackCooldown) {
-				if (this.getParryCooldown() <= 0) {
-					this.getCooldowns().addCooldown(this.getUseItem().getItem(), 20);
-				} else {
-					attacker.knockback(0.55F, attacker.getDeltaMovement().x, attacker.getDeltaMovement().z);
-					this.setParryCooldown(0);
-					if (!this.level.isClientSide) {
-						((ServerPlayerEntity) (Object) this).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
-					}
-				}
-				this.setBlockedCooldown(10);
-				this.stopUsingItem();
-			}
-		}
-	}
-
 	@Inject(method = "defineSynchedData", at = @At("TAIL"))
 	private void shieldexp$defineSynchedData(CallbackInfo ci) {
 		this.entityData.define(PARRY_COOLDOWN, 0);
@@ -104,8 +83,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements LivingEn
 	public void setBlockedCooldown(int block) {
 		this.entityData.set(BLOCKED_COOLDOWN, block);
 	}
-
-	@Shadow
-	public abstract CooldownTracker getCooldowns();
 
 }

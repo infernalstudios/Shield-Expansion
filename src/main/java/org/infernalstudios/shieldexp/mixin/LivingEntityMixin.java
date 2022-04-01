@@ -14,6 +14,8 @@
  */
 package org.infernalstudios.shieldexp.mixin;
 
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.play.server.SChangeGameStatePacket;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +36,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
+@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 
@@ -79,8 +84,40 @@ public abstract class LivingEntityMixin extends Entity {
 		ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem) - this.useItemRemaining >= 0);
 	}
 
+	@Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DamageSource;getDirectEntity()Lnet/minecraft/entity/Entity;"))
+	private void shieldexp$hurt(DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir) {
+		// TODO: Configure 'Attacking Cooldown Percentage'
+		float attackCooldown = 1.0F;
+		Entity entity = damageSource.getDirectEntity();
+
+		if ((Object) this instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) (Object) this;
+
+			if (player.getUseItem().isShield(player)) {
+				if (player.getRandom().nextFloat() < attackCooldown) {
+					if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
+						player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
+
+					} else {
+						if (entity instanceof LivingEntity)
+							((LivingEntity) entity).knockback(0.55F, entity.getDeltaMovement().x, entity.getDeltaMovement().z);
+
+						LivingEntityAccess.get(player).setParryCooldown(0);
+
+						if (!this.level.isClientSide())
+							((ServerPlayerEntity) (Object) this).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+					}
+				}
+
+				LivingEntityAccess.get(player).setBlockedCooldown(10);
+				player.stopUsingItem();
+			}
+		}
+
+	}
+
 	@Redirect(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DamageSource;isProjectile()Z"))
-	private boolean shieldexp$hurt(DamageSource damageSource) {
+	private boolean shieldexp$isProjectileFalse(DamageSource damageSource) {
 		return false;
 	}
 
