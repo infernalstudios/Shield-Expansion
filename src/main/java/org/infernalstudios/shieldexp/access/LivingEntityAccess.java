@@ -16,15 +16,15 @@ package org.infernalstudios.shieldexp.access;
 
 public interface LivingEntityAccess {
 
-	public int getParryCooldown();
+    int getParryCooldown();
 
-	public void setParryCooldown(int parry);
+    void setParryCooldown(int parry);
 
-	public int getBlockedCooldown();
+    int getBlockedCooldown();
 
-	public void setBlockedCooldown(int block);
+    void setBlockedCooldown(int block);
 
-	public static LivingEntityAccess get(Object object) {
+	static LivingEntityAccess get(Object object) {
 		return (LivingEntityAccess) object;
 	}
 

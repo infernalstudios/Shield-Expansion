@@ -52,73 +52,9 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 
-	@Inject(method = "stopUsingItem", at = @At("HEAD"))
-	private void shieldexp$stopUsingItem(CallbackInfo ci) {
-		if ((Object) this instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) (Object) this;
-			if (useItem.isShield(player)) {
-				if (!this.level.isClientSide) {
-					if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
-						player.getCooldowns().addCooldown(useItem.getItem(), 20);
-					}
-					LivingEntityAccess.get(player).setParryCooldown(0);
-				}
-			}
-		}
-	}
-
-	@Inject(method = "startUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isUsingItem()Z", shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-	private void shieldexp$startUsingItem(Hand hand, CallbackInfo ci, ItemStack stack) {
-		if ((Object) this instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) (Object) this;
-			if (stack.isShield(player)) {
-				if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
-					LivingEntityAccess.get(player).setParryCooldown(5);
-				}
-			}
-		}
-	}
-
 	@Inject(method = "isBlocking", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void shieldexp$isBlocking(CallbackInfoReturnable<Boolean> ci) {
 		ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem) - this.useItemRemaining >= 0);
-	}
-
-	@Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DamageSource;getDirectEntity()Lnet/minecraft/entity/Entity;"))
-	private void shieldexp$hurt(DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir) {
-		// TODO: Configure 'Attacking Cooldown Percentage'
-		float attackCooldown = 1.0F;
-		Entity entity = damageSource.getDirectEntity();
-
-		if ((Object) this instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) (Object) this;
-
-			if (player.getUseItem().isShield(player)) {
-				if (player.getRandom().nextFloat() < attackCooldown) {
-					if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
-						player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
-
-					} else {
-						if (entity instanceof LivingEntity)
-							((LivingEntity) entity).knockback(0.55F, entity.getDeltaMovement().x, entity.getDeltaMovement().z);
-
-						LivingEntityAccess.get(player).setParryCooldown(0);
-
-						if (!this.level.isClientSide())
-							((ServerPlayerEntity) (Object) this).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
-					}
-				}
-
-				LivingEntityAccess.get(player).setBlockedCooldown(10);
-				player.stopUsingItem();
-			}
-		}
-
-	}
-
-	@Redirect(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DamageSource;isProjectile()Z"))
-	private boolean shieldexp$isProjectileFalse(DamageSource damageSource) {
-		return false;
 	}
 
 }
