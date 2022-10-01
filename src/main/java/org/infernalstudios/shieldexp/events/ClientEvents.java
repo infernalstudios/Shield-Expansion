@@ -16,7 +16,7 @@ package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -32,13 +32,13 @@ public class ClientEvents {
     @SubscribeEvent
     public void onTooltipCreate(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
 
         if (stack.is(Items.SHIELD)) {
             if (player != null && Screen.hasShiftDown()) {
-                event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
+                event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
             } else {
-                event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
+                event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
             }
         }
     }

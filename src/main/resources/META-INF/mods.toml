@@ -1,10 +1,10 @@
 
 modLoader="javafml"
-loaderVersion="[38,)"
+loaderVersion="[43,)"
 license="Apache-2.0"
 [[mods]]
 modId="shieldexp"
-version="alpha-0.1"
+version="0.1"
 displayName="Shield Expansion"
 updateJSONURL="https://infernalstudios.org/api/mods/shieldexpansion/forge"
 logoFile="Shield_Expansion_Banner.png"
@@ -23,12 +23,12 @@ EB Mario - Concept Collaborator
 [[dependencies.shieldexp]]
     modId="forge"
     mandatory=true
-    versionRange="[38,)"
+    versionRange="[43,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.shieldexp]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18,)"
+    versionRange="[1.19,)"
     ordering="NONE"
     side="BOTH"

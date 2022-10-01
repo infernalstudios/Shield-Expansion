@@ -14,8 +14,13 @@ buildscript {
         classpath group: 'org.spongepowered',                   name: 'mixingradle', version: '0.7-SNAPSHOT'
         classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur',    version: '1.2.1'
         classpath group: 'gradle.plugin.com.matthewprenger',    name: 'CurseGradle', version: '1.4.0'
-        classpath 'org.parchmentmc:librarian:1.+'
     }
+}
+
+plugins {
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -24,7 +29,6 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 ext.config = parseConfig(file('build.properties'))
 
