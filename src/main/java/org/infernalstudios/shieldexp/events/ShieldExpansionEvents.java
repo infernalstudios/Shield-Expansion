@@ -2,6 +2,7 @@ package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,6 +64,7 @@ public class ShieldExpansionEvents {
             Player player = (Player) event.getEntity();
 
             if (player.getUseItem().is(Items.SHIELD)) {
+                event.getSource().getDirectEntity().playSound(SoundEvents.SHIELD_BLOCK);
                 if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
                     player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
                 } else {
@@ -98,6 +100,7 @@ public class ShieldExpansionEvents {
                 Player player = (Player) entityRayTraceResult.getEntity();
 
                 if (player.getUseItem().is(Items.SHIELD)) {
+                    player.playSound(SoundEvents.SHIELD_BLOCK);
                     if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
                         player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
                     } else {
