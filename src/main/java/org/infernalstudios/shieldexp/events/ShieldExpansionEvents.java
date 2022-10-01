@@ -1,18 +1,15 @@
 package org.infernalstudios.shieldexp.events;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.TridentEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SChangeGameStatePacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -26,11 +23,11 @@ public class ShieldExpansionEvents {
 
     @SubscribeEvent
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
-        if (event.getEntity() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntity();
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
             ItemStack stack = event.getItem();
 
-            if (stack.isShield(player)) {
+            if (stack.is(Items.SHIELD)) {
                 if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
                     LivingEntityAccess.get(player).setParryCooldown(5);
                 }
@@ -41,11 +38,11 @@ public class ShieldExpansionEvents {
     @SubscribeEvent
     public void onStopUsing(LivingEntityUseItemEvent event) {
 
-        if (event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish && event.getEntity() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntity();
+        if (event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish && event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
             ItemStack stack = event.getItem();
 
-            if (stack.isShield(player)) {
+            if (stack.is(Items.SHIELD)) {
                 if (!player.level.isClientSide) {
                     if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
                         player.getCooldowns().addCooldown(stack.getItem(), 20);
@@ -62,25 +59,25 @@ public class ShieldExpansionEvents {
         DamageSource source = event.getSource();
         Entity directEntity = source.getDirectEntity();
 
-        if (event.getEntity() instanceof PlayerEntity && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
-            PlayerEntity player = (PlayerEntity) event.getEntity();
+        if (event.getEntity() instanceof Player && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
+            Player player = (Player) event.getEntity();
 
-            if (player.getUseItem().isShield(player)) {
-                    if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
-                        player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
-                    } else {
-                        if (directEntity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) directEntity;
-                            livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
-                            livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
-                        }
-                        LivingEntityAccess.get(player).setParryCooldown(0);
-
-                        if (!player.level.isClientSide()) {
-                            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-                            serverPlayer.connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
-                        }
+            if (player.getUseItem().is(Items.SHIELD)) {
+                if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
+                    player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
+                } else {
+                    if (directEntity instanceof LivingEntity) {
+                        LivingEntity livingEntity = (LivingEntity) directEntity;
+                        livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
+                        livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
                     }
+                    LivingEntityAccess.get(player).setParryCooldown(0);
+
+                    if (!player.level.isClientSide()) {
+                        ServerPlayer serverPlayer = (ServerPlayer) player;
+                        serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
+                    }
+                }
 
                 LivingEntityAccess.get(player).setBlockedCooldown(10);
                 player.stopUsingItem();
@@ -93,14 +90,14 @@ public class ShieldExpansionEvents {
     @SubscribeEvent
     public void onProjectileImpact(ProjectileImpactEvent event) {
         Entity projectile = event.getEntity();
-        RayTraceResult rayTraceResult = event.getRayTraceResult();
+        HitResult rayTraceResult = event.getRayTraceResult();
 
-        if (rayTraceResult instanceof EntityRayTraceResult) {
-            EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
-            if (entityRayTraceResult.getEntity() instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) entityRayTraceResult.getEntity();
+        if (rayTraceResult instanceof EntityHitResult) {
+            EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;
+            if (entityRayTraceResult.getEntity() instanceof Player) {
+                Player player = (Player) entityRayTraceResult.getEntity();
 
-                if (player.getUseItem().isShield(player)) {
+                if (player.getUseItem().is(Items.SHIELD)) {
                     if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
                         player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
                     } else {
@@ -108,8 +105,8 @@ public class ShieldExpansionEvents {
                         LivingEntityAccess.get(player).setParryCooldown(0);
 
                         if (!player.level.isClientSide()) {
-                            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-                            serverPlayer.connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+                            ServerPlayer serverPlayer = (ServerPlayer) player;
+                            serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
                         }
                     }
 

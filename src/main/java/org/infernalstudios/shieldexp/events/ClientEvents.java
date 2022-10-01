@@ -14,11 +14,12 @@
  */
 package org.infernalstudios.shieldexp.events;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,13 +32,13 @@ public class ClientEvents {
     @SubscribeEvent
     public void onTooltipCreate(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
 
-        if (stack.isShield(player)) {
+        if (stack.is(Items.SHIELD)) {
             if (player != null && Screen.hasShiftDown()) {
-                event.getToolTip().add(new TranslationTextComponent("shieldexp.tooltip.instructions.parry").withStyle(TextFormatting.YELLOW));
+                event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
             } else {
-                event.getToolTip().add(new TranslationTextComponent("shieldexp.tooltip.instructions").withStyle(TextFormatting.DARK_GRAY));
+                event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
             }
         }
     }

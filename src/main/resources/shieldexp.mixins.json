@@ -1,14 +1,14 @@
 {
-	"required": true,
-	"minVersion": "0.8",
-	"package": "org.infernalstudios.shieldexp.mixin",
-	"refmap": "shieldexp.refmap.json",
-	"compatibilityLevel": "JAVA_8",
-	"mixins": [
-		"LivingEntityMixin",
-		"PlayerEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.infernalstudios.shieldexp.mixin",
+  "refmap": "shieldexp.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "LivingEntityMixin",
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

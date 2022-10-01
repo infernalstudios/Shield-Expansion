@@ -3,9 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,24 +27,24 @@ import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 
 @Mod("shieldexp")
 public class ShieldExpansion {
-	public static final String NAME = "Shield Expansion";
-	public static final String MOD_ID = "shieldexp";
-	public static final Logger LOGGER = LogManager.getLogger(NAME);
+    public static final String NAME = "Shield Expansion";
+    public static final String MOD_ID = "shieldexp";
+    public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-	public ShieldExpansion() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+    public ShieldExpansion() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
-	}
+    }
 
-	private void commonSetup(final FMLCommonSetupEvent event) {
+    private void commonSetup(final FMLCommonSetupEvent event) {
 
-	}
+    }
 
-	private void clientSetup(final FMLClientSetupEvent event) {
+    private void clientSetup(final FMLClientSetupEvent event) {
 
-	}
+    }
 
 }
