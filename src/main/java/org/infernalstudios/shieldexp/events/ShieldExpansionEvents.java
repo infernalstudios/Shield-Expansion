@@ -39,7 +39,7 @@ public class ShieldExpansionEvents {
     @SubscribeEvent
     public void onStopUsing(LivingEntityUseItemEvent event) {
 
-        if (event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish && event.getEntity() instanceof Player) {
+        if ((event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish) && event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             ItemStack stack = event.getItem();
 
