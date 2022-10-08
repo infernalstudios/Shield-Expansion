@@ -1,0 +1,45 @@
+{
+  "credit": "Made with Blockbench",
+  "texture_size": [64, 64],
+  "textures": {
+    "3": "shieldexp:shields_three"
+  },
+  "elements": [
+    {
+      "name": "face",
+      "from": [2, 0, 4],
+      "to": [14, 16, 5],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 6]},
+      "faces": {
+        "north": {"uv": [0.25, 7.25, 3.25, 11.25], "texture": "#3"},
+        "east": {"uv": [0, 7.25, 0.25, 11.25], "texture": "#3"},
+        "south": {"uv": [3.5, 7.25, 6.5, 11.25], "texture": "#3"},
+        "west": {"uv": [3.25, 7.25, 3.5, 11.25], "texture": "#3"},
+        "up": {"uv": [3.25, 7.25, 0.25, 7], "texture": "#3"},
+        "down": {"uv": [6.25, 7, 3.25, 7.25], "texture": "#3"}
+      }
+    },
+    {
+      "name": "handle",
+      "from": [7, 5, 5],
+      "to": [9, 11, 11],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 6]},
+      "faces": {
+        "north": {"uv": [8, 1.5, 8.5, 3], "texture": "#3"},
+        "east": {"uv": [6.5, 1.5, 8, 3], "texture": "#3"},
+        "south": {"uv": [10, 1.5, 10.5, 3], "texture": "#3"},
+        "west": {"uv": [8.5, 1.5, 10, 3], "texture": "#3"},
+        "up": {"uv": [8.5, 1.5, 8, 0], "texture": "#3"},
+        "down": {"uv": [9, 0, 8.5, 1.5], "texture": "#3"}
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "shieldmedium",
+      "origin": [0, 8, -2],
+      "color": 0,
+      "children": [0, 1]
+    }
+  ]
+}
