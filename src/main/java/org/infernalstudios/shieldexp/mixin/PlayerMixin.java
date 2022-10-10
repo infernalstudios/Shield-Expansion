@@ -37,6 +37,9 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     @Unique
     private static final EntityDataAccessor<Integer> BLOCKED_COOLDOWN = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
+    @Unique
+    private static final EntityDataAccessor<Boolean> IS_BLOCKING = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
+
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
     }
@@ -45,6 +48,7 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     private void shieldexp$defineSynchedData(CallbackInfo ci) {
         this.entityData.define(PARRY_COOLDOWN, 0);
         this.entityData.define(BLOCKED_COOLDOWN, 0);
+        this.entityData.define(IS_BLOCKING, false);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -75,8 +79,15 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     }
 
     @Override
+    public boolean getBlocking() {
+        return this.entityData.get(IS_BLOCKING);
+    }
+
+    @Override
     public void setBlockedCooldown(int block) {
         this.entityData.set(BLOCKED_COOLDOWN, block);
     }
 
+    @Override
+    public void setBlocking(boolean bool) { this.entityData.set(IS_BLOCKING, bool); }
 }

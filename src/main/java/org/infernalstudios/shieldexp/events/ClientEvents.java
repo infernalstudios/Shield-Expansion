@@ -15,16 +15,19 @@
 package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.infernalstudios.shieldexp.ShieldExpansion;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
@@ -39,6 +42,17 @@ public class ClientEvents {
                 event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
             } else {
                 event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        Player player = Minecraft.getInstance().player;
+
+        if (player != null) {
+            if (Minecraft.getInstance().mouseHandler.isLeftPressed() && LivingEntityAccess.get(player).getBlocking()) {
+                player.stopUsingItem();
             }
         }
     }

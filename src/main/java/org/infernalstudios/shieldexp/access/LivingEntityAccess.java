@@ -24,6 +24,10 @@ public interface LivingEntityAccess {
 
     void setBlockedCooldown(int block);
 
+    boolean getBlocking();
+
+    void setBlocking(boolean bool);
+
     static LivingEntityAccess get(Object object) {
         return (LivingEntityAccess) object;
     }

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.ClientEvents;
+import org.infernalstudios.shieldexp.events.FovEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 
@@ -42,6 +43,7 @@ public class ShieldExpansion {
 
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
+        MinecraftForge.EVENT_BUS.register(new FovEvents());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
