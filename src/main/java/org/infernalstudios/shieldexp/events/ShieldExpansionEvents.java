@@ -10,12 +10,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -42,8 +39,10 @@ public class ShieldExpansionEvents {
                         player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
                     }
                 }
+
                 if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
-                    LivingEntityAccess.get(player).setParryCooldown(5);
+                    if (stack.getItem() instanceof NewShieldItem shield) LivingEntityAccess.get(player).setParryWindow(shield.PARRY_TICKS);
+                    else LivingEntityAccess.get(player).setParryWindow(5);
                 }
             }
         }
@@ -51,7 +50,6 @@ public class ShieldExpansionEvents {
 
     @SubscribeEvent
     public void onStopUsing(LivingEntityUseItemEvent event) {
-
         if ((event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish) && event.getEntity() instanceof Player player) {
             ItemStack stack = event.getItem();
 
@@ -63,26 +61,24 @@ public class ShieldExpansionEvents {
                         player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
                     }
                 }
+
                 if (!player.level.isClientSide) {
-                    if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
-                        player.getCooldowns().addCooldown(stack.getItem(), 20);
-                    }
-                    LivingEntityAccess.get(player).setParryCooldown(0);
+                    if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) player.getCooldowns().addCooldown(stack.getItem(), 20);
+                    LivingEntityAccess.get(player).setParryWindow(0);
                 }
             }
         }
-
     }
 
     @SubscribeEvent
     public void onUseTick(LivingEntityUseItemEvent.Tick event) {
+        //checks if the player is swinging despite blocking to sync the blocking state after attacking out of the blocking state on the client
         if (event.getEntity() instanceof Player player && event.getItem().getItem() instanceof ShieldItem && LivingEntityAccess.get(player).getBlocking() && player.swinging) {
             LivingEntityAccess.get(player).setBlocking(false);
             player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
-            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) {
-                player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
-            }
-            LivingEntityAccess.get(player).setParryCooldown(0);
+
+            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0) player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
+            LivingEntityAccess.get(player).setParryWindow(0);
             player.stopUsingItem();
         }
     }
@@ -92,40 +88,40 @@ public class ShieldExpansionEvents {
         DamageSource source = event.getSource();
         Entity directEntity = source.getDirectEntity();
 
-        if (event.getEntity() instanceof Player player && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
+        if (event.getEntity() instanceof Player player
+           && player.getUseItem().getItem() instanceof ShieldItem
+           && LivingEntityAccess.get(player).getBlocking()
+           && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem())
+           && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
+            event.getSource().getDirectEntity().playSound(SoundEvents.SHIELD_BLOCK);
 
-            if (player.getUseItem().getItem() instanceof ShieldItem && LivingEntityAccess.get(player).getBlocking()  && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem())) {
-                event.getSource().getDirectEntity().playSound(SoundEvents.SHIELD_BLOCK);
-                player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
-                if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
-                    player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
-                } else {
-                    if (directEntity instanceof LivingEntity livingEntity) {
-                        if (player.getUseItem().getItem() instanceof NewShieldItem shield) {
-                            livingEntity.hurt(DamageSource.sting(player), (event.getAmount() * shield.getDamageFactor()));
-                        }
-                        livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
-                        livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
-                    }
-                    LivingEntityAccess.get(player).setParryCooldown(0);
+            if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+                LivingEntityAccess.get(player).setParryWindow(0);
 
-                    if (!player.level.isClientSide()) {
-                        ServerPlayer serverPlayer = (ServerPlayer) player;
-                        serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
-                    }
+                if (directEntity instanceof LivingEntity livingEntity) {
+                    if (player.getUseItem().getItem() instanceof NewShieldItem shield) livingEntity.hurt(DamageSource.sting(player), (event.getAmount() * shield.getDamageFactor()));
+                    livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
+                    livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
                 }
 
-                LivingEntityAccess.get(player).setBlockedCooldown(10);
-                if (LivingEntityAccess.get(player).getBlocking()) {
-                    LivingEntityAccess.get(player).setBlocking(false);
-                    if (player.getUseItem().getItem() instanceof NewShieldItem) {
-                        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
-                    }
+                if (!player.level.isClientSide()) {
+                    ServerPlayer serverPlayer = (ServerPlayer) player;
+                    serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
                 }
-                player.stopUsingItem();
+            } else player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
 
-                event.setCanceled(true);
+            player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
+            LivingEntityAccess.get(player).setBlockedCooldown(10);
+
+            if (LivingEntityAccess.get(player).getBlocking()) {
+                LivingEntityAccess.get(player).setBlocking(false);
+                if (player.getUseItem().getItem() instanceof NewShieldItem) {
+                    player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+                }
             }
+
+            player.stopUsingItem();
+            event.setCanceled(true);
         }
     }
 
@@ -139,13 +135,13 @@ public class ShieldExpansionEvents {
 
                 if (player.getUseItem().getItem() instanceof ShieldItem shield && LivingEntityAccess.get(player).getBlocking()  && !player.getCooldowns().isOnCooldown(shield)) {
                     player.playSound(SoundEvents.SHIELD_BLOCK);
-                    player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
-                    if (LivingEntityAccess.get(player).getParryCooldown() <= 0) {
+
+                    if (LivingEntityAccess.get(player).getParryWindow() <= 0) {
                         player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
                     } else {
                         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
                         projectile.syncPacketPositionCodec(projectile.getX(), projectile.getY(), projectile.getZ());
-                        LivingEntityAccess.get(player).setParryCooldown(0);
+                        LivingEntityAccess.get(player).setParryWindow(0);
 
                         if (!player.level.isClientSide()) {
                             ServerPlayer serverPlayer = (ServerPlayer) player;
@@ -153,15 +149,17 @@ public class ShieldExpansionEvents {
                         }
                     }
 
+                    player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
                     LivingEntityAccess.get(player).setBlockedCooldown(10);
+
                     if (LivingEntityAccess.get(player).getBlocking()) {
                         LivingEntityAccess.get(player).setBlocking(false);
                         if (player.getUseItem().getItem() instanceof NewShieldItem) {
                             player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
                         }
                     }
-                    player.stopUsingItem();
 
+                    player.stopUsingItem();
                     event.setCanceled(true);
                 }
             }

@@ -36,24 +36,15 @@ public class ClientEvents {
     public void onTooltipCreate(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         Player player = event.getEntity();
-
         if (stack.is(Items.SHIELD)) {
-            if (player != null && Screen.hasShiftDown()) {
-                event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
-            } else {
-                event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
-            }
+            if (player != null && Screen.hasShiftDown()) event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
+            else event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Player player = Minecraft.getInstance().player;
-
-        if (player != null) {
-            if (Minecraft.getInstance().mouseHandler.isLeftPressed() && LivingEntityAccess.get(player).getBlocking()) {
-                player.stopUsingItem();
-            }
-        }
+        if (player != null) if (Minecraft.getInstance().mouseHandler.isLeftPressed() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
     }
 }

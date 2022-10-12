@@ -17,11 +17,8 @@ package org.infernalstudios.shieldexp;
 import net.minecraftforge.eventbus.api.IEventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.FovEvents;
@@ -35,9 +32,6 @@ public class ShieldExpansion {
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     public ShieldExpansion() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemsInit.ITEMS.register(modBus);
 
@@ -45,13 +39,4 @@ public class ShieldExpansion {
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new FovEvents());
     }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-
-    }
-
-    private void clientSetup(final FMLClientSetupEvent event) {
-
-    }
-
 }

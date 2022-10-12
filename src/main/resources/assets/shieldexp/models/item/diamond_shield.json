@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "1": "shieldexp:shields_three",
-    "particle": "shieldexp:shields_three"
+    "particle": "shieldexp:shields"
   },
   "elements": [
     {

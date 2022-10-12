@@ -54,22 +54,18 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     @Inject(method = "tick", at = @At("TAIL"))
     private void shieldexp$tick(CallbackInfo ci) {
         if (!this.level.isClientSide) {
-            if (this.getParryCooldown() > 0) {
-                this.setParryCooldown(this.getParryCooldown() - 1);
-            }
-            if (this.getBlockedCooldown() > 0) {
-                this.setBlockedCooldown(this.getBlockedCooldown() - 1);
-            }
+            if (this.getParryWindow() > 0) this.setParryWindow(this.getParryWindow() - 1);
+            if (this.getBlockedCooldown() > 0) this.setBlockedCooldown(this.getBlockedCooldown() - 1);
         }
     }
 
     @Override
-    public int getParryCooldown() {
+    public int getParryWindow() {
         return this.entityData.get(PARRY_COOLDOWN);
     }
 
     @Override
-    public void setParryCooldown(int parry) {
+    public void setParryWindow(int parry) {
         this.entityData.set(PARRY_COOLDOWN, parry);
     }
 

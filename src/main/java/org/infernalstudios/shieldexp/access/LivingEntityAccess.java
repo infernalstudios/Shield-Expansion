@@ -16,16 +16,28 @@ package org.infernalstudios.shieldexp.access;
 
 public interface LivingEntityAccess {
 
-    int getParryCooldown();
+    /**
+     * Returns the remaining ticks where parrying is possible.
+     */
+    int getParryWindow();
 
-    void setParryCooldown(int parry);
+    /**
+     * Sets the amount of next ticks where parrying is possible.
+     */
+    void setParryWindow(int parry);
 
     int getBlockedCooldown();
 
     void setBlockedCooldown(int block);
 
+    /**
+     * Returns true if the player is currently in the blocking state.
+     */
     boolean getBlocking();
 
+    /**
+     * Sets the blocking state of the player to the given bool value.
+     */
     void setBlocking(boolean bool);
 
     static LivingEntityAccess get(Object object) {
