@@ -32,6 +32,8 @@ public class ShieldExpansion {
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     public ShieldExpansion() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::setup);
+
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemsInit.ITEMS.register(modBus);
 

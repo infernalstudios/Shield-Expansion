@@ -43,5 +43,4 @@ public abstract class LivingEntityMixin extends Entity {
     private void shieldexp$isBlocking(CallbackInfoReturnable<Boolean> ci) {
         ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem) - this.useItemRemaining >= 0);
     }
-
 }

@@ -86,5 +86,4 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
 
     @Override
     public void setBlocking(boolean bool) { this.entityData.set(IS_BLOCKING, bool); }
-
 }
