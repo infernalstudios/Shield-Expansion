@@ -1,8 +1,10 @@
 package org.infernalstudios.shieldexp.items;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ShieldItem;
 
 public class NewShieldItem extends ShieldItem {
+    public static final ResourceLocation BLOCKING = new ResourceLocation("minecraft:blocking");
     public float SPEED_MODIFIER = 1.0F;
     public float DAMAGE_RETURNING_FACTOR = 0.0F;
     public int PARRY_TICKS = 5;
