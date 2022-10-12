@@ -1,4 +1,9 @@
 {
   "shieldexp.tooltip.instructions": "Hold Shift for Instructions",
-  "shieldexp.tooltip.instructions.parry": "Raise your shield just before getting hit to parry attacks!"
+  "shieldexp.tooltip.instructions.parry": "Raise your shield just before getting hit to parry attacks!",
+  "item.shieldexp.wooden_shield": "Wooden Shield",
+  "item.shieldexp.golden_shield": "Golden Shield",
+  "item.shieldexp.iron_shield": "Iron Shield",
+  "item.shieldexp.diamond_shield": "Diamond Shield",
+  "item.shieldexp.netherite_shield": "Netherite Shield"
 }
