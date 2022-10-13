@@ -1,6 +1,6 @@
 {
-    "pack": {
-        "description": "Shield Expansion",
-        "pack_format": 6
-    }
+   "pack": {
+      "pack_format": 9,
+      "description": "Shield Expansion!"
+   }
 }
