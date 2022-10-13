@@ -18,15 +18,21 @@ public class ItemsInit {
     public static final List<RegistryObject<NewShieldItem>> SHIELDS = new ArrayList<>();
 
     //movement speed factors are modified to align with the vanilla shield modifier, actual results are 75%, 90%, 60%, 45%, and 25% as intended
-    public static final RegistryObject<NewShieldItem> WOODEN_SHIELD = registerShield("wooden_shield", 55, 0.78F, 0.0F);
-    public static final RegistryObject<NewShieldItem> GOLDEN_SHIELD = registerShield("golden_shield", 77, 0.9F, 0.00F);
-    public static final RegistryObject<NewShieldItem> IRON_SHIELD = registerShield("iron_shield", 165, 0.64F, 0.20F);
-    public static final RegistryObject<NewShieldItem> DIAMOND_SHIELD = registerShield("diamond_shield", 363, 0.55F, 0.35F);
-    public static final RegistryObject<NewShieldItem> NETHERITE_SHIELD = registerShield("netherite_shield", 607, 0.38F, 0.50F);
+    public static final RegistryObject<NewShieldItem> WOODEN_SHIELD = registerShield("wooden_shield", 55, 10, 0.78F, 0.0F, 8);
+    public static final RegistryObject<NewShieldItem> GOLDEN_SHIELD = registerShield("golden_shield", 77, 10, 0.9F, 0.0F, 8);
+    public static final RegistryObject<NewShieldItem> IRON_SHIELD = registerShield("iron_shield", 165, 20, 0.64F, 0.20F, 5);
+    public static final RegistryObject<NewShieldItem> DIAMOND_SHIELD = registerShield("diamond_shield", 363, 40, 0.55F, 0.35F, 4);
+    public static final RegistryObject<NewShieldItem> NETHERITE_SHIELD = registerShield("netherite_shield", 607, 60, 0.38F, 0.50F, 3);
 
-    public static RegistryObject<NewShieldItem> registerShield(String id, int durability, float speedFactor, float damageBack) {
-        RegistryObject<NewShieldItem> shield = ITEMS.register(id, () -> new NewShieldItem(new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT), speedFactor, damageBack));
-        SHIELDS.add(shield);
-        return shield;
+    public static RegistryObject<NewShieldItem> registerShield(String id, int durability, int blockTicks, float speedFactor, double damageBack, int parryTicks) {
+        if (id.equals("netherite_shield")) {
+            RegistryObject<NewShieldItem> shield = ITEMS.register(id, () -> new NewShieldItem(new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT).fireResistant(), blockTicks, speedFactor, damageBack, parryTicks));
+            SHIELDS.add(shield);
+            return shield;
+        } else {
+            RegistryObject<NewShieldItem> shield = ITEMS.register(id, () -> new NewShieldItem(new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT), blockTicks, speedFactor, damageBack, parryTicks));
+            SHIELDS.add(shield);
+            return shield;
+        }
     }
 }
