@@ -39,7 +39,7 @@ public class ShieldExpansionEvents {
 
                     if (stack.getItem() instanceof NewShieldItem shield) {
                         AttributeModifier speedModifier = new AttributeModifier(player.getUUID() , "Blocking Speed", (double)(4.0*shield.getSpeedFactor()), AttributeModifier.Operation.MULTIPLY_TOTAL);
-                        player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
+                        if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(speedModifier)) player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
                     }
                 }
 
