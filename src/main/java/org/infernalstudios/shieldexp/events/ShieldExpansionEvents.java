@@ -3,8 +3,10 @@ package org.infernalstudios.shieldexp.events;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -93,6 +96,23 @@ public class ShieldExpansionEvents {
     }
 
     @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        //checks if the player switches to a different inventory slot
+        if (!(event.player.getMainHandItem().getItem() instanceof ShieldItem || event.player.getOffhandItem().getItem() instanceof ShieldItem) && LivingEntityAccess.get(event.player).getBlocking()) {
+            event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(event.player.getUUID());
+            LivingEntityAccess.get(event.player).setBlocking(false);
+
+            if (LivingEntityAccess.get(event.player).getBlockedCooldown() <= 0) {
+                if (event.player.getUseItem().getItem() instanceof NewShieldItem newShield) {
+                    event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), newShield.getShieldTicks());
+                } else event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), 20);
+            }
+            LivingEntityAccess.get(event.player).setParryWindow(0);
+            event.player.stopUsingItem();
+        }
+    }
+
+    @SubscribeEvent
     public void onLivingHurt(LivingAttackEvent event) {
         DamageSource source = event.getSource();
         Entity directEntity = source.getDirectEntity();
@@ -121,16 +141,11 @@ public class ShieldExpansionEvents {
                 player.getCooldowns().addCooldown(player.getUseItem().getItem(), newShield.getShieldTicks());
             } else player.getCooldowns().addCooldown(player.getUseItem().getItem(), 20);
 
-            player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
+            if (player.getUsedItemHand() == InteractionHand.MAIN_HAND) player.getUseItem().hurtAndBreak(1, player, (player1) -> { player1.broadcastBreakEvent(EquipmentSlot.MAINHAND); removeBlocking(player); });
+            else player.getUseItem().hurtAndBreak(1, player, (player1) -> { player1.broadcastBreakEvent(EquipmentSlot.OFFHAND); removeBlocking(player); });
             LivingEntityAccess.get(player).setBlockedCooldown(10);
 
-            if (LivingEntityAccess.get(player).getBlocking()) {
-                if (player.getUseItem().getItem() instanceof NewShieldItem newShield) {
-                    player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
-                    LivingEntityAccess.get(player).setBlockedCooldown(newShield.getShieldTicks());
-                }
-                LivingEntityAccess.get(player).setBlocking(false);
-            }
+            removeBlocking(player);
 
             player.stopUsingItem();
             event.setCanceled(true);
@@ -163,21 +178,26 @@ public class ShieldExpansionEvents {
                         }
                     }
 
-                    player.getUseItem().hurtAndBreak(1, player, (pl) -> { pl.broadcastBreakEvent(player.getUseItem().getEquipmentSlot()); });
+                    if (player.getUsedItemHand() == InteractionHand.MAIN_HAND) player.getUseItem().hurtAndBreak(1, player, (player1) -> { player1.broadcastBreakEvent(EquipmentSlot.MAINHAND); removeBlocking(player); });
+                    else player.getUseItem().hurtAndBreak(1, player, (player1) -> { player1.broadcastBreakEvent(EquipmentSlot.OFFHAND); removeBlocking(player); });
                     LivingEntityAccess.get(player).setBlockedCooldown(10);
 
-                    if (LivingEntityAccess.get(player).getBlocking()) {
-                        if (player.getUseItem().getItem() instanceof NewShieldItem newShield) {
-                            player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
-                            LivingEntityAccess.get(player).setBlockedCooldown(newShield.getShieldTicks());
-                        }
-                        LivingEntityAccess.get(player).setBlocking(false);
-                    }
+                    removeBlocking(player);
 
                     player.stopUsingItem();
                     event.setCanceled(true);
                 }
             }
+        }
+    }
+
+    public void removeBlocking(Player player) {
+        if (LivingEntityAccess.get(player).getBlocking()) {
+            if (player.getUseItem().getItem() instanceof NewShieldItem newShield) {
+                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+                LivingEntityAccess.get(player).setBlockedCooldown(newShield.getShieldTicks());
+            }
+            LivingEntityAccess.get(player).setBlocking(false);
         }
     }
 }
