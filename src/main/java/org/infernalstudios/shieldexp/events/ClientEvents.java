@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -53,7 +54,7 @@ public class ClientEvents {
     public void onTooltipCreate(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         Player player = event.getEntity();
-        if (stack.is(Items.SHIELD)) {
+        if (stack.getItem() instanceof ShieldItem) {
             if (player != null && Screen.hasShiftDown()) event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
             else event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
         }
