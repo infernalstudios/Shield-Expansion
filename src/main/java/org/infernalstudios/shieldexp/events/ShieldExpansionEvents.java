@@ -98,17 +98,19 @@ public class ShieldExpansionEvents {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         //checks if the player switches to a different inventory slot
-        if (!(event.player.getMainHandItem().getItem() instanceof ShieldItem || event.player.getOffhandItem().getItem() instanceof ShieldItem) && LivingEntityAccess.get(event.player).getBlocking()) {
+        if (!(event.player.getMainHandItem().getItem() instanceof NewShieldItem || event.player.getOffhandItem().getItem() instanceof NewShieldItem) && LivingEntityAccess.get(event.player).getBlocking()) {
             event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(event.player.getUUID());
-            LivingEntityAccess.get(event.player).setBlocking(false);
+            if (!(event.player.getMainHandItem().getItem() instanceof ShieldItem || event.player.getOffhandItem().getItem() instanceof ShieldItem) && LivingEntityAccess.get(event.player).getBlocking()) {
+                LivingEntityAccess.get(event.player).setBlocking(false);
 
-            if (LivingEntityAccess.get(event.player).getBlockedCooldown() <= 0) {
-                if (event.player.getUseItem().getItem() instanceof NewShieldItem newShield) {
-                    event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), newShield.getShieldTicks());
-                } else event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), 20);
+                if (LivingEntityAccess.get(event.player).getBlockedCooldown() <= 0) {
+                    if (event.player.getUseItem().getItem() instanceof NewShieldItem newShield) {
+                        event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), newShield.getShieldTicks());
+                    } else event.player.getCooldowns().addCooldown(event.player.getUseItem().getItem(), 20);
+                }
+                LivingEntityAccess.get(event.player).setParryWindow(0);
+                event.player.stopUsingItem();
             }
-            LivingEntityAccess.get(event.player).setParryWindow(0);
-            event.player.stopUsingItem();
         }
     }
 
