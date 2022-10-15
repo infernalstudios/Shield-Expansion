@@ -4,7 +4,7 @@ loaderVersion="[38,)"
 license="Apache-2.0"
 [[mods]]
 modId="shieldexp"
-version="0.1.0"
+version="1.0.0"
 displayName="Shield Expansion"
 updateJSONURL="https://infernalstudios.org/api/mods/shieldexpansion/forge"
 logoFile="Shield_Expansion_Banner.png"
@@ -16,8 +16,8 @@ Parrying an attack, done by raising your shield just before an attack hits you, 
 We hope you enjoy it!
 Credits
 Kuraion - Developer
-LudoCrypt - Developer
-Nekomaster1000 - Conceptualiser, 2D & 3D Artist
+HellionGames, CaelTheQuail, LudoCrypt - Developer
+Nekomaster1000 - Conceptualiser, Artist
 EB Mario - Concept Collaborator
 '''
 [[dependencies.shieldexp]]
