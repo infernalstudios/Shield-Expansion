@@ -1,5 +1,5 @@
 {
-	"credit": "Nekomaster",
+	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "shieldexp:shields",
 		"particle": "shieldexp:shields"
@@ -41,12 +41,12 @@
 		},
 		"firstperson_righthand": {
 			"rotation": [0, 180, 0],
-			"translation": [-15, 3, -10],
+			"translation": [-15, 6, -10],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 180, 0],
-			"translation": [5, 3, -10],
+			"translation": [5, 8, -10],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"gui": {
