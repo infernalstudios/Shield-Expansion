@@ -1,0 +1,39 @@
+{
+  "criteria": {
+    "netherite_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "shieldexp:netherite_shield"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "shieldexp.advancements.get_netherite_shield.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "shieldexp:netherite_shield"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "shieldexp.advancements.get_netherite_shield.title"
+    }
+  },
+  "requirements": [
+    [
+      "netherite_shield"
+    ]
+  ]
+}

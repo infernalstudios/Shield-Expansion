@@ -1,0 +1,39 @@
+{
+  "criteria": {
+    "diamond_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "shieldexp:diamond_shield"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "shieldexp.advancements.get_diamond_shield.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "shieldexp:diamond_shield"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "shieldexp.advancements.get_diamond_shield.title"
+    }
+  },
+  "requirements": [
+    [
+      "diamond_shield"
+    ]
+  ]
+}
