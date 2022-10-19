@@ -23,6 +23,7 @@ public class ItemsInit {
     public static final RegistryObject<NewShieldItem> IRON_SHIELD = registerShield("iron_shield", 165, 30, 0.60F, 0.20F, 5);
     public static final RegistryObject<NewShieldItem> DIAMOND_SHIELD = registerShield("diamond_shield", 363, 45, 0.38F, 0.35F, 4);
     public static final RegistryObject<NewShieldItem> NETHERITE_SHIELD = registerShield("netherite_shield", 607, 60, 0.25F, 0.50F, 3);
+    public static final RegistryObject<NewShieldItem> PARAGON_SHIELD = registerShield("paragon_shield", 640, 35, 0.60F, 0.70F, 4);
 
     public static RegistryObject<NewShieldItem> registerShield(String id, int durability, int blockTicks, float speedFactor, double damageBack, int parryTicks) {
         if (id.equals("netherite_shield")) {
