@@ -14,7 +14,10 @@
  */
 package org.infernalstudios.shieldexp;
 
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,13 +35,15 @@ public class ShieldExpansion {
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     public ShieldExpansion() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::setup);
-
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemsInit.ITEMS.register(modBus);
 
+        modBus.addListener(this::clientSetup);
+
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
-        MinecraftForge.EVENT_BUS.register(new ClientEvents());
-        MinecraftForge.EVENT_BUS.register(new FovEvents());
+    }
+
+    private void clientSetup(final FMLClientSetupEvent event) {
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
     }
 }
