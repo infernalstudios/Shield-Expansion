@@ -1,4 +1,5 @@
 {
+  "parent": "shieldexp:get_diamond_shield",
   "criteria": {
     "netherite_shield": {
       "conditions": {
