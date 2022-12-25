@@ -97,6 +97,10 @@ public class ShieldExpansionEvents {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        //check if the player is no longer using a shield
+        if (!(event.player.getUseItem().getItem() instanceof ShieldItem)) {
+            event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(event.player.getUUID());
+        }
         //checks if the player switches to a different inventory slot
         if (!(event.player.getMainHandItem().getItem() instanceof NewShieldItem || event.player.getOffhandItem().getItem() instanceof NewShieldItem) && LivingEntityAccess.get(event.player).getBlocking()) {
             event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(event.player.getUUID());
