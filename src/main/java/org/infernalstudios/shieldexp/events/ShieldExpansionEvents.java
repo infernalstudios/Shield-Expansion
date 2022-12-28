@@ -30,7 +30,7 @@ public class ShieldExpansionEvents {
 
     @SubscribeEvent
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
-        if (event.getEntity() instanceof Player player) {
+        if (event.getEntity() instanceof Player player && !player.swinging) {
             ItemStack stack = event.getItem();
 
             if (stack.getItem() instanceof ShieldItem && !player.getCooldowns().isOnCooldown(stack.getItem())) {
@@ -126,6 +126,7 @@ public class ShieldExpansionEvents {
         if (event.getEntity() instanceof Player player
                 && player.getUseItem().getItem() instanceof ShieldItem
                 && LivingEntityAccess.get(player).getBlocking()
+                && !player.swinging
                 && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem())
                 && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
             event.getSource().getDirectEntity().playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
@@ -164,7 +165,7 @@ public class ShieldExpansionEvents {
         HitResult rayTraceResult = event.getRayTraceResult();
 
         if (rayTraceResult instanceof EntityHitResult entityRayTraceResult) {
-            if (entityRayTraceResult.getEntity() instanceof Player player) {
+            if (entityRayTraceResult.getEntity() instanceof Player player && !player.swinging) {
 
                 if (player.getUseItem().getItem() instanceof ShieldItem shield && LivingEntityAccess.get(player).getBlocking()  && !player.getCooldowns().isOnCooldown(shield)) {
                     player.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
