@@ -67,6 +67,6 @@ public class ClientEvents {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null) if (Minecraft.getInstance().mouseHandler.isLeftPressed() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
+        if (player != null) if (Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
     }
 }
