@@ -1,8 +1,8 @@
 {
-	"credit": "Nekomaster",
+	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexp:shields",
-		"particle": "shieldexp:shields"
+		"1": "shieldexp:netherite",
+		"particle": "shieldexp:netherite"
 	},
 	"elements": [
 		{
@@ -31,12 +31,7 @@
 		}
 	],
 	"overrides": [
-		{
-			"predicate": {
-				"blocking": 1
-			},
-			"model": "shieldexp:item/netherite_shield_blocking"
-		}
+		{"predicate": {"blocking": 1}, "model": "shieldexp:item/netherite_shield_blocking"}
 	],
 	"display": {
 		"thirdperson_righthand": {
@@ -49,7 +44,7 @@
 		},
 		"firstperson_righthand": {
 			"rotation": [0, 180, 5],
-			"translation": [-10, 0.5, -10],
+			"translation": [-10, 1.75, -10],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"firstperson_lefthand": {

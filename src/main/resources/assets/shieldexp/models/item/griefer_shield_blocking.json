@@ -1,20 +1,20 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexp:wooden",
-		"particle": "shieldexp:wooden"
+		"1": "shieldexp:griefer",
+		"particle": "shieldexp:griefer"
 	},
 	"elements": [
 		{
-			"from": [-6, -6, 1],
-			"to": [6, 6, 2],
+			"from": [-6, -8, 1],
+			"to": [6, 8, 2],
 			"faces": {
-				"north": {"uv": [3.5, 13, 6.5, 16], "texture": "#1"},
-				"east": {"uv": [3.25, 13, 3.5, 16], "texture": "#1"},
-				"south": {"uv": [0.25, 13, 3.25, 16], "texture": "#1"},
-				"west": {"uv": [0, 13, 0.25, 16], "texture": "#1"},
-				"up": {"uv": [0.25, 12.75, 3.25, 13], "texture": "#1"},
-				"down": {"uv": [3.25, 12.75, 6.25, 13], "texture": "#1"}
+				"north": {"uv": [3.5, 7.25, 6.5, 11.25], "texture": "#1"},
+				"east": {"uv": [3.25, 7.25, 3.5, 11.25], "texture": "#1"},
+				"south": {"uv": [0.25, 7.25, 3.25, 11.25], "texture": "#1"},
+				"west": {"uv": [0, 7.25, 0.25, 11.25], "texture": "#1"},
+				"up": {"uv": [0.25, 7, 3.25, 7.25], "texture": "#1"},
+				"down": {"uv": [3.25, 7, 6.25, 7.25], "texture": "#1"}
 			}
 		},
 		{
@@ -41,12 +41,12 @@
 		},
 		"firstperson_righthand": {
 			"rotation": [0, 180, 0],
-			"translation": [-15, 6.75, -10],
+			"translation": [-15, 4.25, -10],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 180, 0],
-			"translation": [5, 7, -9],
+			"translation": [5, 4.25, -9],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"gui": {
