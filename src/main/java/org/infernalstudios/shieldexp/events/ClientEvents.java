@@ -19,17 +19,16 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import net.minecraftforge.registries.RegistryObject;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.items.NewShieldItem;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
@@ -44,7 +43,7 @@ public class ClientEvents {
 
     private static void initShields() {
         ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-        for (RegistryObject<NewShieldItem> shieldItem : ItemsInit.SHIELDS)
+        for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS)
             ItemProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
     }
 

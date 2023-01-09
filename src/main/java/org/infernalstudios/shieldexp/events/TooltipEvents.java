@@ -3,6 +3,7 @@ package org.infernalstudios.shieldexp.events;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,19 +18,19 @@ public class TooltipEvents {
     @SubscribeEvent
     public void onTooltipCreate(ItemTooltipEvent event) {
         Item item = event.getItemStack().getItem();
-        Player player = event.getEntity();
+        Player player = event.getPlayer();
         if (Config.isShield(item)) {
-            event.getToolTip().add(Component.translatable(" "));
-            event.getToolTip().add(Component.translatable("shieldexp.tooltip.attribute").withStyle(ChatFormatting.GRAY));
+            event.getToolTip().add(Component.nullToEmpty((" ")));
+            event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.attribute").withStyle(ChatFormatting.GRAY));
             tooltip(event, item, "cooldownTicks");
             tooltip(event, item, "stamina");
             tooltip(event, item, "speedFactor");
             tooltip(event, item, "parryDamage");
             tooltip(event, item, "parryTicks");
             tooltip(event, item, "blastResistance");
-            event.getToolTip().add(Component.translatable(" "));
-            if (player != null && Screen.hasShiftDown()) event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
-            else event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.GRAY));
+            event.getToolTip().add(Component.nullToEmpty(" "));
+            if (player != null && Screen.hasShiftDown()) event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
+            else event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions").withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -40,10 +41,10 @@ public class TooltipEvents {
             String fullKey = "shieldexp.tooltip.attribute." + attribute.replaceAll("(?<!^)([A-Z])", "_$1").toLowerCase().trim();
 
             if (attribute.equals("speedFactor"))
-                event.getToolTip().add(Component.translatable(value < 0.6 ? fullKey + "_slow" : fullKey + "_fast").withStyle(ChatFormatting.DARK_GREEN));
+                event.getToolTip().add(new TranslatableComponent(value < 0.6 ? fullKey + "_slow" : fullKey + "_fast").withStyle(ChatFormatting.DARK_GREEN));
             else {
                 if ((attribute.equals("parryTicks") && Config.lenientParryEnabled()) || (attribute.equals("stamina") && Config.lenientStaminaEnabled())) value = value * 2;
-                event.getToolTip().add(Component.translatable(fullKey, switch (attribute) {
+                event.getToolTip().add(new TranslatableComponent(fullKey, switch (attribute) {
                     case "cooldownTicks", "parryTicks" -> String.valueOf(value / 20);
                     case "stamina" -> String.valueOf(value.intValue());
                     case "parryDamage", "flatDamage" -> ShieldExpansionEvents.getShieldValue(item, "flatDamage").intValue() + " + " + (value * 100) + "%";
