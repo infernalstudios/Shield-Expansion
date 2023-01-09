@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexp:shields",
-		"particle": "shieldexp:shields"
+		"1": "shieldexp:diamond",
+		"particle": "shieldexp:diamond"
 	},
 	"elements": [
 		{
@@ -46,7 +46,7 @@
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 180, 0],
-			"translation": [5, 3, -10],
+			"translation": [5, 3, -9],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"gui": {

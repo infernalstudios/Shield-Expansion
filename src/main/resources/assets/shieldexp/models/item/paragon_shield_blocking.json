@@ -1,8 +1,8 @@
 {
-	"credit": "Nekomaster",
+	"credit": "Nekomaster1000",
 	"textures": {
-		"2": "shieldexp:special_shields",
-		"particle": "shieldexp:special_shields"
+		"2": "shieldexp:paragon",
+		"particle": "shieldexp:paragon"
 	},
 	"elements": [
 		{
@@ -46,7 +46,7 @@
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 180, 0],
-			"translation": [5, 3, -10],
+			"translation": [5, 3, -9],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"gui": {
