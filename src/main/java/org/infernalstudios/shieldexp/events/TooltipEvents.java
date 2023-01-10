@@ -57,11 +57,13 @@ public class TooltipEvents {
 
     //checks whether the values are 0 or currently disabled
     private Boolean validate(Item item, String attribute) {
-        return switch (attribute) {
-            case "cooldownTicks", "stamina" -> !Config.cooldownDisabled() && ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
-            case "blastResistance" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
-            case "parryDamage" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0 && ShieldExpansionEvents.getShieldValue(item, "flatDamage") != 0;
-            case "speedFactor" -> !Config.speedModifierDisabled();
-            default -> true;};
+        if (Config.isShield(item))
+            return switch (attribute) {
+                    case "cooldownTicks", "stamina" -> !Config.cooldownDisabled() && ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
+                    case "blastResistance" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
+                    case "parryDamage" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0 && ShieldExpansionEvents.getShieldValue(item, "flatDamage") != 0;
+                    case "speedFactor" -> !Config.speedModifierDisabled();
+                    default -> true;};
+        else return false;
     }
 }
