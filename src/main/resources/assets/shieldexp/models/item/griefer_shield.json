@@ -31,7 +31,7 @@
 		}
 	],
 	"overrides": [
-		{"predicate": {"blocking": 1}, "model": "shieldexp:item/iron_shield_blocking"}
+		{"predicate": {"blocking": 1}, "model": "shieldexp:item/griefer_shield_blocking"}
 	],
 	"display": {
 		"thirdperson_righthand": {
