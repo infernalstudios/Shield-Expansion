@@ -88,12 +88,11 @@ public class ShieldExpansionEvents {
         }
 
         //checks if the player switches to a different item
-        if (lastShield != item && Config.isShield(lastShield) && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled()) {
+        if (lastShield != item && Config.isShield(lastShield) && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
             if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
                 player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
-            if (Config.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
-            else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
-        }
+        if (Config.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
+        else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
     }
 
     //shield behavior when hit by a melee attack
