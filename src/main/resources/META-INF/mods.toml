@@ -4,7 +4,7 @@ loaderVersion="[41,)"
 license="Apache-2.0"
 [[mods]]
 modId="shieldexp"
-version="1.1.1"
+version="1.1.2"
 displayName="Shield Expansion"
 updateJSONURL="https://infernalstudios.org/api/mods/shieldexpansion/forge"
 logoFile="Shield_Expansion_Banner.png"
