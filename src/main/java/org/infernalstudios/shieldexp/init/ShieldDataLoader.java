@@ -70,7 +70,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     public static void parse(ResourceLocation name, JsonObject data) {
-        if (ForgeRegistries.ITEMS.containsKey(name)) {
+        if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(ShieldExpansion.MOD_ID + ":default")) {
             Map<String, Double> stats = new HashMap<>();
             stats.put("cooldownTicks", data.getAsJsonObject().get("cooldownTicks").getAsDouble());
             stats.put("speedFactor", data.getAsJsonObject().get("speedFactor").getAsDouble());
