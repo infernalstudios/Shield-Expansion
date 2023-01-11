@@ -17,6 +17,9 @@ public class ClearShields {
     public void encode(FriendlyByteBuf buf){
     }
 
+    public ClearShields() {
+    }
+
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(this::handle);
         ctx.get().setPacketHandled(true);
