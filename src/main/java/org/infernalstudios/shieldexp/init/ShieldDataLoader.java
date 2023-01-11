@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.ShieldExpansion;
+import org.infernalstudios.shieldexp.network.ClearShields;
 import org.infernalstudios.shieldexp.network.SyncShields;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
         Player player = event.getPlayer();
 
         if (!player.level.isClientSide()){
-//            NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ClearProfessionsPacket());
+            NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ClearShields());
 
             for (Map.Entry<ResourceLocation, JsonElement> file : toSync){
                 NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncShields(file.getKey(), file.getValue()));
