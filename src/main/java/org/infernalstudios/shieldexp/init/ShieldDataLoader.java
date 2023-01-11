@@ -51,9 +51,6 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
                 JsonElement data = files.get(name);
 
                 parse(name, data.getAsJsonObject());
-
-                if (!name.toString().equals(ShieldExpansion.MOD_ID + ":default"))
-                    Config.extendList(name.toString());
             }
         }
         toSync.addAll(files.entrySet());
