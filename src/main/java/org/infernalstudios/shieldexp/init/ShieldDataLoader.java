@@ -57,7 +57,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @SubscribeEvent
-    public static void syncProfessionsOnJoin(PlayerEvent.PlayerLoggedInEvent event){
+    public static void syncShieldsOnJoin(PlayerEvent.PlayerLoggedInEvent event){
         Player player = event.getPlayer();
 
         if (!player.level.isClientSide()){
@@ -70,7 +70,8 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     public static void parse(ResourceLocation name, JsonObject data) {
-        if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(ShieldExpansion.MOD_ID + ":default")) {
+        String key = name.toString();
+        if (ForgeRegistries.ITEMS.containsKey(name) || key.equals(ShieldExpansion.MOD_ID + ":default")) {
             Map<String, Double> stats = new HashMap<>();
             stats.put("cooldownTicks", data.getAsJsonObject().get("cooldownTicks").getAsDouble());
             stats.put("speedFactor", data.getAsJsonObject().get("speedFactor").getAsDouble());
@@ -79,15 +80,15 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
             stats.put("stamina", data.getAsJsonObject().get("stamina").getAsDouble());
             stats.put("blastResistance", data.getAsJsonObject().get("blastResistance").getAsDouble());
             stats.put("flatDamage", data.getAsJsonObject().get("flatDamage").getAsDouble());
-            SHIELD_STATS.put(name.toString(), stats);
+            SHIELD_STATS.remove(key);
+            SHIELD_STATS.put(key, stats);
 
-            if (!name.toString().equals(ShieldExpansion.MOD_ID + ":default"))
-                Config.extendList(name.toString());
+            if (!key.equals(ShieldExpansion.MOD_ID + ":default"))
+                Config.extendList(key);
         }
     }
 
     public static void clearAll() {
         SHIELD_STATS.clear();
-        toSync.clear();
     }
 }
