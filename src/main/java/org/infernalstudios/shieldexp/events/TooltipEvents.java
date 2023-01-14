@@ -18,7 +18,7 @@ public class TooltipEvents {
     public void onTooltipCreate(ItemTooltipEvent event) {
         Item item = event.getItemStack().getItem();
         Player player = event.getEntity();
-        if (Config.isShield(item)) {
+        if (player != null && Config.isShield(item)) {
             event.getToolTip().add(Component.translatable(" "));
             event.getToolTip().add(Component.translatable("shieldexp.tooltip.attribute").withStyle(ChatFormatting.GRAY));
             tooltip(event, item, "cooldownTicks");
@@ -28,7 +28,7 @@ public class TooltipEvents {
             tooltip(event, item, "parryTicks");
             tooltip(event, item, "blastResistance");
             event.getToolTip().add(Component.translatable(" "));
-            if (player != null && Screen.hasShiftDown()) event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
+            if (Screen.hasShiftDown()) event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
             else event.getToolTip().add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.GRAY));
         }
     }
