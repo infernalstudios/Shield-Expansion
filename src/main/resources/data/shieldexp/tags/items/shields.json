@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "shieldexp:wooden_shield",
+    "shieldexp:iron_shield",
+    "shieldexp:golden_shield",
+    "shieldexp:diamond_shield",
+    "shieldexp:netherite_shield"
+  ]
+}

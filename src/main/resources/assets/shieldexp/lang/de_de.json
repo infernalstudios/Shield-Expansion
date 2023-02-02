@@ -1,0 +1,29 @@
+{
+  "shieldexp.tooltip.instructions": "Halte Shift um Anweisungen zu sehen",
+  "shieldexp.tooltip.instructions.parry": "Hebe dein Schild unmittelbar bevor du getroffen wirst, um den Angriff zu parieren!",
+
+  "shieldexp.tooltip.attribute": "Als Schild:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Cooldown",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Langsames Movement",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Schnelles Movement",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Parierschaden",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Parierdauer",
+  "shieldexp.tooltip.attribute.stamina": " %s Ausdauer",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Explosionswiderstand",
+
+  "item.shieldexp.wooden_shield": "Holzschild",
+  "item.shieldexp.golden_shield": "Goldschild",
+  "item.shieldexp.iron_shield": "Eisenschild",
+  "item.shieldexp.diamond_shield": "Diamantschild",
+  "item.shieldexp.netherite_shield": "Netheritschild",
+  "item.shieldexp.paragon_shield": "Paragonschild",
+  "item.shieldexp.griefer_shield": "Grieferschild",
+
+  "death.attack.partialblast": "%1$s wurde in die Luft gesprengt weil das Schild der Explosion nicht standhalten konnte",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Diamant ist unzerbrechbar",
+  "shieldexp.advancements.get_diamond_shield.description": "Stelle ein Diamantschild her",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Unbewegliches Objekt",
+  "shieldexp.advancements.get_netherite_shield.description": "Stelle ein Netheritschild her"
+}

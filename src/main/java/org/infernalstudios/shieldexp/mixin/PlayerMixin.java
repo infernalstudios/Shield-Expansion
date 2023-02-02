@@ -20,6 +20,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +41,12 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     private static final EntityDataAccessor<Integer> BLOCKED_COOLDOWN = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
     @Unique
+    private static final EntityDataAccessor<Integer> USED_STAMINA = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+
+    @Unique
+    private static final EntityDataAccessor<ItemStack> LAST_SHIELD = SynchedEntityData.defineId(Player.class, EntityDataSerializers.ITEM_STACK);
+
+    @Unique
     private static final EntityDataAccessor<Boolean> IS_BLOCKING = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
@@ -48,6 +57,8 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     private void shieldexp$defineSynchedData(CallbackInfo ci) {
         this.entityData.define(PARRY_COOLDOWN, 0);
         this.entityData.define(BLOCKED_COOLDOWN, 0);
+        this.entityData.define(USED_STAMINA, 0);
+        this.entityData.define(LAST_SHIELD, new ItemStack(Items.AIR));
         this.entityData.define(IS_BLOCKING, false);
     }
 
@@ -86,4 +97,24 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
 
     @Override
     public void setBlocking(boolean bool) { this.entityData.set(IS_BLOCKING, bool); }
+
+    @Override
+    public int getUsedStamina() {
+        return this.entityData.get(USED_STAMINA);
+    }
+
+    @Override
+    public void setUsedStamina(int stamina) {
+        this.entityData.set(USED_STAMINA, stamina);
+    }
+
+    @Override
+    public ItemStack getLastShield() {
+        return this.entityData.get(LAST_SHIELD);
+    }
+
+    @Override
+    public void setLastShield(ItemStack shield) {
+        this.entityData.set(LAST_SHIELD, shield);
+    }
 }

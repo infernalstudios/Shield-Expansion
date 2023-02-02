@@ -1,8 +1,8 @@
 {
-	"credit": "Nekomaster",
+	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexp:shields",
-		"particle": "shieldexp:shields"
+		"1": "shieldexp:diamond",
+		"particle": "shieldexp:diamond"
 	},
 	"elements": [
 		{
@@ -31,12 +31,7 @@
 		}
 	],
 	"overrides": [
-		{
-			"predicate": {
-				"blocking": 1
-			},
-			"model": "shieldexp:item/diamond_shield_blocking"
-		}
+		{"predicate": {"blocking": 1}, "model": "shieldexp:item/diamond_shield_blocking"}
 	],
 	"display": {
 		"thirdperson_righthand": {
@@ -54,7 +49,7 @@
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 180, 5],
-			"translation": [10, 0, -10],
+			"translation": [10, -1, -10],
 			"scale": [1.25, 1.25, 1.25]
 		},
 		"ground": {
