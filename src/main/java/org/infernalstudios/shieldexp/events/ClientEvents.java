@@ -14,28 +14,21 @@
  */
 package org.infernalstudios.shieldexp.events;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.items.NewShieldItem;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
@@ -43,30 +36,22 @@ public class ClientEvents {
     public static void setup() {
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new FovEvents());
+        MinecraftForge.EVENT_BUS.register(new TooltipEvents());
 
         initShields();
     }
 
     private static void initShields() {
         ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-        for (RegistryObject<NewShieldItem> shieldItem : ItemsInit.SHIELDS) {
-            ItemProperties.register(shieldItem.get(), NewShieldItem.BLOCKING, blockFn);
-        }
+        for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS)
+            ItemProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
     }
 
-    @SubscribeEvent
-    public void onTooltipCreate(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-        Player player = event.getPlayer();
-        if (stack.getItem() instanceof ShieldItem) {
-            if (player != null && Screen.hasShiftDown()) event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
-            else event.getToolTip().add(new TranslatableComponent("shieldexp.tooltip.instructions").withStyle(ChatFormatting.DARK_GRAY));
-        }
-    }
-
+    //desyncs from the server to allow the player to attack despite currently blocking, state is resynced on server-side useTick
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null) if (Minecraft.getInstance().mouseHandler.isLeftPressed() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
+        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking())
+            player.stopUsingItem();
     }
 }

@@ -14,6 +14,8 @@
  */
 package org.infernalstudios.shieldexp.access;
 
+import net.minecraft.world.item.ItemStack;
+
 public interface LivingEntityAccess {
 
     /**
@@ -39,6 +41,14 @@ public interface LivingEntityAccess {
      * Sets the blocking state of the player to the given bool value.
      */
     void setBlocking(boolean bool);
+
+    int getUsedStamina();
+
+    void setUsedStamina(int stamina);
+
+    ItemStack getLastShield();
+
+    void setLastShield(ItemStack shield);
 
     static LivingEntityAccess get(Object object) {
         return (LivingEntityAccess) object;

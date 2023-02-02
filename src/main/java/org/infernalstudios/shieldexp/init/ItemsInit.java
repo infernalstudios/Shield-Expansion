@@ -2,12 +2,12 @@ package org.infernalstudios.shieldexp.init;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.items.NewShieldItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +15,22 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemsInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ShieldExpansion.MOD_ID);
-    public static final List<RegistryObject<NewShieldItem>> SHIELDS = new ArrayList<>();
+    public static final List<RegistryObject<ShieldItem>> SHIELDS = new ArrayList<>();
 
-    //movement speed factors are modified to align with the vanilla shield modifier, actual results are 75%, 90%, 60%, 40~%, and 20~% as intended
-    public static final RegistryObject<NewShieldItem> WOODEN_SHIELD = registerShield("wooden_shield", 55, 20, 0.78F, 0.0F, 5);
-    public static final RegistryObject<NewShieldItem> GOLDEN_SHIELD = registerShield("golden_shield", 32, 25, 0.9F, 0.0F, 6);
-    public static final RegistryObject<NewShieldItem> IRON_SHIELD = registerShield("iron_shield", 165, 30, 0.60F, 0.20F, 5);
-    public static final RegistryObject<NewShieldItem> DIAMOND_SHIELD = registerShield("diamond_shield", 363, 45, 0.38F, 0.35F, 4);
-    public static final RegistryObject<NewShieldItem> NETHERITE_SHIELD = registerShield("netherite_shield", 607, 60, 0.25F, 0.50F, 3);
-    public static final RegistryObject<NewShieldItem> PARAGON_SHIELD = registerShield("paragon_shield", 640, 35, 0.60F, 0.70F, 4);
+    public static final RegistryObject<ShieldItem> WOODEN_SHIELD = registerShield("wooden_shield", 55);
+    public static final RegistryObject<ShieldItem> GOLDEN_SHIELD = registerShield("golden_shield", 32);
+    public static final RegistryObject<ShieldItem> IRON_SHIELD = registerShield("iron_shield", 165);
+    public static final RegistryObject<ShieldItem> DIAMOND_SHIELD = registerShield("diamond_shield", 363);
+    public static final RegistryObject<ShieldItem> NETHERITE_SHIELD = registerShield("netherite_shield", 607);
+    public static final RegistryObject<ShieldItem> PARAGON_SHIELD = registerShield("paragon_shield", 640);
+    public static final RegistryObject<ShieldItem> GRIEFER_SHIELD = registerShield("griefer_shield", 282);
 
-    public static RegistryObject<NewShieldItem> registerShield(String id, int durability, int blockTicks, float speedFactor, double damageBack, int parryTicks) {
-        if (id.equals("netherite_shield")) {
-            RegistryObject<NewShieldItem> shield = ITEMS.register(id, () -> new NewShieldItem(new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT).fireResistant(), blockTicks, speedFactor, damageBack, parryTicks));
-            SHIELDS.add(shield);
-            return shield;
-        } else {
-            RegistryObject<NewShieldItem> shield = ITEMS.register(id, () -> new NewShieldItem(new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT), blockTicks, speedFactor, damageBack, parryTicks));
-            SHIELDS.add(shield);
-            return shield;
-        }
+    public static RegistryObject<ShieldItem> registerShield(String id, int durability) {
+        Item.Properties properties = new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT);
+        if (id.equals("netherite_shield")) properties.fireResistant();
+        RegistryObject<ShieldItem> shield = ITEMS.register(id, () -> new ShieldItem(properties));
+
+        SHIELDS.add(shield);
+        return shield;
     }
 }

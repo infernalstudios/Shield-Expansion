@@ -1,0 +1,17 @@
+{
+  "shieldexp.tooltip.instructions": "Удерживайте Shift для информации",
+  "shieldexp.tooltip.instructions.parry": "Поднимите щит прямо перед ударом, чтобы парировать атаку!",
+
+  "item.shieldexp.wooden_shield": "Деревянный щит",
+  "item.shieldexp.golden_shield": "Золотой щит",
+  "item.shieldexp.iron_shield": "Железный щит",
+  "item.shieldexp.diamond_shield": "Алмазный щит",
+  "item.shieldexp.netherite_shield": "Незеритовый щит",
+  "item.shieldexp.paragon_shield": "Совершенный щит",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Нерушимый алмаз",
+  "shieldexp.advancements.get_diamond_shield.description": "Создайте алмазный щит",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Непоколебимый объект",
+  "shieldexp.advancements.get_netherite_shield.description": "Создайте незеритовый щит"
+}
