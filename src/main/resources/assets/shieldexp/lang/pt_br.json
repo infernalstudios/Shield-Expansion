@@ -1,0 +1,29 @@
+{
+  "shieldexp.tooltip.instructions": "Segure Shift para instruções",
+  "shieldexp.tooltip.instructions.parry": "Levante seu escudo antes de ser atingido para bloquear os ataques!",
+
+  "shieldexp.tooltip.attribute": "Quando usado como escudo:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Tempo de espera",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Movimento lento",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Movimento rápido",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Dano de bloqueio",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Janela de bloqueio",
+  "shieldexp.tooltip.attribute.stamina": " %s Vigor",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Resistência à explosão",
+
+  "item.shieldexp.wooden_shield": "Escudo de madeira",
+  "item.shieldexp.golden_shield": "Escudo de ouro",
+  "item.shieldexp.iron_shield": "Escudo de ferro",
+  "item.shieldexp.diamond_shield": "Escudo de diamante",
+  "item.shieldexp.netherite_shield": "Escudo de netherita",
+  "item.shieldexp.paragon_shield": "Escudo Paragon",
+  "item.shieldexp.griefer_shield": "Escudo Griefer",
+
+  "death.attack.partialblast": "%1$s explodiu porque seu escudo não aguentou a explosão",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Diamante é inquebrável",
+  "shieldexp.advancements.get_diamond_shield.description": "Faça um escudo de diamante",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Objeto imóvel",
+  "shieldexp.advancements.get_netherite_shield.description": "Faça um escudo de netherita"
+}
