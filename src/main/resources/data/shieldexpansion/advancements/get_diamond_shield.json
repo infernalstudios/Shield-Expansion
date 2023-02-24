@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:story/deflect_arrow",
+  "criteria": {
+    "diamond_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "shieldexpansion:diamond_shield"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "shieldexpansion.advancements.get_diamond_shield.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "shieldexpansion:diamond_shield"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "shieldexpansion.advancements.get_diamond_shield.title"
+    }
+  },
+  "requirements": [
+    [
+      "diamond_shield"
+    ]
+  ]
+}

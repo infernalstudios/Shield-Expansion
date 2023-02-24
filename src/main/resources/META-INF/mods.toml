@@ -1,36 +1,12 @@
 modLoader="javafml"
 loaderVersion="[36,)"
-license="Apache-2.0"
+license="Apache License 2.0"
+
 [[mods]]
-modId="shieldexp"
+modId="shieldexpansion"
 version="${file.jarVersion}"
 displayName="Shield Expansion"
-updateJSONURL="https://infernalstudios.org/api/mods/shieldexpansion/forge"
-logoFile="Shield_Expansion_Banner.png"
-authors="Infernal Studios"
+authors="Team Potato"
 description='''
-Shield Expansion is a mod that aims to make combat in Minecraft more engaging and skilful by rebalancing shields. The mod adds traditional tiers to shields and introduces two new mechanics, Universal Cooldown and Parrying, in addition to adding fun enchantments and cool customization options! 
-
-Universal Cooldown means any attack that hits a shield will put it into a state of cooldown for 1 second, forcing you to either go on the offensive or make better use of defensive manoeuvring. You also go into this 1 second cooldown if you lower the shield, too.
-
-Parrying an attack, done by raising your shield just before an attack hits you, allows you to bypass Universal Cooldown, rewarding skilful timing and use of your shield. You also push any melee attackers back upon a successful Parry, too.
-
-We hope you enjoy it!
-
-Credits
-LudoCrypt - Developer
-Nekomaster1000 - Conceptualiser, 2D & 3D Artist
-EB Mario - Concept Collaborator
+Shield Expansion
 '''
-[[dependencies.shieldexp]]
-    modId="forge"
-    mandatory=true
-    versionRange="[36,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.shieldexp]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.16,)"
-    ordering="NONE"
-    side="BOTH"

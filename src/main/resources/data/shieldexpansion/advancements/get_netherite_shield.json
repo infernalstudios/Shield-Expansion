@@ -1,0 +1,40 @@
+{
+  "parent": "shieldexpansion:get_diamond_shield",
+  "criteria": {
+    "netherite_shield": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "shieldexpansion:netherite_shield"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "shieldexpansion.advancements.get_netherite_shield.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "shieldexpansion:netherite_shield"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "shieldexpansion.advancements.get_netherite_shield.title"
+    }
+  },
+  "requirements": [
+    [
+      "netherite_shield"
+    ]
+  ]
+}

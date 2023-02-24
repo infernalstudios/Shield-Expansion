@@ -1,0 +1,29 @@
+{
+  "shieldexpansion.tooltip.instructions": "Hold Shift for Instructions",
+  "shieldexpansion.tooltip.instructions.parry": "Raise your shield just before getting hit to parry attacks!",
+
+  "shieldexpansion.tooltip.attribute": "When used as Shield:",
+  "shieldexpansion.tooltip.attribute.cooldown_ticks": " %ss Cooldown",
+  "shieldexpansion.tooltip.attribute.speed_factor_slow": " Slow Movement",
+  "shieldexpansion.tooltip.attribute.speed_factor_fast": " Fast Movement",
+  "shieldexpansion.tooltip.attribute.parry_damage": " %s Parry Damage",
+  "shieldexpansion.tooltip.attribute.parry_ticks": " %ss Parry Window",
+  "shieldexpansion.tooltip.attribute.stamina": " %s Stamina",
+  "shieldexpansion.tooltip.attribute.blast_resistance": " %s Blast Resistance",
+
+  "item.shieldexpansion.wooden_shield": "Wooden Shield",
+  "item.shieldexpansion.golden_shield": "Golden Shield",
+  "item.shieldexpansion.iron_shield": "Iron Shield",
+  "item.shieldexpansion.diamond_shield": "Diamond Shield",
+  "item.shieldexpansion.netherite_shield": "Netherite Shield",
+  "item.shieldexpansion.paragon_shield": "Paragon Shield",
+  "item.shieldexpansion.griefer_shield": "Griefer Shield",
+
+  "death.attack.partialblast": "%1$s blew up because their shield couldn't withstand the blast",
+
+  "shieldexpansion.advancements.get_diamond_shield.title": "Diamond is Unbreakable",
+  "shieldexpansion.advancements.get_diamond_shield.description": "Craft a Diamond Shield",
+
+  "shieldexpansion.advancements.get_netherite_shield.title": "Immovable Object",
+  "shieldexpansion.advancements.get_netherite_shield.description": "Craft a Netherite Shield"
+}
