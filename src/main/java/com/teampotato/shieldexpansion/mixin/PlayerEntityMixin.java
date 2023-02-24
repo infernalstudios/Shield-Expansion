@@ -36,30 +36,30 @@ import net.minecraft.world.World;
 public abstract class PlayerEntityMixin extends LivingEntity implements LivingEntityAccess {
 
     @Unique
-    private static final DataParameter<Integer> PARRY_COOLDOWN = EntityDataManager.defineId(PlayerEntityMixin.class, DataSerializers.INT);
+    private static final DataParameter<Integer> PARRY_COOLDOWN = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
     @Unique
-    private static final DataParameter<Integer> BLOCKED_COOLDOWN = EntityDataManager.defineId(PlayerEntityMixin.class, DataSerializers.INT);
+    private static final DataParameter<Integer> BLOCKED_COOLDOWN = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
     @Unique
-    private static final DataParameter<Integer> USED_STAMINA = EntityDataManager.defineId(PlayerEntityMixin.class, DataSerializers.INT);
+    private static final DataParameter<Integer> USED_STAMINA = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
     @Unique
-    private static final DataParameter<ItemStack> LAST_SHIELD = EntityDataManager.defineId(PlayerEntityMixin.class, DataSerializers.ITEM_STACK);
+    private static final DataParameter<ItemStack> LAST_SHIELD = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.ITEM_STACK);
 
     @Unique
-    private static final DataParameter<Boolean> IS_BLOCKING = EntityDataManager.defineId(PlayerEntityMixin.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> IS_BLOCKING = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.BOOLEAN);
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void shieldexp$defineSynchedData(CallbackInfo ci) {
+    private void shieldexpansion$defineSynchedData(CallbackInfo ci) {
         this.entityData.define(PARRY_COOLDOWN, 0);
         this.entityData.define(BLOCKED_COOLDOWN, 0);
         this.entityData.define(USED_STAMINA, 0);
-        this.entityData.define(LAST_SHIELD, new ItemStack(Items.SHIELD));
+        this.entityData.define(LAST_SHIELD, new ItemStack(Items.AIR));
         this.entityData.define(IS_BLOCKING, false);
     }
 
