@@ -16,12 +16,19 @@ package com.teampotato.shieldexpansion.events;
 
 import com.teampotato.shieldexpansion.ShieldExpansion;
 import com.teampotato.shieldexpansion.access.LivingEntityAccess;
+import com.teampotato.shieldexpansion.init.ItemsInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ShieldItem;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -29,7 +36,14 @@ public class ClientEvent {
     public static void setup() {
         MinecraftForge.EVENT_BUS.register(new ClientEvent());
         MinecraftForge.EVENT_BUS.register(new FovEvent());
+        MinecraftForge.EVENT_BUS.register(new TooltipEvents());
     }
+
+    private static void initShields() {
+        IItemPropertyGetter blockFn = (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+        for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS) ItemModelsProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+    }
+
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
