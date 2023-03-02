@@ -14,7 +14,7 @@
  */
 package org.infernalstudios.shieldexp;
 
-import org.infernalstudios.shieldexp.events.ClientEvent;
+import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
@@ -50,7 +50,7 @@ public class ShieldExpansion {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvent::setup);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
     }
 
     @SubscribeEvent
