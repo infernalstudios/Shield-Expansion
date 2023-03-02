@@ -24,10 +24,10 @@
       }
     ],
     "catalyst": {
-      "item": "shieldexpansion:diamond_shield"
+      "item": "shieldexp:diamond_shield"
     },
     "result": {
-      "item": "shieldexpansion:paragon_shield"
+      "item": "shieldexp:paragon_shield"
     },
     "enchantments": [
       {

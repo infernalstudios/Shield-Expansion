@@ -3,7 +3,7 @@ loaderVersion="[36,)"
 license="Apache-2.0"
 
 [[mods]]
-modId="shieldexpansion"
+modId="shieldexp"
 version="${file.jarVersion}"
 displayName="Shield Expansion"
 authors="Infernal Studios"

@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "shieldexpansion:diamond_shield"
+              "shieldexp:diamond_shield"
             ]
           }
         ]
@@ -20,16 +20,16 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "shieldexpansion.advancements.get_diamond_shield.description"
+      "translate": "shieldexp.advancements.get_diamond_shield.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "shieldexpansion:diamond_shield"
+      "item": "shieldexp:diamond_shield"
     },
     "show_toast": true,
     "title": {
-      "translate": "shieldexpansion.advancements.get_diamond_shield.title"
+      "translate": "shieldexp.advancements.get_diamond_shield.title"
     }
   },
   "requirements": [

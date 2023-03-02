@@ -1,8 +1,8 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexpansion:iron",
-		"particle": "shieldexpansion:iron"
+		"1": "shieldexp:iron",
+		"particle": "shieldexp:iron"
 	},
 	"elements": [
 		{
@@ -35,7 +35,7 @@
 			"predicate": {
 				"blocking": 1
 			},
-			"model": "shieldexpansion:item/iron_shield_blocking"
+			"model": "shieldexp:item/iron_shield_blocking"
 		}
 	],
 	"display": {

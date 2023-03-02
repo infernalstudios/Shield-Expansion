@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shieldexpansion:netherite_shield"
+        "recipe": "shieldexp:netherite_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "shieldexpansion:netherite_shield"
+      "shieldexp:netherite_shield"
     ]
   }
 }

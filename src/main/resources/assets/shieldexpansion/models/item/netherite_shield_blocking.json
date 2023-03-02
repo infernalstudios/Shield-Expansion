@@ -1,8 +1,8 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexpansion:netherite",
-		"particle": "shieldexpansion:netherite"
+		"1": "shieldexp:netherite",
+		"particle": "shieldexp:netherite"
 	},
 	"elements": [
 		{

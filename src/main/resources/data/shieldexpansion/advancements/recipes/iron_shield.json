@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shieldexpansion:iron_shield"
+        "recipe": "shieldexp:iron_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "shieldexpansion:iron_shield"
+      "shieldexp:iron_shield"
     ]
   }
 }

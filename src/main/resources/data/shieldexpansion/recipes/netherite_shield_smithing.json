@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "shieldexpansion:diamond_shield"
+    "item": "shieldexp:diamond_shield"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"
   },
   "result": {
-    "item": "shieldexpansion:netherite_shield"
+    "item": "shieldexp:netherite_shield"
   }
 }

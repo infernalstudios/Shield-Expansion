@@ -1,0 +1,47 @@
+name: Build JAR
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - 'main'
+    paths:
+      - 'build.gradle'
+  pull_request:
+    branches: 
+      - 'main'
+    paths:
+      - 'src/**'
+      - '*.gradle'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@master
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+          
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+
+      - name: Gradle Build
+        run: ./gradlew build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Generated JAR
+          path: build/libs/

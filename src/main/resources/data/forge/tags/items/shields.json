@@ -3,31 +3,31 @@
   "values": [
     "minecraft:shield",
     {
-      "id": "shieldexpansion:wooden_shield",
+      "id": "shieldexp:wooden_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:iron_shield",
+      "id": "shieldexp:iron_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:golden_shield",
+      "id": "shieldexp:golden_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:diamond_shield",
+      "id": "shieldexp:diamond_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:netherite_shield",
+      "id": "shieldexp:netherite_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:paragon_shield",
+      "id": "shieldexp:paragon_shield",
       "required": false
     },
     {
-      "id": "shieldexpansion:griefer_shield",
+      "id": "shieldexp:griefer_shield",
       "required": false
     },
     {

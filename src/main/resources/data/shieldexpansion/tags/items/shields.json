@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "shieldexpansion:wooden_shield",
-    "shieldexpansion:iron_shield",
-    "shieldexpansion:golden_shield",
-    "shieldexpansion:diamond_shield",
-    "shieldexpansion:netherite_shield"
+    "shieldexp:wooden_shield",
+    "shieldexp:iron_shield",
+    "shieldexp:golden_shield",
+    "shieldexp:diamond_shield",
+    "shieldexp:netherite_shield"
   ]
 }

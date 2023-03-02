@@ -1,8 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.teampotato.shieldexpansion.mixin",
-  "refmap": "shieldexpansion.refmap.json",
+  "package": "org.infernalstudios.shieldexp.mixin",
+  "refmap": "shieldexp.refmap.json",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "LivingEntityMixin",

@@ -3,19 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.teampotato.shieldexpansion.mixin;
+package org.infernalstudios.shieldexp.mixin;
 
 
-import com.teampotato.shieldexpansion.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,7 +55,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements LivingEn
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void shieldexpansion$defineSynchedData(CallbackInfo ci) {
+    private void shieldexp$defineSynchedData(CallbackInfo ci) {
         this.entityData.define(PARRY_COOLDOWN, 0);
         this.entityData.define(BLOCKED_COOLDOWN, 0);
         this.entityData.define(USED_STAMINA, 0);
@@ -64,7 +64,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements LivingEn
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void shieldexpansion$tick(CallbackInfo ci) {
+    private void shieldexp$tick(CallbackInfo ci) {
         if (!this.level.isClientSide) {
             if (this.getParryWindow() > 0) this.setParryWindow(this.getParryWindow() - 1);
             if (this.getBlockedCooldown() > 0) this.setBlockedCooldown(this.getBlockedCooldown() - 1);

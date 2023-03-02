@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shieldexpansion:wooden_shield"
+        "recipe": "shieldexp:wooden_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "shieldexpansion:wooden_shield"
+      "shieldexp:wooden_shield"
     ]
   }
 }

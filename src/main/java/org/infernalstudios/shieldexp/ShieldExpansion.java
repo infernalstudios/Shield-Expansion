@@ -3,23 +3,23 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.teampotato.shieldexpansion;
+package org.infernalstudios.shieldexp;
 
-import com.teampotato.shieldexpansion.events.ClientEvent;
-import com.teampotato.shieldexpansion.events.ShieldExpansionEvents;
-import com.teampotato.shieldexpansion.init.Config;
-import com.teampotato.shieldexpansion.init.ItemsInit;
-import com.teampotato.shieldexpansion.init.NetworkInit;
-import com.teampotato.shieldexpansion.init.ShieldDataLoader;
+import org.infernalstudios.shieldexp.events.ClientEvent;
+import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
+import org.infernalstudios.shieldexp.init.Config;
+import org.infernalstudios.shieldexp.init.ItemsInit;
+import org.infernalstudios.shieldexp.init.NetworkInit;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,7 +34,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ShieldExpansion.ID)
 public class ShieldExpansion {
-    public static final String ID = "shieldexpansion";
+    public static final String ID = "shieldexp";
 
     public ShieldExpansion() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
