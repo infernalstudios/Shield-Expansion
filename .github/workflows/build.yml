@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: 
-      - 'main'
+      - '1.16.5'
     paths:
       - 'build.gradle'
   pull_request:
