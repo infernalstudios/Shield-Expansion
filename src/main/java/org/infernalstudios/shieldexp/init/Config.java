@@ -125,6 +125,7 @@ public class Config {
 
     public static void extendList(String id) {
         List<String> newList = new java.util.ArrayList<>(SHIELD_LIST.get());
+        newList.addAll(SHIELD_LIST.get());
         if (!newList.contains(id)) newList.add(id);
         SHIELD_LIST.set(newList);
     }

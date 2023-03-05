@@ -58,31 +58,20 @@ public class ShieldExpansionEvents {
             LivingEntityAccess.get(player).setBlockedCooldown(10);
             LivingEntityAccess.get(player).setUsedStamina(0);
             AttributeModifier speedModifier = new AttributeModifier(player.getUUID() , "Blocking Speed", 4.0*getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
-            if (
-                    !Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).hasModifier(speedModifier) &&
-                    !Config.speedModifierDisabled()
-            ) Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).addTransientModifier(speedModifier);
-            if (!LivingEntityAccess.get(player).getBlocking()) LivingEntityAccess.get(player).setBlocking(true);
+            if (!Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).hasModifier(speedModifier) && !Config.speedModifierDisabled())
+                Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).addTransientModifier(speedModifier);
+            if (!LivingEntityAccess.get(player).getBlocking())
+                LivingEntityAccess.get(player).setBlocking(true);
         }
     }
 
     @SubscribeEvent
     public void onStopUsing(LivingEntityUseItemEvent event) {
         Item item = event.getItem().getItem();
-        if (
-                (
-                        event instanceof LivingEntityUseItemEvent.Stop ||
-                        event instanceof LivingEntityUseItemEvent.Finish
-                ) &&
-                event.getEntity() instanceof PlayerEntity player &&
-                Config.isShield(item)
-        ) {
+        if ((event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish) && event.getEntity() instanceof PlayerEntity player && Config.isShield(item)) {
             removeBlocking(player);
-            if (
-                    LivingEntityAccess.get(player).getBlockedCooldown() <= 0 &&
-                    !Config.stashingCooldownDisabled() &&
-                    !Config.cooldownDisabled()
-            ) player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
+            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
+                player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
         }
     }
 
@@ -92,11 +81,8 @@ public class ShieldExpansionEvents {
         Item item = event.getItem().getItem();
         if (event.getEntity() instanceof PlayerEntity player && Config.isShield(item) && LivingEntityAccess.get(player).getBlocking() && player.attackAnim > 0) {
             removeBlocking(player);
-            if (
-                    LivingEntityAccess.get(player).getBlockedCooldown() <= 0 &&
-                    !Config.stashingCooldownDisabled() &&
-                    !Config.cooldownDisabled()
-            ) player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
+            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
+                player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
             player.stopUsingItem();
         }
     }
@@ -111,22 +97,15 @@ public class ShieldExpansionEvents {
         if (!Config.isShield(item)) removeBlocking(player);
 
         //checks if the player is in the blocking state without holding a shield
-        if (
-                !(
-                        Config.isShield(player.getMainHandItem().getItem()) ||
-                        Config.isShield(player.getOffhandItem().getItem())
-                ) &&
-                LivingEntityAccess.get(player).getBlocking()
-        ) {
+        if (!(Config.isShield(player.getMainHandItem().getItem()) || Config.isShield(player.getOffhandItem().getItem())) && LivingEntityAccess.get(player).getBlocking()) {
             removeBlocking(player);
             player.stopUsingItem();
         }
 
         //checks if the player switches to a different item
-        if (
-                (lastShield != item && Config.isShield(lastShield) && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled()) &&
-                (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
-        ) player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
+        if (lastShield != item && Config.isShield(lastShield) && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
+                if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
+                    player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
         if (Config.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
         else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
     }
@@ -136,13 +115,14 @@ public class ShieldExpansionEvents {
     public void onLivingHurt(LivingAttackEvent event) {
         DamageSource source = event.getSource();
         Entity directEntity = source.getDirectEntity();
-        if (event.getEntity() instanceof PlayerEntity player && (source.getMsgId().equals("player") || source.getMsgId().equals("mob")) && validateBlocking(player)) {
+        if (event.getEntity() instanceof PlayerEntity player && validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
             Item item = player.getUseItem().getItem();
             player.level.playSound(player, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0F, 1.0F);
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
                 player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                 if (directEntity instanceof LivingEntity livingEntity) {
-                    if (Config.isShield(item) && getShieldValue(item, "parryDamage") != 0) livingEntity.hurt(DamageSource.sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
+                    if (Config.isShield(item) && getShieldValue(item, "parryDamage") != 0)
+                        livingEntity.hurt(DamageSource.sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
                     livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
                     livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
                 }
@@ -153,7 +133,6 @@ public class ShieldExpansionEvents {
                 else if (event.getAmount() > 0) stamina(player, item, 2);
             }
             event.setCanceled(true);
-
         }
     }
 
@@ -222,8 +201,7 @@ public class ShieldExpansionEvents {
                     } else if (event.getAmount() > 0) stamina(player, item, 3);
                 }
                 event.setCanceled(true);
-                if (Config.advancedExplosionsEnabled())
-                    player.hurt(new DamageSource("partialblast"), (float) (event.getAmount() / 2 * damageFactor));
+                if (Config.advancedExplosionsEnabled()) player.hurt(new DamageSource("partialblast"), (float) (event.getAmount() / 2 * damageFactor));
             }
         }
 
@@ -232,13 +210,17 @@ public class ShieldExpansionEvents {
     //removes the blocking state
     public void removeBlocking(PlayerEntity player) {
         Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).removeModifier(player.getUUID());
-        if (LivingEntityAccess.get(player).getBlocking()) LivingEntityAccess.get(player).setBlocking(false);
+        if (LivingEntityAccess.get(player).getBlocking())
+            LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryWindow(0);
     }
 
     //returns true if the player is allowed to block
     public boolean validateBlocking(PlayerEntity player) {
-        return Config.isShield(player.getUseItem().getItem()) && LivingEntityAccess.get(player).getBlocking() && player.attackAnim == 0 && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem());
+        return Config.isShield(player.getUseItem().getItem())
+                && LivingEntityAccess.get(player).getBlocking()
+                && player.attackAnim == 0
+                && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem());
     }
 
     //reads a shield attribute from the given shield's stats map, or the default map if no map is found

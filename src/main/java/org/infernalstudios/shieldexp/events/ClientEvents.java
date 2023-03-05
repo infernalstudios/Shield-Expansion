@@ -36,6 +36,8 @@ public class ClientEvents {
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new FovEvent());
         MinecraftForge.EVENT_BUS.register(new TooltipEvents());
+
+        initShields();
     }
 
     private static void initShields() {
@@ -47,10 +49,6 @@ public class ClientEvents {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         PlayerEntity player = Minecraft.getInstance().player;
-        if (
-                player != null &&
-                Minecraft.getInstance().options.keyAttack.isDown() &&
-                LivingEntityAccess.get(player).getBlocking()
-        ) player.stopUsingItem();
+        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
     }
 }
