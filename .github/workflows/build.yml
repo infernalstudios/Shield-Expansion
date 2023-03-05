@@ -9,7 +9,7 @@ on:
       - 'build.gradle'
   pull_request:
     branches: 
-      - 'main'
+      - '1.16.5'
     paths:
       - 'src/**'
       - '*.gradle'
