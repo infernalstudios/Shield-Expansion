@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "shieldexp:diamond_shield"
-            ]
+            "item": "shieldexp:diamond_shield"
           }
         ]
       },

@@ -1,15 +1,15 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "ggg",
-      "gsg",
-      "ggg"
+      "GGG",
+      "GSG",
+      "GGG"
     ],
     "key": {
-      "g": {
+      "G": {
         "item": "minecraft:gold_ingot"
       },
-      "s": {
+      "S": {
         "item": "minecraft:stick"
       }
     },
