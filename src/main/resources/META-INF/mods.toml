@@ -27,7 +27,7 @@ EB Mario - Concept Collaborator
     mandatory=true
     versionRange="[36,)"
     ordering="NONE"
-side="BOTH"
+    side="BOTH"
 [[dependencies.shieldexp]]
     modId="minecraft"
     mandatory=true
