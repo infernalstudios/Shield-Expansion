@@ -55,31 +55,60 @@ public class TooltipEvents {
             Double value = ShieldExpansionEvents.getShieldValue(item, attribute);
             String fullKey = "shieldexp.tooltip.attribute." + attribute.replaceAll("(?<!^)([A-Z])", "_$1").toLowerCase().trim();
 
-            if (attribute.equals("speedFactor"))
-                event.getToolTip().add(new TranslationTextComponent(value < 0.6 ? fullKey + "_slow" : fullKey + "_fast").withStyle(TextFormatting.DARK_GREEN));
-            else {
-                if ((attribute.equals("parryTicks") && Config.lenientParryEnabled()) || (attribute.equals("stamina") && Config.lenientStaminaEnabled())) value = value * 2;
-                event.getToolTip().add(new TranslationTextComponent(fullKey, switch (attribute) {
-                    case "cooldownTicks", "parryTicks" -> String.valueOf(value / 20);
-                    case "stamina" -> String.valueOf(value.intValue());
-                    case "parryDamage", "flatDamage" -> ShieldExpansionEvents.getShieldValue(item, "flatDamage").intValue() + " + " + (value * 100) + "%";
-                    case "blastResistance" -> value * 100 + "%";
-                    default -> "";
-                }).withStyle(TextFormatting.DARK_GREEN));
+            if (attribute.equals("speedFactor")) {
+                String key = value < 0.6 ? fullKey + "_slow" : fullKey + "_fast";
+                TranslationTextComponent component = (TranslationTextComponent) new TranslationTextComponent(key).withStyle(TextFormatting.DARK_GREEN);
+                event.getToolTip().add(component);
+            } else {
+                if ((attribute.equals("parryTicks") && Config.lenientParryEnabled()) || (attribute.equals("stamina") && Config.lenientStaminaEnabled())) {
+                    value = value * 2;
+                }
+
+                String text;
+                switch (attribute) {
+                    case "cooldownTicks":
+                    case "parryTicks":
+                        text = String.valueOf(value / 20);
+                        break;
+                    case "stamina":
+                        text = String.valueOf(value.intValue());
+                        break;
+                    case "parryDamage":
+                    case "flatDamage":
+                        text = ShieldExpansionEvents.getShieldValue(item, "flatDamage").intValue() + " + " + (value * 100) + "%";
+                        break;
+                    case "blastResistance":
+                        text = value * 100 + "%";
+                        break;
+                    default:
+                        text = "";
+                }
+
+                TranslationTextComponent component = (TranslationTextComponent) new TranslationTextComponent(fullKey, text).withStyle(TextFormatting.DARK_GREEN);
+                event.getToolTip().add(component);
             }
         }
     }
 
     //checks whether the values are 0 or currently disabled
-    private Boolean validate(Item item, String attribute) {
-        if (Config.isShield(item))
-            return switch (attribute) {
-                case "cooldownTicks", "stamina" -> !Config.cooldownDisabled() && ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
-                case "blastResistance" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
-                case "parryDamage" -> ShieldExpansionEvents.getShieldValue(item, attribute) != 0 && ShieldExpansionEvents.getShieldValue(item, "flatDamage") != 0;
-                case "speedFactor" -> !Config.speedModifierDisabled();
-                default -> true;};
-        else return false;
+    private boolean validate(Item item, String attribute) {
+        if (Config.isShield(item)) {
+            switch (attribute) {
+                case "cooldownTicks":
+                case "stamina":
+                    return !Config.cooldownDisabled() && ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
+                case "blastResistance":
+                    return ShieldExpansionEvents.getShieldValue(item, attribute) != 0;
+                case "parryDamage":
+                    return ShieldExpansionEvents.getShieldValue(item, attribute) != 0 && ShieldExpansionEvents.getShieldValue(item, "flatDamage") != 0;
+                case "speedFactor":
+                    return !Config.speedModifierDisabled();
+                default:
+                    return true;
+            }
+        } else {
+            return false;
+        }
     }
 }
 

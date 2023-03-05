@@ -24,11 +24,10 @@ version = config.VERSION
 group = "${config.GROUP}.${config.ARTIFACT}"
 archivesBaseName = "${config.ARCHIVES_BASE_NAME}-${config.MINECRAFT_VERSION}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
   mappings channel: config.MAPPINGS_CHANNEL, version: config.MAPPINGS_VERSION
-
   runs {
     client {
       workingDirectory project.file('run')
