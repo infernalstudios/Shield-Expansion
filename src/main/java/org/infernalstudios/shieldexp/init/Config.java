@@ -118,9 +118,8 @@ public class Config {
 
     public static Boolean isShield(Item item) {
         String itemID = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).toString();
-        for (String s : SHIELD_BLACKLIST.get()) if (s.equals(itemID)) return false;
-        for (String s : SHIELD_LIST.get()) if (s.equals(itemID)) return true;
-        return false;
+        if (SHIELD_BLACKLIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID))) return false;
+        return SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID));
     }
 
     public static void extendList(String id) {
