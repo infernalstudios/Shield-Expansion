@@ -28,6 +28,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
   mappings channel: config.MAPPINGS_CHANNEL, version: config.MAPPINGS_VERSION
+
   runs {
     client {
       workingDirectory project.file('run')
