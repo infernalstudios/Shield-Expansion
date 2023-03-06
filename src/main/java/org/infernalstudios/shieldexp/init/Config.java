@@ -124,7 +124,6 @@ public class Config {
     public static void extendList(String id) {
         if (SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, id))) return;
         List<String> newList = new java.util.ArrayList<>(SHIELD_LIST.get());
-        newList.addAll(SHIELD_LIST.get());
         if (!newList.contains(id)) newList.add(id);
         SHIELD_LIST.set(newList.stream().distinct().collect(Collectors.toList()));
     }
