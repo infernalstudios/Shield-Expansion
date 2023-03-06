@@ -95,7 +95,7 @@ public class ShieldDataLoader extends JsonReloadListener {
             SHIELD_STATS.remove(key);
             SHIELD_STATS.put(key, stats);
 
-            if (!key.equals(ShieldExpansion.ID + ":default") && !Config.SHIELD_LIST.get().contains(key)) Config.extendList(key);
+            if (!key.equals(ShieldExpansion.ID + ":default")) Config.extendList(key);
         }
     }
 

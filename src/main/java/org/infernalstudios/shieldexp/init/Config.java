@@ -18,10 +18,9 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Config {
     public static ForgeConfigSpec CONFIG;
@@ -118,15 +117,16 @@ public class Config {
 
     public static Boolean isShield(Item item) {
         String itemID = Objects.requireNonNull(item.getRegistryName()).toString();
-        if (SHIELD_BLACKLIST.get().contains(itemID)) return false;
-        return SHIELD_LIST.get().contains(itemID);
+        if (SHIELD_BLACKLIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID))) return false;
+        return SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID));
     }
 
     public static void extendList(String id) {
+        if (SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, id))) return;
         List<String> newList = new java.util.ArrayList<>(SHIELD_LIST.get());
         newList.addAll(SHIELD_LIST.get());
         if (!newList.contains(id)) newList.add(id);
-        SHIELD_LIST.set(newList);
+        SHIELD_LIST.set(newList.stream().distinct().collect(Collectors.toList()));
     }
 
     public static Boolean stashingCooldownDisabled() { return STASHING_COOLDOWN.get(); }
