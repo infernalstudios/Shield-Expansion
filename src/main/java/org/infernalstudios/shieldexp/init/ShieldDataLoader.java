@@ -75,7 +75,6 @@ public class ShieldDataLoader extends JsonReloadListener {
 
         if (!player.level.isClientSide()){
             NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new ClearShields());
-
             for (Map.Entry<ResourceLocation, JsonElement> file : toSync){
                 NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new SyncShields(file.getKey(), file.getValue()));
             }
@@ -96,8 +95,7 @@ public class ShieldDataLoader extends JsonReloadListener {
             SHIELD_STATS.remove(key);
             SHIELD_STATS.put(key, stats);
 
-            if (!key.equals(ShieldExpansion.ID + ":default"))
-                Config.extendList(key);
+            if (!key.equals(ShieldExpansion.ID + ":default") && !Config.SHIELD_LIST.get().contains(key)) Config.extendList(key);
         }
     }
 
