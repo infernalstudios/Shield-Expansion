@@ -19,9 +19,9 @@ import net.minecraft.item.ItemStack;
 
 public interface LivingEntityAccess {
 
-    int getParryWindow();
+    int getParryCooldown();
 
-    void setParryWindow(int parry);
+    void setParryCooldown(int parry);
 
     int getBlockedCooldown();
 

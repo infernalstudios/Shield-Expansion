@@ -56,7 +56,7 @@ public class ShieldExpansionEvents {
             if (player.attackAnim == 0 && !player.getCooldowns().isOnCooldown(item)) {
                 int parryTicks = getShieldValue(item, "parryTicks").intValue();
                 if (Config.lenientParryEnabled()) parryTicks = parryTicks * 2;
-                LivingEntityAccess.get(player).setParryWindow(parryTicks);
+                LivingEntityAccess.get(player).setParryCooldown(parryTicks);
                 LivingEntityAccess.get(player).setBlockedCooldown(10);
                 LivingEntityAccess.get(player).setUsedStamina(0);
                 AttributeModifier speedModifier = new AttributeModifier(player.getUUID(), "Blocking Speed", 4.0 * getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -129,7 +129,7 @@ public class ShieldExpansionEvents {
             if (validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
                 Item item = player.getUseItem().getItem();
                 player.level.playSound(player, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0F, 1.0F);
-                if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     if (directEntity instanceof LivingEntity) {
                         LivingEntity livingEntity = (LivingEntity) directEntity;
@@ -161,7 +161,7 @@ public class ShieldExpansionEvents {
                 if (!validateBlocking(player)) return;
                 Item item = player.getUseItem().getItem();
                 player.level.playSound(null, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0f, 1.0f);
-                if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
                     damageItem(player, 1);
@@ -185,7 +185,7 @@ public class ShieldExpansionEvents {
                 double damageFactor = (1.00 - getShieldValue(item, "blastResistance"));
                 double usedDurability = event.getAmount() * damageFactor;
                 player.level.playSound(null, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0f, 1.0f);
-                if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     damageItem(player, (int) usedDurability);
                     if (!Config.cooldownDisabled()) {
@@ -234,7 +234,7 @@ public class ShieldExpansionEvents {
         Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).removeModifier(player.getUUID());
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
-        LivingEntityAccess.get(player).setParryWindow(0);
+        LivingEntityAccess.get(player).setParryCooldown(0);
     }
 
     //returns true if the player is allowed to block
