@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = ShieldExpansion.ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ShieldDataLoader extends JsonReloadListener {
     public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     public static Map<ResourceLocation, JsonElement> FILE_MAP = new HashMap<>();
@@ -51,7 +51,7 @@ public class ShieldDataLoader extends JsonReloadListener {
     }
 
     @SubscribeEvent
-    void register(AddReloadListenerEvent event) {
+    public void register(AddReloadListenerEvent event) {
         event.addListener(new ShieldDataLoader());
     }
 
@@ -60,7 +60,7 @@ public class ShieldDataLoader extends JsonReloadListener {
         FILE_MAP = files;
 
         for (ResourceLocation name : FILE_MAP.keySet()) {
-            if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(ShieldExpansion.ID + ":default")) {
+            if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(ShieldExpansion.MOD_ID + ":default")) {
                 JsonElement data = files.get(name);
 
                 parse(name, data.getAsJsonObject());
@@ -83,7 +83,7 @@ public class ShieldDataLoader extends JsonReloadListener {
 
     public static void parse(ResourceLocation name, JsonObject data) {
         String key = name.toString();
-        if (ForgeRegistries.ITEMS.containsKey(name) || key.equals(ShieldExpansion.ID + ":default")) {
+        if (ForgeRegistries.ITEMS.containsKey(name) || key.equals(ShieldExpansion.MOD_ID + ":default")) {
             Map<String, Double> stats = new HashMap<>();
             stats.put("cooldownTicks", data.getAsJsonObject().get("cooldownTicks").getAsDouble());
             stats.put("speedFactor", data.getAsJsonObject().get("speedFactor").getAsDouble());
@@ -95,7 +95,7 @@ public class ShieldDataLoader extends JsonReloadListener {
             SHIELD_STATS.remove(key);
             SHIELD_STATS.put(key, stats);
 
-            if (!key.equals(ShieldExpansion.ID + ":default")) Config.extendList(key);
+            if (!key.equals(ShieldExpansion.MOD_ID + ":default")) Config.extendList(key);
         }
     }
 

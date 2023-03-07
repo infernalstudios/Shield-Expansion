@@ -26,9 +26,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemsInit {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ShieldExpansion.ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ShieldExpansion.MOD_ID);
     public static final List<RegistryObject<ShieldItem>> SHIELDS = new ArrayList<>();
 
     public static final RegistryObject<ShieldItem> WOODEN_SHIELD = registerShield("wooden_shield", 55);

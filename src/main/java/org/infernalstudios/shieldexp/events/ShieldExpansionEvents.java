@@ -14,7 +14,6 @@
  */
 package org.infernalstudios.shieldexp.events;
 
-import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.Config;
 import net.minecraft.entity.Entity;
@@ -37,7 +36,6 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
@@ -45,7 +43,6 @@ import java.util.Objects;
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 
-@Mod.EventBusSubscriber(modid = ShieldExpansion.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShieldExpansionEvents {
 
     @SubscribeEvent

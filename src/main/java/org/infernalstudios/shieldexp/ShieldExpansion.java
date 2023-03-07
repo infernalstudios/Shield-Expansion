@@ -32,9 +32,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(ShieldExpansion.ID)
+@Mod(ShieldExpansion.MOD_ID)
 public class ShieldExpansion {
-    public static final String ID = "shieldexp";
+    public static final String MOD_ID = "shieldexp";
 
     public ShieldExpansion() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -45,6 +45,7 @@ public class ShieldExpansion {
         modBus.addListener(this::clientSetup);
         modBus.addListener(this::commonSetup);
 
+        MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
         MinecraftForge.EVENT_BUS.register(new ShieldDataLoader());
     }
@@ -53,7 +54,6 @@ public class ShieldExpansion {
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
     }
 
-    @SubscribeEvent
     public void commonSetup(final FMLCommonSetupEvent event){
         NetworkInit.registerPackets();
     }

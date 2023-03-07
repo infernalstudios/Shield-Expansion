@@ -30,7 +30,7 @@ public class NetworkInit {
     }
 
     public static void registerPackets() {
-        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(ShieldExpansion.ID, "packets"), () -> "1.0", s -> true, s -> true);
+        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(ShieldExpansion.MOD_ID, "packets"), () -> "1.0", s -> true, s -> true);
 
         INSTANCE.registerMessage(nextID(), SyncShields.class, SyncShields::encode, SyncShields::new, SyncShields::handle);
         INSTANCE.registerMessage(nextID(), ClearShields.class, ClearShields::encode, ClearShields::new, ClearShields::handle);
