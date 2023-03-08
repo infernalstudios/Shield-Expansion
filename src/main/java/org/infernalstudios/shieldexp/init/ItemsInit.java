@@ -14,14 +14,13 @@
  */
 package org.infernalstudios.shieldexp.init;
 
-import org.infernalstudios.shieldexp.ShieldExpansion;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ShieldItem;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.infernalstudios.shieldexp.ShieldExpansion;
 
 import java.util.ArrayList;
 import java.util.List;

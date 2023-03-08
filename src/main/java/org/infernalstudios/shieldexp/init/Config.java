@@ -16,9 +16,10 @@ package org.infernalstudios.shieldexp.init;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 

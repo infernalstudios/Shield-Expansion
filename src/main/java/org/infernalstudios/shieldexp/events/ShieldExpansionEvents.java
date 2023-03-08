@@ -14,8 +14,6 @@
  */
 package org.infernalstudios.shieldexp.events;
 
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
-import org.infernalstudios.shieldexp.init.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -37,11 +35,12 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.init.Config;
 
 import java.util.Objects;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
-
 
 public class ShieldExpansionEvents {
 

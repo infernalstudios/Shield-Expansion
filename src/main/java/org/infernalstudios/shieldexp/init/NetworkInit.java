@@ -14,12 +14,12 @@
  */
 package org.infernalstudios.shieldexp.init;
 
-import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.network.ClearShields;
-import org.infernalstudios.shieldexp.network.SyncShields;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import org.infernalstudios.shieldexp.ShieldExpansion;
+import org.infernalstudios.shieldexp.network.ClearShields;
+import org.infernalstudios.shieldexp.network.SyncShields;
 
 public class NetworkInit {
     public static SimpleChannel INSTANCE;

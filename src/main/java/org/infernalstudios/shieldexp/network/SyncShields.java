@@ -15,7 +15,6 @@
 package org.infernalstudios.shieldexp.network;
 
 import com.google.gson.JsonElement;
-import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -24,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 import java.util.function.Supplier;
 

@@ -14,36 +14,29 @@
  */
 package org.infernalstudios.shieldexp.events;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ShieldItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import org.infernalstudios.shieldexp.ShieldExpansion;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 
 public class ClientEvents {
-    public static void setup() {
-        initShields();
-    }
 
-    private static void initShields() {
+    public static void initShields() {
         IItemPropertyGetter blockFn = (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
         for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS) ItemModelsProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
     }
