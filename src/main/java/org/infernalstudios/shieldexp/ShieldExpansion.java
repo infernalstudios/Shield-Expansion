@@ -19,17 +19,12 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.init.NetworkInit;
 import org.infernalstudios.shieldexp.init.ShieldDataLoader;
-
-import static org.infernalstudios.shieldexp.events.ClientEvents.initShields;
 
 @Mod(ShieldExpansion.MOD_ID)
 public class ShieldExpansion {

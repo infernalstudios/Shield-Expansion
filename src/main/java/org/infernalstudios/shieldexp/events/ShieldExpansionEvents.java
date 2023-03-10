@@ -45,7 +45,7 @@ import java.util.Objects;
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 public class ShieldExpansionEvents {
-    
+
     @SubscribeEvent
     public void commonSetup(final FMLCommonSetupEvent event){
         NetworkInit.registerPackets();
