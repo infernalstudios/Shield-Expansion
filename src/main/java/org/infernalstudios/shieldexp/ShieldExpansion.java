@@ -41,19 +41,8 @@ public class ShieldExpansion {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
 
-        modBus.addListener(this::clientSetup);
-        modBus.addListener(this::commonSetup);
-
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
         MinecraftForge.EVENT_BUS.register(new ShieldDataLoader());
-    }
-
-    private void clientSetup(final FMLClientSetupEvent event) {
-        initShields();
-    }
-
-    public void commonSetup(final FMLCommonSetupEvent event){
-        NetworkInit.registerPackets();
     }
 }

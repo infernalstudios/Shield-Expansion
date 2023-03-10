@@ -30,11 +30,16 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 
 public class ClientEvents {
+    @SubscribeEvent
+    private void clientSetup(final FMLClientSetupEvent event) {
+        initShields();
+    }
 
     public static void initShields() {
         IItemPropertyGetter blockFn = (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;

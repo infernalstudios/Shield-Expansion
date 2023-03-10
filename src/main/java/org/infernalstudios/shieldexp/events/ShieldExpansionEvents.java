@@ -34,15 +34,22 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.Config;
+import org.infernalstudios.shieldexp.init.NetworkInit;
 
 import java.util.Objects;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 public class ShieldExpansionEvents {
+    
+    @SubscribeEvent
+    public void commonSetup(final FMLCommonSetupEvent event){
+        NetworkInit.registerPackets();
+    }
 
     @SubscribeEvent
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
