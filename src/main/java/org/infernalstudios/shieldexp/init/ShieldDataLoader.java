@@ -34,6 +34,7 @@ import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.network.ClearShields;
 import org.infernalstudios.shieldexp.network.SyncShields;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +57,7 @@ public class ShieldDataLoader extends JsonReloadListener {
     }
 
     @Override
-    public void apply(Map<ResourceLocation, JsonElement> files, IResourceManager resourceManager, IProfiler profiler) {
+    public void apply(@Nonnull Map<ResourceLocation, JsonElement> files, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler) {
         FILE_MAP = files;
 
         for (ResourceLocation name : FILE_MAP.keySet()) {
