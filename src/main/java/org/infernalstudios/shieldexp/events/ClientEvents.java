@@ -37,7 +37,7 @@ import org.infernalstudios.shieldexp.init.ItemsInit;
 
 public class ClientEvents {
     @SubscribeEvent
-    private void clientSetup(final FMLClientSetupEvent event) {
+    public void clientSetup(final FMLClientSetupEvent event) {
         initShields();
     }
 
