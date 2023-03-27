@@ -1,0 +1,29 @@
+{
+  "shieldexp.tooltip.instructions": "Houd Shift ingedrukt voor Instructies",
+  "shieldexp.tooltip.instructions.parry": "Hef je schild net voordat je geraakt wordt om een aanval te pareren!",
+
+  "shieldexp.tooltip.attribute": "Als Shield:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Cooldown",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Langzame Beweging",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Snelle Beweging",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Pareerschade",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Pareerduur",
+  "shieldexp.tooltip.attribute.stamina": " %s Uithoudingsvermogen",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Explosieweerstand",
+
+  "item.shieldexp.wooden_shield": "Houten Schild",
+  "item.shieldexp.golden_shield": "Gouden Schild",
+  "item.shieldexp.iron_shield": "IJzeren Schild",
+  "item.shieldexp.diamond_shield": "Diamanten Schild",
+  "item.shieldexp.netherite_shield": "Netherieten Schild",
+  "item.shieldexp.paragon_shield": "Paragonschild",
+  "item.shieldexp.griefer_shield": "Grieferschild",
+
+  "death.attack.partialblast": "%1$s ontplofte omdat hun schild de explosie niet tegen kon houden",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Diamant is Onbreekbaar",
+  "shieldexp.advancements.get_diamond_shield.description": "Maak een Diamanten Schild",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Onbeweegbaar Object",
+  "shieldexp.advancements.get_netherite_shield.description": "Maak een Netherieten Schild"
+}

@@ -2,12 +2,24 @@
   "shieldexp.tooltip.instructions": "Удерживайте Shift для информации",
   "shieldexp.tooltip.instructions.parry": "Поднимите щит прямо перед ударом, чтобы парировать атаку!",
 
+  "shieldexp.tooltip.attribute": "Используя как Щит:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %sсек Откат",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Медлительность",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Манёвренность",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Урон парирования",
+  "shieldexp.tooltip.attribute.parry_ticks": " %sсек Окно парирования",
+  "shieldexp.tooltip.attribute.stamina": " %s Выносливость",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Взрывоустойчивость",
+
   "item.shieldexp.wooden_shield": "Деревянный щит",
   "item.shieldexp.golden_shield": "Золотой щит",
   "item.shieldexp.iron_shield": "Железный щит",
   "item.shieldexp.diamond_shield": "Алмазный щит",
   "item.shieldexp.netherite_shield": "Незеритовый щит",
   "item.shieldexp.paragon_shield": "Совершенный щит",
+  "item.shieldexp.griefer_shield": "Гриферский щит",
+
+  "death.attack.partialblast": "%1$s взорвался, потому что его щит не выдержал взрыва",
 
   "shieldexp.advancements.get_diamond_shield.title": "Нерушимый алмаз",
   "shieldexp.advancements.get_diamond_shield.description": "Создайте алмазный щит",
