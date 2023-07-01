@@ -52,7 +52,7 @@ public class ShieldDataLoader extends JsonReloadListener {
     }
 
     @SubscribeEvent
-    void register(AddReloadListenerEvent event) {
+    public void register(AddReloadListenerEvent event) {
         event.addListener(new ShieldDataLoader());
     }
 

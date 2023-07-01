@@ -1,188 +1,101 @@
 buildscript {
-  repositories {
-    maven { url = 'https://maven.minecraftforge.net' }
-    maven { url = 'https://plugins.gradle.org/m2/' }
-    mavenCentral()
-  }
-
-  dependencies {
-    classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-    classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
-    classpath group: 'gradle.plugin.com.matthewprenger',  name: 'CurseGradle', version: '1.4.0'
-    classpath group: 'org.spongepowered',  name: 'mixingradle', version: '0.7+'
-  }
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered',  name: 'mixingradle', version: '0.7+'
+    }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.matthewprenger.cursegradle'
 
-ext.config = parseConfig(file('build.properties'))
-
-version = config.VERSION
-group = "${config.GROUP}.${config.ARTIFACT}"
-archivesBaseName = "${config.ARCHIVES_BASE_NAME}-${config.MINECRAFT_VERSION}"
+version = '1.16.5-1.1.6'
+group = 'org.infernalstudios.shieldexp'
+archivesBaseName = 'shieldexp'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-  mappings channel: config.MAPPINGS_CHANNEL, version: config.MAPPINGS_VERSION
+    mappings channel: 'official', version: '1.16.5'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
 
-  runs {
-    client {
-      workingDirectory project.file('run')
-//    property 'forge.logging.markers', 'REGISTRIES'
-      property 'forge.logging.console.level', 'debug'
-      mods {
-        shieldexp {
-          source sourceSets.main
+            mods {
+                shieldexp {
+                    source sourceSets.main
+                }
+            }
         }
-      }
-    }
 
-    server {
-      workingDirectory project.file('run')
-//    property 'forge.logging.markers', 'REGISTRIES'
-      property 'forge.logging.console.level', 'debug'
-      mods {
-        shieldexp {
-          source sourceSets.main
-        }
-      }
-    }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
 
-    data {
-      workingDirectory project.file('run')
-//    property 'forge.logging.markers', 'REGISTRIES'
-      property 'forge.logging.console.level', 'debug'
-      args '--mod', config.MOD_ID, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-      mods {
-        shieldexp {
-          source sourceSets.main
+            mods {
+                shieldexp {
+                    source sourceSets.main
+                }
+            }
         }
-      }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
+            args '--mod', 'shieldexp', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                shieldexp {
+                    source sourceSets.main
+                }
+            }
+        }
     }
-  }
 }
 
-repositories {
-
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-  minecraft "net.minecraftforge:forge:${config.MINECRAFT_VERSION}-${config.FORGE_VERSION}"
-  annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-}
-
-jar {
-  manifest {
-    attributes([
-      'Specification-Title'   : config.TITLE,
-      'Specification-Vendor'  : config.AUTHOR,
-      'Specification-Version' : '1',
-      'Implementation-Title'  : config.TITLE,
-      'Implementation-Version': config.VERSION,
-      'Implementation-Vendor' : config.AUTHOR
-    ])
-  }
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 mixin {
-  add sourceSets.main, 'shieldexp.refmap.json'
-  config 'shieldexp.mixins.json'
+    add sourceSets.main, "shieldexp.refmap.json"
+    config "shieldexp.mixins.json"
 }
 
-jar.finalizedBy('reobfJar')
+jar {
+    manifest {
+        attributes([
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"teampotato",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "shieldexp.mixins.json"
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar') 
 
 publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      groupId = config.GROUP
-      artifactId = config.ARTIFACT
-      artifact jar
-
-      pom {
-        name = config.NAME
-        url = config.URL
-        licenses {
-          license {
-            name = config.LICENSE_NAME
-            url = config.LICENSE_URL
-          }
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
         }
-        scm {
-          connection = config.SCM_CONNECTION
-          url = config.SCM_URL
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
         }
-      }
     }
-  }
-
-  repositories {
-    maven {
-      url config.MAVEN_URL
-
-      
-      credentials {
-        username = System.getenv('MAVEN_USER')
-        password = System.getenv('MAVEN_TOKEN')
-      }
-      
-      authentication {
-        basic(BasicAuthentication)
-      }
-    }
-  }
-}
-
-task publishModrinth() {
-  println('Modrinth publishing is not setup yet!')
-}
-
-tasks.curseforge.configure {
-  actions.clear()
-  doLast {
-    println('Modrinth publishing is not setup yet!')
-  }
-}
-
-// // Modrinth publishing
-// import com.modrinth.minotaur.TaskModrinthUpload
-
-// task publishModrinth (type: TaskModrinthUpload) {
-//   onlyIf {
-//     System.getenv('MODRINTH')
-//   }
-
-//   token = System.getenv('MODRINTH')
-//   projectId = config.MODRINTH_ID
-//   versionNumber = project.version
-//   uploadFile = jar
-//   addGameVersion(config.MINECRAFT_VERSION)
-//   addLoader('forge')
-// }
-
-// // Curseforge publishing
-// curseforge {
-//   apiKey = System.getenv('CURSEFORGE') ?: 'If you\'re seeing this, you haven\'t set your "CURSEFORGE" environment variable'
-  
-//   project {
-//     id = config.CURSEFORGE_ID
-//     changelog = 'No changelog specified.'
-//     releaseType = 'release'
-//     addGameVersion config.MINECRAFT_VERSION
-//     mainArtifact (jar) { 
-//       displayName = "${project.version}"
-//     }
-//   }
-// }
-
-// Config parse function
-def parseConfig(File config) {
-  config.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    return new ConfigSlurper().parse(prop)
-  }
 }

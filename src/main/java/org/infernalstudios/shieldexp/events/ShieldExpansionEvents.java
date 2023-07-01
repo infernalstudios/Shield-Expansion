@@ -18,15 +18,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.TickEvent;
@@ -40,12 +38,9 @@ import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.Config;
 
-import java.util.Objects;
-
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShieldExpansionEvents {
-
 
     @SubscribeEvent
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
@@ -59,8 +54,9 @@ public class ShieldExpansionEvents {
                 LivingEntityAccess.get(player).setBlockedCooldown(10);
                 LivingEntityAccess.get(player).setUsedStamina(0);
                 AttributeModifier speedModifier = new AttributeModifier(player.getUUID(), "Blocking Speed", 4.0 * getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
-                if (!Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).hasModifier(speedModifier) && !Config.speedModifierDisabled())
-                    Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).addTransientModifier(speedModifier);
+                ModifiableAttributeInstance movementSpeedInstance = player.getAttribute(Attributes.MOVEMENT_SPEED);
+                if (movementSpeedInstance != null && !movementSpeedInstance.hasModifier(speedModifier) && !Config.speedModifierDisabled())
+                    movementSpeedInstance.addTransientModifier(speedModifier);
                 if (!LivingEntityAccess.get(player).getBlocking())
                     LivingEntityAccess.get(player).setBlocking(true);
             }
@@ -230,7 +226,9 @@ public class ShieldExpansionEvents {
 
     //removes the blocking state
     public void removeBlocking(PlayerEntity player) {
-        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).removeModifier(player.getUUID());
+        ModifiableAttributeInstance movementSpeedInstance = player.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (movementSpeedInstance == null) return;
+        movementSpeedInstance.removeModifier(player.getUUID());
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryCooldown(0);
@@ -246,7 +244,9 @@ public class ShieldExpansionEvents {
 
     //reads a shield attribute from the given shield's stats map, or the default map if no map is found
     public static Double getShieldValue(Item item, String value) {
-        String key = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).toString();
+        ResourceLocation itemID = ForgeRegistries.ITEMS.getKey(item);
+        if (itemID == null) return SHIELD_STATS.get("shieldexp:default").get(value);
+        String key = itemID.toString();
         return SHIELD_STATS.containsKey(key) ? SHIELD_STATS.get(key).get(value) : SHIELD_STATS.get("shieldexp:default").get(value);
     }
 
@@ -266,8 +266,8 @@ public class ShieldExpansionEvents {
 
     //reduces durability of the given player's used shield, and removes the blocking state if it breaks
     public void damageItem(PlayerEntity player, int amount) {
-        player.getUseItem().hurtAndBreak(amount, player, (player1) -> {
-            player1.broadcastBreakEvent(player.getUsedItemHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
+        player.getUseItem().hurtAndBreak(amount, player, (playerEntity) -> {
+            playerEntity.broadcastBreakEvent(player.getUsedItemHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
             removeBlocking(player);
             player.stopUsingItem();
         });

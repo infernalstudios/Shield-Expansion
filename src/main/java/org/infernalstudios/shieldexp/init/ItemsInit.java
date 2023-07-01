@@ -25,6 +25,7 @@ import org.infernalstudios.shieldexp.ShieldExpansion;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class ItemsInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ShieldExpansion.MOD_ID);
     public static final List<RegistryObject<ShieldItem>> SHIELDS = new ArrayList<>();

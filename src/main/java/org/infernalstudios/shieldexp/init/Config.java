@@ -19,7 +19,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -117,13 +116,14 @@ public class Config {
     }
 
     public static Boolean isShield(Item item) {
-        String itemID = Objects.requireNonNull(item.getRegistryName()).toString();
-        if (SHIELD_BLACKLIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID))) return false;
-        return SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, itemID));
+        if (item.getRegistryName() == null) return false;
+        String itemID = item.getRegistryName().toString();
+        if (SHIELD_BLACKLIST.get().contains(itemID)) return false;
+        return SHIELD_LIST.get().contains(itemID);
     }
 
     public static void extendList(String id) {
-        if (SHIELD_LIST.get().stream().anyMatch(entry -> Objects.equals(entry, id))) return;
+        if (SHIELD_LIST.get().contains(id)) return;
         List<String> newList = new java.util.ArrayList<>(SHIELD_LIST.get());
         if (!newList.contains(id)) newList.add(id);
         SHIELD_LIST.set(newList.stream().distinct().collect(Collectors.toList()));

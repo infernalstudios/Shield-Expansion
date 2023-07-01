@@ -16,12 +16,10 @@ package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -32,17 +30,14 @@ import org.infernalstudios.shieldexp.init.ItemsInit;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
-
-    public static void setup() {
-        MinecraftForge.EVENT_BUS.register(new ClientEvents());
-        MinecraftForge.EVENT_BUS.register(new FovEvent());
-        MinecraftForge.EVENT_BUS.register(new TooltipEvents());
-        initShields();
-    }
-
-    private static void initShields() {
-        IItemPropertyGetter blockFn = (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-        for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS) ItemModelsProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+    public static void initShields() {
+        for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS) {
+            ItemModelsProperties.register(
+                    shieldItem.get(),
+                    new ResourceLocation("minecraft:blocking"),
+                    (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F
+            );
+        }
     }
 
 
@@ -51,5 +46,4 @@ public class ClientEvents {
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
     }
-
 }

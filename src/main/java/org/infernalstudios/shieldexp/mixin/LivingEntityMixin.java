@@ -40,5 +40,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "isBlocking", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     private void shieldexp$isBlocking(CallbackInfoReturnable<Boolean> ci) {
         ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem) - this.useItemRemaining >= 0);
+        ci.cancel();
     }
 }

@@ -14,11 +14,7 @@
  */
 package org.infernalstudios.shieldexp;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -26,31 +22,23 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.ClientEvents;
-import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 import org.infernalstudios.shieldexp.init.NetworkInit;
-import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 @Mod(ShieldExpansion.MOD_ID)
+@Mod.EventBusSubscriber
 public class ShieldExpansion {
     public static final String MOD_ID = "shieldexp";
 
     public ShieldExpansion() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ItemsInit.ITEMS.register(modBus);
-
+        ItemsInit.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
-
-        modBus.addListener(this::clientSetup);
-        modBus.addListener(this::commonSetup);
-
-        MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
-        MinecraftForge.EVENT_BUS.register(new ShieldDataLoader());
     }
 
+    @SubscribeEvent
     private void clientSetup(final FMLClientSetupEvent event) {
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
+        ClientEvents.initShields();
     }
 
     @SubscribeEvent
