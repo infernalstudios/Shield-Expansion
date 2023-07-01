@@ -12,12 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.infernalstudios.shieldexp.access;
+package org.infernalstudios.shieldexp.api;
 
 
 import net.minecraft.item.ItemStack;
 
-public interface LivingEntityAccess {
+public interface ExtendedPlayerEntity {
 
     int getParryCooldown();
 
@@ -39,8 +39,8 @@ public interface LivingEntityAccess {
 
     void setLastShield(ItemStack shield);
 
-    static LivingEntityAccess get(Object object) {
-        return (LivingEntityAccess) object;
+    static ExtendedPlayerEntity get(Object object) {
+        return (ExtendedPlayerEntity) object;
     }
 
 }

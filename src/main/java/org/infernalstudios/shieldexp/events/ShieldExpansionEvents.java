@@ -35,7 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
 import org.infernalstudios.shieldexp.init.Config;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
@@ -50,15 +50,15 @@ public class ShieldExpansionEvents {
             if (player.attackAnim == 0 && !player.getCooldowns().isOnCooldown(item)) {
                 int parryTicks = getShieldValue(item, "parryTicks").intValue();
                 if (Config.lenientParryEnabled()) parryTicks = parryTicks * 2;
-                LivingEntityAccess.get(player).setParryCooldown(parryTicks);
-                LivingEntityAccess.get(player).setBlockedCooldown(10);
-                LivingEntityAccess.get(player).setUsedStamina(0);
+                ExtendedPlayerEntity.get(player).setParryCooldown(parryTicks);
+                ExtendedPlayerEntity.get(player).setBlockedCooldown(10);
+                ExtendedPlayerEntity.get(player).setUsedStamina(0);
                 AttributeModifier speedModifier = new AttributeModifier(player.getUUID(), "Blocking Speed", 4.0 * getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
                 ModifiableAttributeInstance movementSpeedInstance = player.getAttribute(Attributes.MOVEMENT_SPEED);
                 if (movementSpeedInstance != null && !movementSpeedInstance.hasModifier(speedModifier) && !Config.speedModifierDisabled())
                     movementSpeedInstance.addTransientModifier(speedModifier);
-                if (!LivingEntityAccess.get(player).getBlocking())
-                    LivingEntityAccess.get(player).setBlocking(true);
+                if (!ExtendedPlayerEntity.get(player).getBlocking())
+                    ExtendedPlayerEntity.get(player).setBlocking(true);
             }
         }
     }
@@ -70,7 +70,7 @@ public class ShieldExpansionEvents {
             PlayerEntity player = (PlayerEntity) event.getEntity();
             if (Config.isShield(item)) {
                 removeBlocking(player);
-                if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
+                if (ExtendedPlayerEntity.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
                     player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
             }
         }
@@ -82,9 +82,9 @@ public class ShieldExpansionEvents {
         Item item = event.getItem().getItem();
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntity();
-            if (Config.isShield(item) && LivingEntityAccess.get(player).getBlocking() && player.attackAnim > 0) {
+            if (Config.isShield(item) && ExtendedPlayerEntity.get(player).getBlocking() && player.attackAnim > 0) {
                 removeBlocking(player);
-                if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
+                if (ExtendedPlayerEntity.get(player).getBlockedCooldown() <= 0 && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
                     player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
                 player.stopUsingItem();
             }
@@ -95,23 +95,23 @@ public class ShieldExpansionEvents {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
         Item item = player.getUseItem().getItem();
-        Item lastShield = LivingEntityAccess.get(player).getLastShield().getItem();
+        Item lastShield = ExtendedPlayerEntity.get(player).getLastShield().getItem();
 
         //check if the player is no longer using a shield
         if (!Config.isShield(item)) removeBlocking(player);
 
         //checks if the player is in the blocking state without holding a shield
-        if (!(Config.isShield(player.getMainHandItem().getItem()) || Config.isShield(player.getOffhandItem().getItem())) && LivingEntityAccess.get(player).getBlocking()) {
+        if (!(Config.isShield(player.getMainHandItem().getItem()) || Config.isShield(player.getOffhandItem().getItem())) && ExtendedPlayerEntity.get(player).getBlocking()) {
             removeBlocking(player);
             player.stopUsingItem();
         }
 
         //checks if the player switches to a different item
         if (lastShield != item && Config.isShield(lastShield) && !Config.stashingCooldownDisabled() && !Config.cooldownDisabled())
-                if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
+                if (!player.getCooldowns().isOnCooldown(lastShield) && ExtendedPlayerEntity.get(player).getBlockedCooldown() <= 0)
                     player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
-        if (Config.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
-        else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
+        if (Config.isShield(item)) ExtendedPlayerEntity.get(player).setLastShield(item.getDefaultInstance());
+        else ExtendedPlayerEntity.get(player).setLastShield(new ItemStack(Items.AIR));
     }
 
     //shield behavior when hit by a melee attack
@@ -124,7 +124,7 @@ public class ShieldExpansionEvents {
             if (validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
                 Item item = player.getUseItem().getItem();
                 player.level.playSound(player, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0F, 1.0F);
-                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
+                if (ExtendedPlayerEntity.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     if (directEntity instanceof LivingEntity) {
                         LivingEntity livingEntity = (LivingEntity) directEntity;
@@ -156,7 +156,7 @@ public class ShieldExpansionEvents {
                 if (!validateBlocking(player)) return;
                 Item item = player.getUseItem().getItem();
                 player.level.playSound(null, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0f, 1.0f);
-                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
+                if (ExtendedPlayerEntity.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
                     damageItem(player, 1);
@@ -180,7 +180,7 @@ public class ShieldExpansionEvents {
                 double damageFactor = (1.00 - getShieldValue(item, "blastResistance"));
                 double usedDurability = event.getAmount() * damageFactor;
                 player.level.playSound(null, player.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.HOSTILE, 1.0f, 1.0f);
-                if (LivingEntityAccess.get(player).getParryCooldown() > 0) {
+                if (ExtendedPlayerEntity.get(player).getParryCooldown() > 0) {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ARROW_HIT_PLAYER, SoundCategory.HOSTILE, 1.0f, 1.0f);
                     damageItem(player, (int) usedDurability);
                     if (!Config.cooldownDisabled()) {
@@ -229,15 +229,15 @@ public class ShieldExpansionEvents {
         ModifiableAttributeInstance movementSpeedInstance = player.getAttribute(Attributes.MOVEMENT_SPEED);
         if (movementSpeedInstance == null) return;
         movementSpeedInstance.removeModifier(player.getUUID());
-        if (LivingEntityAccess.get(player).getBlocking())
-            LivingEntityAccess.get(player).setBlocking(false);
-        LivingEntityAccess.get(player).setParryCooldown(0);
+        if (ExtendedPlayerEntity.get(player).getBlocking())
+            ExtendedPlayerEntity.get(player).setBlocking(false);
+        ExtendedPlayerEntity.get(player).setParryCooldown(0);
     }
 
     //returns true if the player is allowed to block
     public boolean validateBlocking(PlayerEntity player) {
         return Config.isShield(player.getUseItem().getItem())
-                && LivingEntityAccess.get(player).getBlocking()
+                && ExtendedPlayerEntity.get(player).getBlocking()
                 && player.attackAnim == 0
                 && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem());
     }
@@ -253,10 +253,10 @@ public class ShieldExpansionEvents {
     //increases the current used stamina count of the given player, and removes the blocking state if the given shield's stamina is used up
     public void stamina(PlayerEntity player, Item item, int stamina) {
         if (!Config.cooldownDisabled()) {
-            LivingEntityAccess.get(player).setUsedStamina(LivingEntityAccess.get(player).getUsedStamina() + stamina);
+            ExtendedPlayerEntity.get(player).setUsedStamina(ExtendedPlayerEntity.get(player).getUsedStamina() + stamina);
             int maxStamina = getShieldValue(item, "stamina").intValue();
             if (Config.lenientStaminaEnabled()) maxStamina = maxStamina * 2;
-            if (LivingEntityAccess.get(player).getUsedStamina() >= maxStamina) {
+            if (ExtendedPlayerEntity.get(player).getUsedStamina() >= maxStamina) {
                 player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
                 removeBlocking(player);
                 player.stopUsingItem();

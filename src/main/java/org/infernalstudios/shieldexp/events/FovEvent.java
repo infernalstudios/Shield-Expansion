@@ -19,12 +19,12 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class FovEvent {
     @SubscribeEvent
     public void onFovModify(FOVUpdateEvent event) {
-        if (LivingEntityAccess.get(event.getEntity()).getBlocking()) event.setNewfov(1.0F);
+        if (ExtendedPlayerEntity.get(event.getEntity()).getBlocking()) event.setNewfov(1.0F);
     }
 }

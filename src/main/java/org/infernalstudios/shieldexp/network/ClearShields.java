@@ -26,14 +26,10 @@ import java.util.function.Supplier;
 
 @SuppressWarnings({"EmptyMethod", "unused"})
 public class ClearShields {
-    public ClearShields(PacketBuffer buf) {
-    }
+    public ClearShields(PacketBuffer buf) {}
 
-    public void encode(PacketBuffer buf){
-    }
-
-    public ClearShields() {
-    }
+    public void encode(PacketBuffer buf){}
+    public ClearShields() {}
 
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(this::handle);
@@ -43,8 +39,6 @@ public class ClearShields {
     @OnlyIn(Dist.CLIENT)
     private void handle() {
         PlayerEntity player = Minecraft.getInstance().player;
-        if (player != null){
-            ShieldDataLoader.clearAll();
-        }
+        if (player != null) ShieldDataLoader.clearAll();
     }
 }

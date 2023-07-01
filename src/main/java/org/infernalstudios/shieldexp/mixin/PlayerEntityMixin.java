@@ -23,7 +23,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,8 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("WrongEntityDataParameterClass")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements LivingEntityAccess {
-
+public abstract class PlayerEntityMixin extends LivingEntity implements ExtendedPlayerEntity {
     @Unique private static final DataParameter<Integer> PARRY_COOLDOWN = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
     @Unique private static final DataParameter<Integer> BLOCKED_COOLDOWN = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
     @Unique private static final DataParameter<Integer> USED_STAMINA = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);

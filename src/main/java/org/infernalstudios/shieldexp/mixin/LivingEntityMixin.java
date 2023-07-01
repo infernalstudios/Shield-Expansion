@@ -27,11 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-    @Shadow
-    protected ItemStack useItem;
-
-    @Shadow
-    protected int useItemRemaining;
+    @Shadow protected ItemStack useItem;
+    @Shadow protected int useItemRemaining;
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);

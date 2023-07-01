@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -44,6 +44,6 @@ public class ClientEvents {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         PlayerEntity player = Minecraft.getInstance().player;
-        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking()) player.stopUsingItem();
+        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && ExtendedPlayerEntity.get(player).getBlocking()) player.stopUsingItem();
     }
 }
