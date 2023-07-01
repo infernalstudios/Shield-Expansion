@@ -24,6 +24,7 @@ import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings({"EmptyMethod", "unused"})
 public class ClearShields {
     public ClearShields(PacketBuffer buf) {
     }
