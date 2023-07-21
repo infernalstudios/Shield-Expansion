@@ -37,7 +37,7 @@ public class ShieldExpansion {
     }
 
     @SubscribeEvent
-    private void clientSetup(final FMLClientSetupEvent event) {
+    public void clientSetup(final FMLClientSetupEvent event) {
         ClientEvents.initShields();
     }
 
