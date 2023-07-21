@@ -39,6 +39,7 @@ import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
 import org.infernalstudios.shieldexp.init.Config;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
+
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShieldExpansionEvents {
 
