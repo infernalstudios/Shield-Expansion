@@ -1,9 +1,9 @@
-name: Build
+name: Java CI with Gradle
 
-on: [ pull_request, push, workflow_dispatch ]
+on: [ pull_request, push ]
 
 jobs:
-  Build:
+  build:
     runs-on: ubuntu-22.04
 
     steps:
@@ -13,25 +13,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            .gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'build.gradle') }}
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
       - name: Build with Gradle
-        run: |
-          chmod +x gradlew
-          ./gradlew build
-      - name: Upload artifacts (forge)
+        run: ./gradlew build
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: 1.20.x-forge
-          path: ${{ github.workspace }}/forge/build/libs
-      - name: Upload artifacts (fabric)
-        uses: actions/upload-artifact@v3
-        with:
-          name: 1.20.x-fabric
-          path: ${{ github.workspace }}/fabric/build/libs
+          name: Artifacts
+          path: build/libs
