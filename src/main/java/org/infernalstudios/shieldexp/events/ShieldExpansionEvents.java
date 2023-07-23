@@ -35,7 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.ShieldExpansion;
-import org.infernalstudios.shieldexp.api.ExtendedPlayerEntity;
+import org.infernalstudios.shieldexp.access.ExtendedPlayerEntity;
 import org.infernalstudios.shieldexp.init.Config;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
