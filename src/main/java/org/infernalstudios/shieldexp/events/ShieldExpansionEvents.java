@@ -1,5 +1,7 @@
 package org.infernalstudios.shieldexp.events;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -25,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.init.DamageTypesInit;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
@@ -107,7 +110,7 @@ public class ShieldExpansionEvents {
                 player.level.playSound(null, player.getOnPos(), SoundEvents.ARROW_HIT_PLAYER, SoundSource.HOSTILE, 1.0f, 1.0f);
                 if (directEntity instanceof LivingEntity livingEntity) {
                     if (Config.isShield(item) && getShieldValue(item, "parryDamage") != 0)
-                        livingEntity.hurt(DamageSource.sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
+                        livingEntity.hurt(livingEntity.damageSources().sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
                     livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
                     livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
                 }
@@ -187,7 +190,7 @@ public class ShieldExpansionEvents {
                     } else if (event.getAmount() > 0) stamina(player, item, 3);
                 }
                 event.setCanceled(true);
-                if (Config.advancedExplosionsEnabled()) player.hurt(new DamageSource("partialblast"), (float) (event.getAmount() / 2 * damageFactor));
+                if (Config.advancedExplosionsEnabled()) player.hurt(new DamageSource(player.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesInit.PARTIALBLAST)), (float) (event.getAmount() / 2 * damageFactor));
             }
         }
     }

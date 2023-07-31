@@ -1,8 +1,8 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"2": "shieldexp:paragon",
-		"particle": "shieldexp:paragon"
+		"2": "shieldexp:item/paragon",
+		"particle": "shieldexp:item/paragon"
 	},
 	"elements": [
 		{

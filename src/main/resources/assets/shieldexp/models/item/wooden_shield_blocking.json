@@ -1,8 +1,8 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"1": "shieldexp:wooden",
-		"particle": "shieldexp:wooden"
+		"1": "shieldexp:item/wooden",
+		"particle": "shieldexp:item/wooden"
 	},
 	"elements": [
 		{

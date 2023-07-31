@@ -1,8 +1,8 @@
 {
 	"credit": "Nekomaster1000",
 	"textures": {
-		"2": "shieldexp:griefer",
-		"particle": "shieldexp:griefer"
+		"2": "shieldexp:item/griefer",
+		"particle": "shieldexp:item/griefer"
 	},
 	"elements": [
 		{

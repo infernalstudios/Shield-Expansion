@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.infernalstudios.shieldexp.events.CreativeTabEvents;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
@@ -48,6 +49,7 @@ public class ShieldExpansion {
 
         modBus.addListener(this::clientSetup);
         modBus.addListener(this::commonSetup);
+        modBus.addListener(CreativeTabEvents::addShields);
 
         MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
         MinecraftForge.EVENT_BUS.register(new ShieldDataLoader());

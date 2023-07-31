@@ -26,7 +26,7 @@ public class ItemsInit {
     public static final RegistryObject<ShieldItem> GRIEFER_SHIELD = registerShield("griefer_shield", 282);
 
     public static RegistryObject<ShieldItem> registerShield(String id, int durability) {
-        Item.Properties properties = new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT);
+        Item.Properties properties = new Item.Properties().durability(durability);
         if (id.equals("netherite_shield")) properties.fireResistant();
         RegistryObject<ShieldItem> shield = ITEMS.register(id, () -> new ShieldItem(properties));
 
