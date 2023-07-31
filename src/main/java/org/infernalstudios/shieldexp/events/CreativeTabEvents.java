@@ -1,7 +1,7 @@
 package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.infernalstudios.shieldexp.init.ItemsInit;
@@ -9,8 +9,8 @@ import org.infernalstudios.shieldexp.init.ItemsInit;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CreativeTabEvents {
     @SubscribeEvent
-    public static void addShields(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == CreativeModeTabs.COMBAT) {
+    public static void addShields(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(ItemsInit.WOODEN_SHIELD);
             event.accept(ItemsInit.IRON_SHIELD);
             event.accept(ItemsInit.GOLDEN_SHIELD);
