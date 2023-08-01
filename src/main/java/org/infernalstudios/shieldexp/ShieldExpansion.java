@@ -37,7 +37,7 @@ public class ShieldExpansion {
     public ShieldExpansion() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemsInit.ITEMS.register(modBus);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
 
         modBus.addListener(this::onClientSetup);
         modBus.addListener(this::onCommonSetup);
