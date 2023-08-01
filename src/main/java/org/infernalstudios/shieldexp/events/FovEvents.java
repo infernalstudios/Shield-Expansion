@@ -22,7 +22,7 @@ import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.ExtendedPlayerEntity;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class FovEvent {
+public class FovEvents {
     @SubscribeEvent
     public void onFovModify(FOVUpdateEvent event) {
         if (ExtendedPlayerEntity.get(event.getEntity()).getBlocking()) event.setNewfov(1.0F);
