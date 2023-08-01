@@ -20,6 +20,7 @@ import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -30,6 +31,14 @@ import org.infernalstudios.shieldexp.init.ItemsInit;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
+    public static void setup() {
+        MinecraftForge.EVENT_BUS.register(new ClientEvents());
+        MinecraftForge.EVENT_BUS.register(new FovEvents());
+        MinecraftForge.EVENT_BUS.register(new TooltipEvents());
+
+        initShields();
+    }
+
     public static void initShields() {
         for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS) {
             ItemModelsProperties.register(

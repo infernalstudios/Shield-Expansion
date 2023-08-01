@@ -24,9 +24,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.ClientEvents;
+import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 import org.infernalstudios.shieldexp.init.NetworkInit;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 @Mod(ShieldExpansion.MOD_ID)
 public class ShieldExpansion {
@@ -40,10 +42,13 @@ public class ShieldExpansion {
         modBus.addListener(this::onClientSetup);
         modBus.addListener(this::onCommonSetup);
         MinecraftForge.EVENT_BUS.register(this);
+
+        MinecraftForge.EVENT_BUS.register(new ShieldExpansionEvents());
+        MinecraftForge.EVENT_BUS.register(new ShieldDataLoader());
     }
 
     public void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(ClientEvents::initShields);
+        event.enqueueWork(ClientEvents::setup);
     }
 
     public void onCommonSetup(FMLCommonSetupEvent event) {
