@@ -19,6 +19,8 @@
   "item.shieldexp.paragon_shield": "Paragonschild",
   "item.shieldexp.griefer_shield": "Grieferschild",
 
+  "sounds.shieldexp.parry_sound": "Erfolgreiches Parieren",
+
   "death.attack.partialblast": "%1$s wurde in die Luft gesprengt weil das Schild der Explosion nicht standhalten konnte",
 
   "shieldexp.advancements.get_diamond_shield.title": "Diamant ist unzerbrechbar",
