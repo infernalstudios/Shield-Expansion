@@ -1,0 +1,29 @@
+{
+  "shieldexp.tooltip.instructions": "Mantén shift para recibir instrucciones",
+  "shieldexp.tooltip.instructions.parry": "¡Levanta tu escudo justo antes de recibir un golpe para devolver los ataques!",
+
+  "shieldexp.tooltip.attribute": "Cuando se usa como escudo:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Tiempo de espera",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Movimiento lento",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Movimiento rápido",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Daño del parry",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Ventana del parry",
+  "shieldexp.tooltip.attribute.stamina": " %s Resistencia",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Resistencia a las explosiones",
+
+  "item.shieldexp.wooden_shield": "Escudo de madera",
+  "item.shieldexp.golden_shield": "Escudo de oro",
+  "item.shieldexp.iron_shield": "Escudo de hierro",
+  "item.shieldexp.diamond_shield": "Escudo de diamante",
+  "item.shieldexp.netherite_shield": "Escudo de netherita",
+  "item.shieldexp.paragon_shield": "Escudo modelo",
+  "item.shieldexp.griefer_shield": "Escudo de griefer",
+
+  "death.attack.partialblast": "%1$s ha explotado porque su escudo no pudo soportar la explosión",
+
+  "shieldexp.advancements.get_diamond_shield.title": "El diamante es irrompible",
+  "shieldexp.advancements.get_diamond_shield.description": "Fabrica un escudo de diamante.",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Objeto inamovible",
+  "shieldexp.advancements.get_netherite_shield.description": "Fabrica un escudo de netherita."
+}
