@@ -28,6 +28,7 @@ import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.DamageTypesInit;
+import org.infernalstudios.shieldexp.init.SoundsInit;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
@@ -107,7 +108,7 @@ public class ShieldExpansionEvents {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
-                player.level().playSound(null, player.getOnPos(), SoundEvents.ARROW_HIT_PLAYER, SoundSource.HOSTILE, 1.0f, 1.0f);
+                player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 if (directEntity instanceof LivingEntity livingEntity) {
                     if (Config.isShield(item) && getShieldValue(item, "parryDamage") != 0)
                         livingEntity.hurt(livingEntity.damageSources().sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
@@ -133,7 +134,7 @@ public class ShieldExpansionEvents {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
-                player.level().playSound(null, player.getOnPos(), SoundEvents.ARROW_HIT_PLAYER, SoundSource.HOSTILE, 1.0f, 1.0f);
+                player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
                 projectile.syncPacketPositionCodec(projectile.getX(), projectile.getY(), projectile.getZ());
                 damageItem(player, 1);
@@ -155,7 +156,7 @@ public class ShieldExpansionEvents {
             double usedDurability = event.getAmount() * damageFactor;
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
-                player.level().playSound(null, player.getOnPos(), SoundEvents.ARROW_HIT_PLAYER, SoundSource.HOSTILE, 1.0f, 1.0f);
+                player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 damageItem(player, (int) usedDurability);
                 if (!Config.cooldownDisabled()) {
                     if (event.getAmount() >= 15) {

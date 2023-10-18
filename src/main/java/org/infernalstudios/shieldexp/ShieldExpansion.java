@@ -28,12 +28,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.infernalstudios.shieldexp.events.CreativeTabEvents;
-import org.infernalstudios.shieldexp.init.Config;
+import org.infernalstudios.shieldexp.init.*;
 import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
-import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.init.NetworkInit;
-import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 @Mod("shieldexp")
 public class ShieldExpansion {
@@ -44,6 +41,7 @@ public class ShieldExpansion {
     public ShieldExpansion() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemsInit.ITEMS.register(modBus);
+        SoundsInit.SOUND_EVENTS.register(modBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
 
