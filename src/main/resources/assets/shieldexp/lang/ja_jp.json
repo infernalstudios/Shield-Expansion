@@ -9,9 +9,20 @@
   "item.shieldexp.netherite_shield": "ネザライトの盾",
   "item.shieldexp.paragon_shield": "パラゴンの盾",
 
+  "shieldexp.tooltip.attribute": "盾を構えたとき:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " クールダウン %s秒",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " 重量級",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " 軽量級",
+  "shieldexp.tooltip.attribute.parry_damage": " パリィダメージ %s",
+  "shieldexp.tooltip.attribute.parry_ticks": " パリィの持続時間 %s秒",
+  "shieldexp.tooltip.attribute.stamina": " スタミナ %s",
+  "shieldexp.tooltip.attribute.blast_resistance": " 爆破耐性 %s",
+
   "shieldexp.advancements.get_diamond_shield.title": "ダイヤモンドは砕けない",
   "shieldexp.advancements.get_diamond_shield.description": "ダイヤモンドの盾を作る",
 
   "shieldexp.advancements.get_netherite_shield.title": "不動の物体",
-  "shieldexp.advancements.get_netherite_shield.description": "ネザライトの盾を作る"
+  "shieldexp.advancements.get_netherite_shield.description": "ネザライトの盾を作る",
+
+  "death.attack.partialblast": "%1$は盾が爆発に耐えきれずに吹き飛んだ"
 }
