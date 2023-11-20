@@ -30,6 +30,11 @@ import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
 
@@ -39,6 +44,7 @@ public class ClientEvents {
         MinecraftForge.EVENT_BUS.register(new TooltipEvents());
 
         initShields();
+        copyOptionalResourcePackIfMissing();
     }
 
     private static void initShields() {
@@ -53,5 +59,28 @@ public class ClientEvents {
         Player player = Minecraft.getInstance().player;
         if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking())
             player.stopUsingItem();
+    }
+
+    private static void copyOptionalResourcePackIfMissing() {
+        File dir = new File(".", "resourcepacks");
+        File target = new File(dir, "SE Vanilla Consistency 1.19.2.zip");
+
+        if(!target.exists()) {
+            try {
+                dir.mkdirs();
+                InputStream in = ShieldExpansion.class.getResourceAsStream("/assets/shieldexp/SE_Vanilla_Consistency_1.19.2.zip");
+                FileOutputStream out = new FileOutputStream(target);
+
+                byte[] buf = new byte[16384];
+                int len;
+                while ((len = in.read(buf)) > 0)
+                    out.write(buf, 0, len);
+
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
