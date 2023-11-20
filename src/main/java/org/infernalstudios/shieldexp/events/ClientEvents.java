@@ -63,12 +63,12 @@ public class ClientEvents {
 
     private static void copyOptionalResourcePackIfMissing() {
         File dir = new File(".", "resourcepacks");
-        File target = new File(dir, "SE Vanilla Consistency 1.19.2.zip");
+        File target = new File(dir, "SE Vanilla Consistency 1.18.2.zip");
 
         if(!target.exists()) {
             try {
                 dir.mkdirs();
-                InputStream in = ShieldExpansion.class.getResourceAsStream("/assets/shieldexp/SE_Vanilla_Consistency_1.19.2.zip");
+                InputStream in = ShieldExpansion.class.getResourceAsStream("/assets/shieldexp/SE_Vanilla_Consistency_1.18.2.zip");
                 FileOutputStream out = new FileOutputStream(target);
 
                 byte[] buf = new byte[16384];
