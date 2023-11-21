@@ -1,6 +1,6 @@
 
 modLoader="javafml"
-loaderVersion="[46,)"
+loaderVersion="[45,)"
 license="Apache-2.0"
 [[mods]]
 modId="shieldexp"
@@ -23,12 +23,12 @@ EB Mario - Concept Collaborator
 [[dependencies.shieldexp]]
     modId="forge"
     mandatory=true
-    versionRange="[46,)"
+    versionRange="[45,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.shieldexp]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20,)"
+    versionRange="[1.19,)"
     ordering="NONE"
     side="BOTH"
