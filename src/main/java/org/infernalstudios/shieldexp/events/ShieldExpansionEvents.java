@@ -1,9 +1,12 @@
 package org.infernalstudios.shieldexp.events;
 
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -104,6 +107,12 @@ public class ShieldExpansionEvents {
         if (event.getEntity() instanceof Player player && validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
             Item item = player.getUseItem().getItem();
             player.level.playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
+
+            // if on server, trigger the entity hurt player
+            if (!player.level.isClientSide) {
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, source, event.getAmount(), 0.0F, true);
+            }
+
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
                 player.level.playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 if (directEntity instanceof LivingEntity livingEntity) {
@@ -130,6 +139,13 @@ public class ShieldExpansionEvents {
         if (rayTraceResult instanceof EntityHitResult entityRayTraceResult && entityRayTraceResult.getEntity() instanceof Player player && validateBlocking(player)) {
             Item item = player.getUseItem().getItem();
             player.level.playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
+
+            // if on server, trigger the entity hurt player
+            if (!player.level.isClientSide) {
+                // NOTE: this event doesn't give us any damage values, so they are set to 0 for the trigger.
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, (new IndirectEntityDamageSource("arrow", projectile, null)).setProjectile(), 0.0F, 0.0F, true);
+            }
+
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
                 player.level.playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
@@ -170,6 +186,11 @@ public class ShieldExpansionEvents {
                     else if (event.getAmount() > 0) stamina(player, item, (int) (2 * damageFactor));
                 }
                 event.setCanceled(true);
+
+                // if on server, trigger the entity hurt player
+                if (!player.level.isClientSide) {
+                    CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, event.getSource(), event.getAmount(), 0.0F, true);
+                }
             } else {
                 damageItem(player, (int) usedDurability);
                 if (!Config.cooldownDisabled()) {
@@ -188,7 +209,15 @@ public class ShieldExpansionEvents {
                     } else if (event.getAmount() > 0) stamina(player, item, 3);
                 }
                 event.setCanceled(true);
-                if (Config.advancedExplosionsEnabled()) player.hurt(new DamageSource("partialblast"), (float) (event.getAmount() / 2 * damageFactor));
+                if (Config.advancedExplosionsEnabled()) {
+                    float damageTaken = (float) (event.getAmount() / 2 * damageFactor);
+                    player.hurt(new DamageSource("partialblast"), damageTaken);
+
+                    // if on server, trigger the entity hurt player
+                    if (!player.level.isClientSide) {
+                        CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, event.getSource(), event.getAmount(), damageTaken, true);
+                    }
+                }
             }
         }
     }
