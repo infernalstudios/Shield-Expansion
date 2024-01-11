@@ -168,6 +168,8 @@ public class ShieldExpansionEvents {
             double damageFactor = (1.00 - getShieldValue(item, "blastResistance"));
             double usedDurability = event.getAmount() * damageFactor;
             player.level.playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
+
+            float damageTaken = 0.0F;
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
                 player.level.playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 damageItem(player, (int) usedDurability);
@@ -186,11 +188,6 @@ public class ShieldExpansionEvents {
                     else if (event.getAmount() > 0) stamina(player, item, (int) (2 * damageFactor));
                 }
                 event.setCanceled(true);
-
-                // if on server, trigger the entity hurt player
-                if (!player.level.isClientSide) {
-                    CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, event.getSource(), event.getAmount(), 0.0F, true);
-                }
             } else {
                 damageItem(player, (int) usedDurability);
                 if (!Config.cooldownDisabled()) {
@@ -209,15 +206,16 @@ public class ShieldExpansionEvents {
                     } else if (event.getAmount() > 0) stamina(player, item, 3);
                 }
                 event.setCanceled(true);
-                if (Config.advancedExplosionsEnabled()) {
-                    float damageTaken = (float) (event.getAmount() / 2 * damageFactor);
-                    player.hurt(new DamageSource("partialblast"), damageTaken);
 
-                    // if on server, trigger the entity hurt player
-                    if (!player.level.isClientSide) {
-                        CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, event.getSource(), event.getAmount(), damageTaken, true);
-                    }
+                if (Config.advancedExplosionsEnabled()) {
+                    damageTaken = (float) (event.getAmount() / 2 * damageFactor);
+                    player.hurt(new DamageSource("partialblast"), damageTaken);
                 }
+            }
+
+            // if on server, trigger the entity hurt player
+            if (!player.level.isClientSide) {
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, event.getSource(), event.getAmount(), damageTaken, true);
             }
         }
     }
