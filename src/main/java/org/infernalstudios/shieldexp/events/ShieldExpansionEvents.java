@@ -1,12 +1,15 @@
 package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,6 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
+import org.infernalstudios.shieldexp.init.DamageTypesInit;
 import org.infernalstudios.shieldexp.init.SoundsInit;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
@@ -117,7 +121,7 @@ public class ShieldExpansionEvents {
                 player.level.playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 if (directEntity instanceof LivingEntity livingEntity) {
                     if (Config.isShield(item) && getShieldValue(item, "parryDamage") != 0)
-                        livingEntity.hurt(DamageSource.sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
+                        livingEntity.hurt(livingEntity.damageSources().sting(player), event.getAmount() * getShieldValue(item, "parryDamage").floatValue() + getShieldValue(item, "flatDamage").floatValue());
                     livingEntity.knockback(0.55F, directEntity.getDeltaMovement().x, directEntity.getDeltaMovement().z);
                     livingEntity.knockback(0.5F, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
                 }
@@ -143,7 +147,7 @@ public class ShieldExpansionEvents {
             // if on server, trigger the entity hurt player
             if (!player.level.isClientSide) {
                 // NOTE: this event doesn't give us any damage values, so they are set to 0 for the trigger.
-                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, (new IndirectEntityDamageSource("arrow", projectile, null)).setProjectile(), 0.0F, 0.0F, true);
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, new DamageSource(player.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.ARROW)), 0.0F, 0.0F, true);
             }
 
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
@@ -209,7 +213,7 @@ public class ShieldExpansionEvents {
 
                 if (Config.advancedExplosionsEnabled()) {
                     damageTaken = (float) (event.getAmount() / 2 * damageFactor);
-                    player.hurt(new DamageSource("partialblast"), damageTaken);
+                    player.hurt(new DamageSource(player.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesInit.PARTIALBLAST)), damageTaken);
                 }
             }
 
