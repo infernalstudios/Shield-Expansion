@@ -243,7 +243,14 @@ public class ShieldExpansionEvents {
     //reads a shield attribute from the given shield's stats map, or the default map if no map is found
     public static Double getShieldValue(Item item, String value) {
         String key = ForgeRegistries.ITEMS.getKey(item).toString();
-        return SHIELD_STATS.containsKey(key) ? SHIELD_STATS.get(key).get(value) : SHIELD_STATS.get("shieldexp:default").get(value);
+        if(SHIELD_STATS.containsKey(key))
+            if(SHIELD_STATS.get(key).containsKey(value))
+                return SHIELD_STATS.get(key).get(value);
+
+        if(SHIELD_STATS.containsKey("shieldexp:default"))
+            if(SHIELD_STATS.get("shieldexp:default").containsKey(value))
+                return SHIELD_STATS.get("shieldexp:default").get(value);
+        return 0.0;
     }
 
     //increases the current used stamina count of the given player, and removes the blocking state if the given shield's stamina is used up
