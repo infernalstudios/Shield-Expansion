@@ -1,0 +1,52 @@
+{
+  "type": "miningmaster:forging_recipe",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "miningmaster"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "miningmaster"
+      ]
+    }
+  ],
+  "gems": [
+    {
+      "item": "miningmaster:unbreaking_iolite"
+    },
+    {
+      "item": "miningmaster:power_pyrite"
+    },
+    {
+      "item": "miningmaster:haste_peridot"
+    },
+    {
+      "item": "miningmaster:spirit_garnet"
+    },
+    {
+      "item": "miningmaster:haste_peridot"
+    },
+    {
+      "item": "miningmaster:power_pyrite"
+    },
+    {
+      "item": "miningmaster:unbreaking_iolite"
+    }
+  ],
+  "catalyst": {
+    "item": "shieldexp:diamond_shield"
+  },
+  "result": {
+    "item": "shieldexp:paragon_shield"
+  },
+  "enchantments": [
+    {
+      "enchantment": "minecraft:unbreaking",
+      "lvl": 3
+    }
+  ]
+}

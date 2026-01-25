@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "savage_and_ravage"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "savage_and_ravage"
+      ]
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "XIX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "savage_and_ravage:blast_proof_plating"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "shieldexp:griefer_shield"
+  }
+}

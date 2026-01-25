@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {
+    "homepage": "https://infernalstudios.org/",
+    "sources": "https://github.com/infernalstudios/Shield-Expansion/",
+    "issues": "https://github.com/infernalstudios/Shield-Expansion/issues"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.infernalstudios.shieldexp.ShieldExpansionMod"
+    ],
+    "client": [
+      "org.infernalstudios.shieldexp.client.ShieldExpansionModClient"
+    ],
+    "modmenu": [
+      "org.infernalstudios.shieldexp.compat.ModMenuIntegration"
+    ]
+  },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14",
+        "fabric": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=17"
+    },
+    "suggests": {
+        "cloth-config": "*"
+    }
+}
+  
