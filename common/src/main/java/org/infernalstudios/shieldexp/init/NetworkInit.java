@@ -1,6 +1,5 @@
 package org.infernalstudios.shieldexp.init;
 
-import org.infernalstudios.shieldexp.network.ClearShields;
 import org.infernalstudios.shieldexp.network.SyncBlocking;
 import org.infernalstudios.shieldexp.network.SyncConfig;
 import org.infernalstudios.shieldexp.network.SyncShields;
@@ -10,7 +9,6 @@ public class NetworkInit {
     public static void registerPackets() {
         Services.NETWORK.registerPacket(0, SyncShields.class);
         Services.NETWORK.registerPacket(1, SyncBlocking.class);
-        Services.NETWORK.registerPacket(2, ClearShields.class);
-        Services.NETWORK.registerPacket(3, SyncConfig.class);
+        Services.NETWORK.registerPacket(2, SyncConfig.class);
     }
 }
