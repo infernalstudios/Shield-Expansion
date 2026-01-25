@@ -1,87 +1,28 @@
-# Afterimages
+## **![](https://media.forgecdn.net/attachments/description/583318/description_4e7b7bf9-a3b0-4a07-b3aa-85d0557f1299.png)**
 
-A lightweight, data-driven mod that adds visual afterimage trails to entities. You can configure which entities have afterimages, how they look, and when they appear—entirely through Resource Packs.
+## <span style="font-size:36px"><strong>Shield Expansion</strong></span>
 
-### Features
+<span style="font-size:14px">Shield Expansion is a mod that aims to make combat in Minecraft more engaging and skilful by rebalancing shields.<br>The mod adds traditional tiers to shields and introduces two new mechanics, Off-Guard Cooldown and Parrying!<br><br></span><span style="font-size:14px"><span style="font-size:18px"><a href="https://www.curseforge.com/minecraft/mc-mods/shield-expansion/files" rel="nofollow"><img src="https://i.imgur.com/apaKxGM.png"></a></span></span><span style="font-size:14px"><span style="font-size:18px">Off-Guard Cooldown</span><br>Off-Guard Cooldown means any attack that hits a shield will put it into a state of cooldown (the length of which is dependant on the shield tier), forcing you to either go on the offensive or make better use of defensive manoeuvring. You also go into this cooldown if you lower the shield, too.<br></span>  
+<span style="font-size:14px"><span style="font-size:18px">Parrying</span><br>Parrying an attack, done by raising your shield just before an attack hits you, allows you to bypass Off-Guard Cooldown, rewarding skilful timing and use of your shield. You shove melee attackers back and deflect enemy projectiles upon a successful Parry, too!</span>
 
-* **Data-Driven:** Every aspect of the afterimage (duration, color, triggers) is controlled via JSON files.
-* **Mod Compatible:** Built-in support for **Combat Roll** and other mods in the future, upon request.
+<span style="font-size:14px">Pushing an enemy with a wooden or golden shield will deal no damage, but doing so with any other will result in a <strong>Parry-Bash</strong>, dealing the enemy back a percentage of the damage they would have dealt you! This percentage increases the higher the shield tier is, but the opportunity window to parry at all shrinks.<br></span>
 
----
+<span style="font-size:14px"><span style="font-size:18px">Compatibility</span><br>Shield Expansion has native compatibility with our other mod, <a href="https://www.curseforge.com/minecraft/mc-mods/mining-master" rel="nofollow">Mining Master!</a>&nbsp;</span> <span style="font-size:14px">With it, you can upgrade your Diamond Shield into the elusive and powerful <strong>Paragon Shield!</strong></span>
 
-### Global Configuration
+<span style="font-size:14px">Or, if complete blast resistance is more your style, perhaps you may prefer the build-in combability we added for Team Abnormals' <a href="https://www.curseforge.com/minecraft/mc-mods/savage-and-ravage" rel="nofollow"><span style="text-decoration:underline"><strong>Savage and Ravage!</strong></span></a></span>
 
-This mod uses **Cloth Config** for global settings. You can access the config menu via Mod Menu (on Fabric) or the configured keybind.
+<span style="font-size:14px">Besides that, we went to the effort of programming the mod in such a way so that SE's attributes apply to&nbsp;<em>all</em> shields from&nbsp;<em>all</em> other mods! Said attributes can be tweaked to your liking with a handy-dandy datapack, whilst basic functionality for&nbsp;<em>all</em> shields can be tweaked in the config!</span>
 
-| Option | Default | Description |
-| --- | --- | --- |
-| **Step Size** | `0.25` | Controls the density of the afterimage trail. Lower values (e.g. `0.1`) create smoother, connected trails but may impact performance. Higher values create distinct "snapshots". |
+<span style="font-size:14px"><a href="https://i.imgur.com/uZeg2Kd.png" rel="nofollow"><img src="https://i.imgur.com/Ne6GqCP.png" width="1100" height="400"></a></span>
 
----
+<span style="font-size:14px">I'd also&nbsp;<em>highly</em> suggest pairing this mod with <a href="https://www.curseforge.com/minecraft/mc-mods/combat-roll" rel="nofollow">Combat Roll!</a><br>Looking for something similar to this mod on Fabric? Check out <a href="https://www.curseforge.com/minecraft/mc-mods/cammies-combat-tweaks" rel="nofollow">Cammie's Combat Tweaks</a>, or <a href="https://www.curseforge.com/minecraft/mc-mods/guarding" rel="nofollow">Guarding!</a></span>
 
-### Entity Configuration
+<span style="font-size:14px">Want a resource pack to bring your tools and armour up to snuff alongside your fancy new shields?<br><a href="https://www.curseforge.com/minecraft/texture-packs/nekos-enhanced-tools-and-armor" rel="nofollow">Neko's Enhanced Tools and Armor</a> pairs great with Shield Expansion!</span>
 
-To add an afterimage to an entity, create a JSON file in your resource pack at:
-`assets/<namespace>/afterimages/entities/<entity_name>.json`
+<span style="font-size:14px"><a href="https://www.curseforge.com/minecraft/texture-packs/nekos-enhanced-tools-and-armor" rel="nofollow"><img src="https://i.imgur.com/1hnNiHa.png" alt="Image from Xenoraptor on Discord!" width="1125" height="293"></a>We hope you enjoy Shield Expansion! If you have any feedback, critique or ideas, please let us know! :D<br></span>
 
-#### Example: Standard Arrow Trail
+[![](https://i.imgur.com/2bC35E0.png)](https://www.curseforge.com/minecraft/mc-mods/infernal-expansion)[![](https://i.imgur.com/rVvl9pS.png)](https://www.curseforge.com/minecraft/mc-mods/nekos-enchanted-books)[![](https://i.imgur.com/vllDogN.png)](https://www.curseforge.com/minecraft/mc-mods/second-chance-forge)[![](https://i.imgur.com/ZO9M3Gd.png)](https://www.curseforge.com/minecraft/mc-mods/food-effects)[![](https://i.imgur.com/gdTzvC5.png)](https://www.curseforge.com/minecraft/mc-mods/mining-master)[![](https://i.imgur.com/wbgl9mS.png)](https://www.curseforge.com/minecraft/mc-mods/shield-expansion)[![](https://i.imgur.com/UbcGgbt.png)](https://www.curseforge.com/minecraft/mc-mods/sun-and-moon-celestial-configuration)[![](https://i.imgur.com/Fe38k8h.png)](https://www.curseforge.com/minecraft/mc-mods/elytra-bounce)
 
-`assets/example/afterimages/entities/arrow.json`
+[![](https://i.imgur.com/LsBpOIN.png)](https://github.com/infernalstudios)[![](https://i.imgur.com/n33Sgsv.png)](https://twitter.com/InfernalExp)[![](https://i.imgur.com/ZukAGME.png)](https://infernalstudios.org/discord)[![](https://i.imgur.com/d7iCSGH.png)](https://infernalstudios.org/)
 
-```json
-{
-  "entity": "minecraft:arrow",
-  "speed_threshold": 0.5,
-  "duration": 5,
-  "color": "0xFFFFFF",
-  "start_alpha": 0.6
-}
-
-```
-
-#### Example: Combat Roll Exclusive
-
-`assets/example/afterimages/entities/player.json`
-
-```json
-{
-  "entity": "minecraft:player",
-  "combat_roll_only": true,
-  "duration": 15,
-  "start_alpha": 0.8
-}
-```
-
-#### Configuration Fields
-
-| Field | Type | Default | Description                                                                                                                          |
-| --- | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------|
-| `entity` | String | *Filename* | The entity ID (e.g. `minecraft:ender_pearl`). If omitted, the mod tries to guess based on the JSON filename.                         |
-| `speed_threshold` | Double | `0.5` | The minimum speed (blocks/tick) required to trigger the effect. Ignored if `combat_roll_only` is true.                               |
-| `duration` | Integer | `10` | How long the afterimage trail lasts in ticks.                                                                                        |
-| `color` | Hex String | `"0xFFFFFF"` | A hex color code to tint the afterimage.                                                                                             |
-| `start_alpha` | Float | `0.5` | The opacity of the afterimage when it first appears (0.0 to 1.0).                                                                    |
-| `overlay_only` | Boolean | `false` | If `true`, the afterimage will render *only* the overlay layer (e.g., skin outer layer, armor glint). Useful for ghost-like effects. |
-| `combat_roll_only` | Boolean | `false` | If `true`, afterimages will **only** appear when the entity is performing a Combat Roll (requires the **Combat Roll** mod).          |
-
----
-
-### Mod Integration
-
-#### Combat Roll
-
-Afterimages has native support for the **[Combat Roll](https://modrinth.com/mod/combat-roll)** mod.
-
-Afterimages also supports **[Elenai Dodge 2](https://modrinth.com/mod/elenai-dodge-2)** on Forge.
-
-* **Usage:** Set `"combat_roll_only": true` or `"elenai_dodge_only": true` in your player configuration file to make trails appear exclusively during a roll dodge.
-
----
-
-### License
-
-This project is licensed under the **MIT License**.
-
-### Contributing
-
-Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request.
+[![](https://i.imgur.com/zgOVvah.gif)](https://bisecthosting.com/infernalstudios)
