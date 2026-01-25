@@ -1,0 +1,59 @@
+{
+  "config.shieldexp.title": "Shield Expansion Config",
+  "config.shieldexp.category.shield_list": "Shield Lists",
+  "config.shieldexp.category.modifiers": "Modifiers",
+
+  "config.shieldexp.option.shield_list": "Shield Whitelist",
+  "config.shieldexp.tooltip.shield_list": "List of items considered as shields. Automatically populated by data packs.",
+
+  "config.shieldexp.option.shield_blacklist": "Shield Blacklist",
+  "config.shieldexp.tooltip.shield_blacklist": "List of items to ignore, even if they are in the whitelist.",
+
+  "config.shieldexp.option.lowering_cooldown": "Lowering Cooldown",
+  "config.shieldexp.tooltip.lowering_cooldown": "Enable the cooldown applied when you lower your shield manually.",
+
+  "config.shieldexp.option.cooldown": "Shield Cooldowns",
+  "config.shieldexp.tooltip.cooldown": "Enable shield cooldowns mechanisms.",
+
+  "config.shieldexp.option.speed_modifier": "Speed Adjustment",
+  "config.shieldexp.tooltip.speed_modifier": "Enable the speed adjustment to make blocking faster (reduces the vanilla movement penalty).",
+
+  "config.shieldexp.option.harder_explosions": "Advanced Explosions",
+  "config.shieldexp.tooltip.harder_explosions": "Shields only block partial damage from explosions based on their Blast Resistance stat.",
+
+  "config.shieldexp.option.lenient_parry_mode": "Lenient Parry",
+  "config.shieldexp.tooltip.lenient_parry_mode": "Double the parry window timing.",
+
+  "config.shieldexp.option.lenient_stamina_mode": "Lenient Stamina",
+  "config.shieldexp.tooltip.lenient_stamina_mode": "Double the available shield stamina.",
+
+  "shieldexp.tooltip.instructions": "Hold Shift for Instructions",
+  "shieldexp.tooltip.instructions.parry": "Raise your shield just before getting hit to parry attacks!",
+
+  "shieldexp.tooltip.attribute": "When used as Shield:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Cooldown",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Slow Movement",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Fast Movement",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Parry Damage",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Parry Window",
+  "shieldexp.tooltip.attribute.stamina": " %s Stamina",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Blast Resistance",
+
+  "item.shieldexp.wooden_shield": "Wooden Shield",
+  "item.shieldexp.golden_shield": "Golden Shield",
+  "item.shieldexp.iron_shield": "Iron Shield",
+  "item.shieldexp.diamond_shield": "Diamond Shield",
+  "item.shieldexp.netherite_shield": "Netherite Shield",
+  "item.shieldexp.paragon_shield": "Paragon Shield",
+  "item.shieldexp.griefer_shield": "Griefer Shield",
+
+  "sounds.shieldexp.parry_sound": "Successful parry",
+
+  "death.attack.partialblast": "%1$s blew up because their shield couldn't withstand the blast",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Diamond is Unbreakable",
+  "shieldexp.advancements.get_diamond_shield.description": "Craft a Diamond Shield",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Immovable Object",
+  "shieldexp.advancements.get_netherite_shield.description": "Craft a Netherite Shield"
+}
