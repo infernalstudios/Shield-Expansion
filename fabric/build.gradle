@@ -59,7 +59,7 @@ publishMods {
 
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        projectId = "6049267"
+        projectId = "583318"
         minecraftVersions.add("1.20.1")
 
         optional { slug = "cloth-config" }
