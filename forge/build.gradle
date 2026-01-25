@@ -95,6 +95,6 @@ publishMods {
         optional { slug = "cloth-config" }
         optional { slug = "mining-master" }
         optional { slug = "savage-and-ravage" }
-        optional { slug = "better-combat-by-daedelus" }
+        optional { slug = "better-combat" }
     }
 }
