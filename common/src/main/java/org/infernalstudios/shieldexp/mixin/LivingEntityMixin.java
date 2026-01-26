@@ -4,6 +4,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,8 +26,13 @@ public abstract class LivingEntityMixin extends Entity {
         super(type, world);
     }
 
+    @Shadow
+    public abstract boolean isUsingItem();
+
     @Inject(method = "isBlocking", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     private void shieldexp$isBlocking(CallbackInfoReturnable<Boolean> ci) {
-        ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem, (LivingEntity) (Object) this) - this.useItemRemaining >= 0);
+        if (this.isUsingItem() && this.useItem.getUseAnimation() == UseAnim.BLOCK) {
+            ci.setReturnValue(this.useItem.getItem().getUseDuration(this.useItem, (LivingEntity) (Object) this) - this.useItemRemaining >= 0);
+        }
     }
 }
