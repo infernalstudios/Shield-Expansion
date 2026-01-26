@@ -7,29 +7,38 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Player;
 import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SyncShields implements IPacket {
     private static final int MAX = 32767 * 2;
-    JsonElement data;
-    ResourceLocation shield;
+    private final Map<ResourceLocation, JsonElement> shields;
 
     public SyncShields(FriendlyByteBuf buf) {
-        this.shield = buf.readResourceLocation();
-        this.data = GsonHelper.fromJson(ShieldDataLoader.GSON, buf.readUtf(MAX), JsonElement.class);
+        int size = buf.readVarInt();
+        this.shields = new HashMap<>(size);
+        for (int i = 0; i < size; i++) {
+            ResourceLocation id = buf.readResourceLocation();
+            JsonElement data = GsonHelper.fromJson(ShieldDataLoader.GSON, buf.readUtf(MAX), JsonElement.class);
+            this.shields.put(id, data);
+        }
     }
 
-    public SyncShields(ResourceLocation shield, JsonElement data) {
-        this.shield = shield;
-        this.data = data;
+    public SyncShields(Map<ResourceLocation, JsonElement> shields) {
+        this.shields = shields;
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(shield);
-        buf.writeUtf(this.data.toString());
+        buf.writeVarInt(shields.size());
+        shields.forEach((id, data) -> {
+            buf.writeResourceLocation(id);
+            buf.writeUtf(data.toString());
+        });
     }
 
     @Override
     public void handle(Player player) {
-        ShieldDataLoader.parse(shield, data.getAsJsonObject());
+        shields.forEach((id, data) -> ShieldDataLoader.parse(id, data.getAsJsonObject()));
     }
 }

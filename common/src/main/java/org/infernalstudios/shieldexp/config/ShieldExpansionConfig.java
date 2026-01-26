@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShieldItem;
 import org.infernalstudios.shieldexp.Constants;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import org.infernalstudios.shieldexp.platform.Services;
 
 import java.io.File;
@@ -80,7 +81,8 @@ public class ShieldExpansionConfig {
 
         for (String s : SHIELD_LIST) if (s.equals(itemID)) return true;
 
-        return item instanceof ShieldItem && BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(Constants.MOD_ID);
+        return SHIELD_LIST.contains(itemID) ||
+                (item instanceof ShieldItem && (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(Constants.MOD_ID) || ShieldDataLoader.SHIELD_STATS.containsKey(itemID)));
     }
 
     public static void extendList(String id) {
