@@ -38,10 +38,10 @@
     }
   ],
   "catalyst": {
-    "item": "shieldexp:diamond_shield"
+    "id": "shieldexp:diamond_shield"
   },
   "result": {
-    "item": "shieldexp:paragon_shield"
+    "id": "shieldexp:paragon_shield"
   },
   "enchantments": [
     {

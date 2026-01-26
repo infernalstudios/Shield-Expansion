@@ -47,6 +47,8 @@
   "item.shieldexp.paragon_shield": "Paragon Shield",
   "item.shieldexp.griefer_shield": "Griefer Shield",
 
+  "tag.item.shieldexp.shields": "Shields",
+
   "sounds.shieldexp.parry_sound": "Successful parry",
 
   "death.attack.partialblast": "%1$s blew up because their shield couldn't withstand the blast",

@@ -1,12 +1,12 @@
 {
-  "parent": "shieldexp:get_diamond_shield",
+  "parent": "minecraft:story/deflect_arrow",
   "criteria": {
-    "netherite_shield": {
+    "diamond_shield": {
       "conditions": {
         "items": [
           {
             "items": [
-              "shieldexp:netherite_shield"
+              "shieldexp:diamond_shield"
             ]
           }
         ]
@@ -15,26 +15,26 @@
     }
   },
   "rewards": {
-    "experience": 100
+    "experience": 50
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "shieldexp.advancements.get_netherite_shield.description"
+      "translate": "shieldexp.advancements.get_diamond_shield.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "shieldexp:netherite_shield"
+      "id": "shieldexp:diamond_shield"
     },
     "show_toast": true,
     "title": {
-      "translate": "shieldexp.advancements.get_netherite_shield.title"
+      "translate": "shieldexp.advancements.get_diamond_shield.title"
     }
   },
   "requirements": [
     [
-      "netherite_shield"
+      "diamond_shield"
     ]
   ]
 }

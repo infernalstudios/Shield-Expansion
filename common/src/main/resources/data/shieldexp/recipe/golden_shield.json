@@ -1,19 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "ddd",
-      "dsd",
-      "ddd"
+      "ggg",
+      "gsg",
+      "ggg"
     ],
     "key": {
-      "d": {
-        "item": "minecraft:diamond"
+      "g": {
+        "item": "minecraft:gold_ingot"
       },
       "s": {
         "item": "minecraft:stick"
       }
     },
     "result": {
-      "item": "shieldexp:diamond_shield"
+      "id": "shieldexp:golden_shield"
     }
   }

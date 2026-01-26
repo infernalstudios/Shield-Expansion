@@ -6,6 +6,12 @@
       "modid": "savage_and_ravage"
     }
   ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",
@@ -28,6 +34,6 @@
     }
   },
   "result": {
-    "item": "shieldexp:griefer_shield"
+    "id": "shieldexp:griefer_shield"
   }
 }

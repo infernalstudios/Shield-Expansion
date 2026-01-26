@@ -1,19 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "ppp",
-      "psp",
-      "ppp"
+      "ddd",
+      "dsd",
+      "ddd"
     ],
     "key": {
-      "p": {
-        "tag": "minecraft:planks"
+      "d": {
+        "item": "minecraft:diamond"
       },
       "s": {
         "item": "minecraft:stick"
       }
     },
     "result": {
-      "item": "shieldexp:wooden_shield"
+      "id": "shieldexp:diamond_shield"
     }
   }
