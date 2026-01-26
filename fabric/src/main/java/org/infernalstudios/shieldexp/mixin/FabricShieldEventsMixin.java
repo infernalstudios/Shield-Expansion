@@ -25,9 +25,11 @@ public abstract class FabricShieldEventsMixin extends Entity {
     @Shadow
     public abstract ItemStack getUseItem();
 
-    @Inject(method = "startUsingItem", at = @At("HEAD"))
+    @Inject(method = "startUsingItem", at = @At("HEAD"), cancellable = true)
     private void onStartUsing(InteractionHand hand, CallbackInfo ci) {
-        ShieldEvents.onStartUsing(this, ((LivingEntity) (Object) this).getItemInHand(hand));
+        if (ShieldEvents.onStartUsing(this, ((LivingEntity) (Object) this).getItemInHand(hand))) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "stopUsingItem", at = @At("HEAD"))

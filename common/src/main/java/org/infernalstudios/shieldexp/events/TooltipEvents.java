@@ -1,7 +1,6 @@
 package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -13,19 +12,27 @@ import java.util.List;
 public class TooltipEvents {
     public static void addTooltip(ItemStack stack, Player player, List<Component> tooltip) {
         Item item = stack.getItem();
-        if (ShieldExpansionConfig.isShield(item)) {
+        if (player != null && ShieldExpansionConfig.isShield(item) && ShieldExpansionConfig.TOOLTIPS) {
             tooltip.add(Component.literal(" "));
             tooltip.add(Component.translatable("shieldexp.tooltip.attribute").withStyle(ChatFormatting.GRAY));
-            addTooltipLine(tooltip, item, "cooldownTicks");
-            addTooltipLine(tooltip, item, "stamina");
-            addTooltipLine(tooltip, item, "speedFactor");
-            addTooltipLine(tooltip, item, "parryDamage");
-            addTooltipLine(tooltip, item, "parryTicks");
-            addTooltipLine(tooltip, item, "blastResistance");
-            tooltip.add(Component.literal(" "));
-            if (Screen.hasShiftDown())
-                tooltip.add(Component.translatable("shieldexp.tooltip.instructions.parry").withStyle(ChatFormatting.YELLOW));
-            else tooltip.add(Component.translatable("shieldexp.tooltip.instructions").withStyle(ChatFormatting.GRAY));
+
+            if (ShieldExpansionConfig.TOOLTIP_COOLDOWN)
+                addTooltipLine(tooltip, item, "cooldownTicks");
+
+            if (ShieldExpansionConfig.TOOLTIP_STAMINA)
+                addTooltipLine(tooltip, item, "stamina");
+
+            if (ShieldExpansionConfig.TOOLTIP_SPEED)
+                addTooltipLine(tooltip, item, "speedFactor");
+
+            if (ShieldExpansionConfig.TOOLTIP_PARRY_DAMAGE)
+                addTooltipLine(tooltip, item, "parryDamage");
+
+            if (ShieldExpansionConfig.TOOLTIP_PARRY_WINDOW)
+                addTooltipLine(tooltip, item, "parryTicks");
+
+            if (ShieldExpansionConfig.TOOLTIP_BLAST_RESISTANCE)
+                addTooltipLine(tooltip, item, "blastResistance");
         }
     }
 

@@ -28,6 +28,7 @@ public class ClothConfigIntegration {
 
         ConfigCategory shieldList = builder.getOrCreateCategory(Component.translatable("config.shieldexp.category.shield_list"));
         ConfigCategory modifiers = builder.getOrCreateCategory(Component.translatable("config.shieldexp.category.modifiers"));
+        ConfigCategory tooltips = builder.getOrCreateCategory(Component.translatable("config.shieldexp.category.tooltips"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
@@ -77,6 +78,41 @@ public class ClothConfigIntegration {
                 .setDefaultValue(false)
                 .setTooltip(Component.translatable("config.shieldexp.tooltip.lenient_stamina_mode"))
                 .setSaveConsumer(newValue -> ShieldExpansionConfig.LENIENT_STAMINA = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.enable_tooltips"), ShieldExpansionConfig.TOOLTIPS)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIPS = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_cooldown"), ShieldExpansionConfig.TOOLTIP_COOLDOWN)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_COOLDOWN = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_stamina"), ShieldExpansionConfig.TOOLTIP_STAMINA)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_STAMINA = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_speed"), ShieldExpansionConfig.TOOLTIP_SPEED)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_SPEED = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_parry_damage"), ShieldExpansionConfig.TOOLTIP_PARRY_DAMAGE)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_PARRY_DAMAGE = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_parry_window"), ShieldExpansionConfig.TOOLTIP_PARRY_WINDOW)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_PARRY_WINDOW = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.tooltip_blast_resistance"), ShieldExpansionConfig.TOOLTIP_BLAST_RESISTANCE)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_BLAST_RESISTANCE = newValue)
                 .build());
 
         return builder.build();

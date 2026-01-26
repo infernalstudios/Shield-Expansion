@@ -27,15 +27,22 @@
   "config.shieldexp.option.lenient_stamina_mode": "Lenient Stamina",
   "config.shieldexp.tooltip.lenient_stamina_mode": "Double the available shield stamina.",
 
-  "shieldexp.tooltip.instructions": "Hold Shift for Instructions",
-  "shieldexp.tooltip.instructions.parry": "Raise your shield just before getting hit to parry attacks!",
+  "config.shieldexp.category.tooltips": "Tooltips",
+
+  "config.shieldexp.option.enable_tooltips": "Enable Tooltips",
+  "config.shieldexp.option.tooltip_cooldown": "Show Cooldown",
+  "config.shieldexp.option.tooltip_stamina": "Show Stamina",
+  "config.shieldexp.option.tooltip_speed": "Show Speed Modifier",
+  "config.shieldexp.option.tooltip_parry_damage": "Show Parry Damage",
+  "config.shieldexp.option.tooltip_parry_window": "Show Parry Window",
+  "config.shieldexp.option.tooltip_blast_resistance": "Show Blast Resistance",
 
   "shieldexp.tooltip.attribute": "When used as Shield:",
-  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Cooldown",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %s Cooldown",
   "shieldexp.tooltip.attribute.speed_factor_slow": " Slow Movement",
   "shieldexp.tooltip.attribute.speed_factor_fast": " Fast Movement",
   "shieldexp.tooltip.attribute.parry_damage": " %s Parry Damage",
-  "shieldexp.tooltip.attribute.parry_ticks": " %ss Parry Window",
+  "shieldexp.tooltip.attribute.parry_ticks": " %s Parry Window",
   "shieldexp.tooltip.attribute.stamina": " %s Stamina",
   "shieldexp.tooltip.attribute.blast_resistance": " %s Blast Resistance",
 

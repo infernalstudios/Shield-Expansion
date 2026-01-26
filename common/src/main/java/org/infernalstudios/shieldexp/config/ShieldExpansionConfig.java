@@ -20,6 +20,15 @@ public class ShieldExpansionConfig {
     public static List<String> SHIELD_LIST = new ArrayList<>();
     public static List<String> SHIELD_BLACKLIST = new ArrayList<>();
 
+    public static boolean TOOLTIPS = true;
+
+    public static boolean TOOLTIP_COOLDOWN = true;
+    public static boolean TOOLTIP_STAMINA = false;
+    public static boolean TOOLTIP_SPEED = false;
+    public static boolean TOOLTIP_PARRY_DAMAGE = false;
+    public static boolean TOOLTIP_PARRY_WINDOW = true;
+    public static boolean TOOLTIP_BLAST_RESISTANCE = false;
+
     public static boolean STASHING_COOLDOWN = true;
     public static boolean GENERAL_COOLDOWN = true;
     public static boolean SPEED_MODIFICATION = true;
@@ -50,6 +59,13 @@ public class ShieldExpansionConfig {
                 ADVANCED_EXPLOSIONS = data.advancedExplosions;
                 LENIENT_PARRY = data.lenientParry;
                 LENIENT_STAMINA = data.lenientStamina;
+                TOOLTIPS = data.tooltips;
+                TOOLTIP_COOLDOWN = data.tooltipCooldown;
+                TOOLTIP_STAMINA = data.tooltipStamina;
+                TOOLTIP_SPEED = data.tooltipSpeed;
+                TOOLTIP_PARRY_DAMAGE = data.tooltipParryDamage;
+                TOOLTIP_PARRY_WINDOW = data.tooltipParryWindow;
+                TOOLTIP_BLAST_RESISTANCE = data.tooltipBlastResistance;
             }
         } catch (IOException e) {
             Constants.LOG.error("Failed to load config", e);
@@ -77,10 +93,12 @@ public class ShieldExpansionConfig {
     public static Boolean isShield(Item item) {
         String itemID = BuiltInRegistries.ITEM.getKey(item).toString();
         for (String s : SHIELD_BLACKLIST) if (s.equals(itemID)) return false;
-
         for (String s : SHIELD_LIST) if (s.equals(itemID)) return true;
 
-        return item instanceof ShieldItem && BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(Constants.MOD_ID);
+        return item instanceof ShieldItem && (
+                BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(Constants.MOD_ID) ||
+                        org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS.containsKey(itemID)
+        );
     }
 
     public static void extendList(String id) {
@@ -122,5 +140,13 @@ public class ShieldExpansionConfig {
         boolean advancedExplosions = false;
         boolean lenientParry = false;
         boolean lenientStamina = false;
+
+        boolean tooltips = true;
+        boolean tooltipCooldown = true;
+        boolean tooltipStamina = false;
+        boolean tooltipSpeed = false;
+        boolean tooltipParryDamage = false;
+        boolean tooltipParryWindow = true;
+        boolean tooltipBlastResistance = false;
     }
 }
