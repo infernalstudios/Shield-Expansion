@@ -17,16 +17,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
 import org.infernalstudios.shieldexp.init.DamageTypesInit;
 import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import org.infernalstudios.shieldexp.init.SoundsInit;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 public class ShieldEvents {
+
+    public static final UUID SPEED_MODIFIER_ID = UUID.fromString("3c1b8a2e-3c62-4f5c-9e9a-5b92fcae4d2c");
 
     public static boolean onStartUsing(Entity entity, ItemStack stack) {
         Item item = stack.getItem();
@@ -42,7 +46,12 @@ public class ShieldEvents {
             LivingEntityAccess.get(player).setBlockedCooldown(10);
             LivingEntityAccess.get(player).setUsedStamina(0);
 
-            AttributeModifier speedModifier = new AttributeModifier(player.getUUID() , "Blocking Speed", 4.0 * getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier speedModifier = new AttributeModifier(
+                    SPEED_MODIFIER_ID,
+                    "Blocking Speed",
+                    4.0 * getShieldValue(item, "speedFactor"),
+                    AttributeModifier.Operation.MULTIPLY_TOTAL
+            );
 
             if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(speedModifier) && ShieldExpansionConfig.speedModifierEnabled())
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
@@ -89,7 +98,8 @@ public class ShieldEvents {
             if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
                 player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
 
-        if (ShieldExpansionConfig.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
+        if (ShieldExpansionConfig.isShield(item))
+            LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
         else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
     }
 
@@ -207,7 +217,7 @@ public class ShieldEvents {
     }
 
     public static void removeBlocking(Player player) {
-        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).removeModifier(SPEED_MODIFIER_ID);
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryWindow(0);

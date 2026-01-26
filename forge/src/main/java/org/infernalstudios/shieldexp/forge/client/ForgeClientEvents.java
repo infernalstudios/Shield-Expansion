@@ -4,7 +4,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -43,12 +42,6 @@ public class ForgeClientEvents {
     }
 
     public static class ForgeClientRuntimeEvents {
-        @SubscribeEvent
-        public static void clientTick(TickEvent.ClientTickEvent event) {
-            if (event.phase == TickEvent.Phase.END) {
-                ClientEvents.onClientTick();
-            }
-        }
 
         @SubscribeEvent
         public static void onFovModify(ComputeFovModifierEvent event) {

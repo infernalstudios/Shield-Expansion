@@ -1,14 +1,10 @@
 package org.infernalstudios.shieldexp.events;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ShieldItem;
 import org.infernalstudios.shieldexp.CommonClass;
-import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import org.infernalstudios.shieldexp.mixin.ItemPropertiesAccessor;
 
 import java.io.File;
@@ -26,16 +22,6 @@ public class ClientEvents {
         for (Supplier<ShieldItem> shieldItem : ItemsInit.SHIELDS) {
             ItemPropertiesAccessor.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
         }
-    }
-
-    public static void onClientTick() {
-        Player player = Minecraft.getInstance().player;
-        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking() && player.isUsingItem())
-            player.stopUsingItem();
-    }
-
-    public static void onLoggingOut() {
-        ShieldDataLoader.clearAll();
     }
 
     public static void copyOptionalResourcePackIfMissing() {
