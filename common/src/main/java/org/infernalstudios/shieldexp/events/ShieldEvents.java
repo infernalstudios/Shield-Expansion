@@ -2,6 +2,8 @@ package org.infernalstudios.shieldexp.events;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
+import org.infernalstudios.shieldexp.Constants;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
 import org.infernalstudios.shieldexp.init.DamageTypesInit;
@@ -27,6 +29,7 @@ import org.infernalstudios.shieldexp.init.SoundsInit;
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 public class ShieldEvents {
+    public static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "blocking_speed");
 
     public static boolean onStartUsing(Entity entity, ItemStack stack) {
         Item item = stack.getItem();
@@ -42,9 +45,13 @@ public class ShieldEvents {
             LivingEntityAccess.get(player).setBlockedCooldown(10);
             LivingEntityAccess.get(player).setUsedStamina(0);
 
-            AttributeModifier speedModifier = new AttributeModifier(player.getUUID() , "Blocking Speed", 4.0 * getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier speedModifier = new AttributeModifier(
+                    SPEED_MODIFIER_ID,
+                    4.0 * getShieldValue(item, "speedFactor"),
+                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            );
 
-            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(speedModifier) && ShieldExpansionConfig.speedModifierEnabled())
+            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER_ID) && ShieldExpansionConfig.speedModifierEnabled())
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
 
             if (!LivingEntityAccess.get(player).getBlocking())
@@ -89,7 +96,8 @@ public class ShieldEvents {
             if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
                 player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
 
-        if (ShieldExpansionConfig.isShield(item)) LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
+        if (ShieldExpansionConfig.isShield(item))
+            LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
         else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
     }
 
@@ -100,8 +108,8 @@ public class ShieldEvents {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
 
-            if (!player.level().isClientSide) {
-                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, source, amount, 0.0F, true);
+            if (player.level() instanceof ServerLevel && player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger(serverPlayer, source, amount, 0.0F, true);
             }
 
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
@@ -178,8 +186,8 @@ public class ShieldEvents {
             }
         }
 
-        if (!player.level().isClientSide) {
-            CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, source, amount, damageTaken, true);
+        if (player.level() instanceof ServerLevel && player instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.ENTITY_HURT_PLAYER.trigger(serverPlayer, source, amount, damageTaken, true);
         }
     }
 
@@ -188,8 +196,8 @@ public class ShieldEvents {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
 
-            if (!player.level().isClientSide) {
-                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) player, new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.ARROW)), 0.0F, 0.0F, true);
+            if (player.level() instanceof ServerLevel && player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.ENTITY_HURT_PLAYER.trigger(serverPlayer, new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.ARROW)), 0.0F, 0.0F, true);
             }
 
             if (LivingEntityAccess.get(player).getParryWindow() > 0) {
@@ -207,7 +215,7 @@ public class ShieldEvents {
     }
 
     public static void removeBlocking(Player player) {
-        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_ID);
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryWindow(0);
@@ -239,10 +247,14 @@ public class ShieldEvents {
     }
 
     public static void damageItem(Player player, int amount) {
-        player.getUseItem().hurtAndBreak(amount, player, (player1) -> {
-            player1.broadcastBreakEvent(player.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            removeBlocking(player);
-            player.stopUsingItem();
-        });
+        EquipmentSlot slot = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+
+        if (player.level() instanceof ServerLevel serverLevel) {
+            player.getUseItem().hurtAndBreak(amount, serverLevel, player instanceof ServerPlayer sp ? sp : null, (item) -> {
+                player.onEquippedItemBroken(item, slot);
+                removeBlocking(player);
+                player.stopUsingItem();
+            });
+        }
     }
 }

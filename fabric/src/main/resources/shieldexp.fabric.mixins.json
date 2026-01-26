@@ -10,6 +10,7 @@
     "FabricShieldEventsMixin"
   ],
   "client": [
+    "FabricFovMixin"
   ],
   "server": [
   ],

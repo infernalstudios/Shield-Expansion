@@ -1,10 +1,22 @@
 package org.infernalstudios.shieldexp.network;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import org.infernalstudios.shieldexp.Constants;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
+import org.jetbrains.annotations.NotNull;
 
 public class SyncConfig implements IPacket {
+    public static final CustomPacketPayload.Type<SyncConfig> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_config"));
+
+    public static final StreamCodec<FriendlyByteBuf, SyncConfig> STREAM_CODEC = StreamCodec.ofMember(
+            SyncConfig::encode,
+            SyncConfig::new
+    );
+
     private final boolean stashingCooldown;
     private final boolean generalCooldown;
     private final boolean speedModification;
@@ -30,7 +42,6 @@ public class SyncConfig implements IPacket {
         this.lenientStamina = buf.readBoolean();
     }
 
-    @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeBoolean(stashingCooldown);
         buf.writeBoolean(generalCooldown);
@@ -38,6 +49,11 @@ public class SyncConfig implements IPacket {
         buf.writeBoolean(advancedExplosions);
         buf.writeBoolean(lenientParry);
         buf.writeBoolean(lenientStamina);
+    }
+
+    @Override
+    public @NotNull Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
     @Override

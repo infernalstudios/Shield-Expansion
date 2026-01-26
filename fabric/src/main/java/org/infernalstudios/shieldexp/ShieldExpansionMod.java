@@ -25,7 +25,7 @@ public class ShieldExpansionMod implements ModInitializer {
     private static class FabricShieldDataLoader extends ShieldDataLoader implements IdentifiableResourceReloadListener {
         @Override
         public ResourceLocation getFabricId() {
-            return new ResourceLocation(Constants.MOD_ID, "shields");
+            return ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "shields");
         }
     }
 }

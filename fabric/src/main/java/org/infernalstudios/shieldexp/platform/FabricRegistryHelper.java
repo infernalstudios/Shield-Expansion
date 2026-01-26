@@ -13,11 +13,11 @@ import java.util.function.Supplier;
 public class FabricRegistryHelper implements IRegistryHelper {
     @Override
     public void registerItem(String id, Supplier<Item> itemSupplier) {
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Constants.MOD_ID, id), itemSupplier.get());
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), itemSupplier.get());
     }
 
     @Override
     public void registerSound(String id, Supplier<SoundEvent> soundSupplier) {
-        Registry.register(BuiltInRegistries.SOUND_EVENT, new ResourceLocation(Constants.MOD_ID, id), soundSupplier.get());
+        Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), soundSupplier.get());
     }
 }

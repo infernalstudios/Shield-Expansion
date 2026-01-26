@@ -39,19 +39,20 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void shieldexp$defineSynchedData(CallbackInfo ci) {
-        this.entityData.define(PARRY_COOLDOWN, 0);
-        this.entityData.define(BLOCKED_COOLDOWN, 0);
-        this.entityData.define(USED_STAMINA, 0);
-        this.entityData.define(LAST_SHIELD, new ItemStack(Items.AIR));
-        this.entityData.define(IS_BLOCKING, false);
+    private void shieldexp$defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(PARRY_COOLDOWN, 0);
+        builder.define(BLOCKED_COOLDOWN, 0);
+        builder.define(USED_STAMINA, 0);
+        builder.define(LAST_SHIELD, new ItemStack(Items.AIR));
+        builder.define(IS_BLOCKING, false);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void shieldexp$tick(CallbackInfo ci) {
         if (!this.level().isClientSide) {
             if (this.getParryWindow() > 0) this.setParryWindow(this.getParryWindow() - 1);
-            if (this.getBlockedCooldown() > 0) this.setBlockedCooldown(this.getBlockedCooldown() - 1);
+            if (this.getBlockedCooldown() > 0)
+                this.setBlockedCooldown(this.getBlockedCooldown() - 1);
         }
     }
 

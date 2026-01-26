@@ -14,7 +14,7 @@ public class CreativeTabEvents {
 
     private static final ResourceKey<CreativeModeTab> COMBAT_TAB = ResourceKey.create(
             Registries.CREATIVE_MODE_TAB,
-            new ResourceLocation("combat")
+            ResourceLocation.parse("combat")
     );
 
     public static void onBuildTabContents(ResourceKey<CreativeModeTab> tabKey, Consumer<ItemStack> acceptor) {

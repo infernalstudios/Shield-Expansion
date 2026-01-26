@@ -8,7 +8,6 @@ import net.minecraft.world.item.ShieldItem;
 import org.infernalstudios.shieldexp.CommonClass;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
-import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import org.infernalstudios.shieldexp.mixin.ItemPropertiesAccessor;
 
 import java.io.File;
@@ -24,18 +23,8 @@ public class ClientEvents {
                 entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
 
         for (Supplier<ShieldItem> shieldItem : ItemsInit.SHIELDS) {
-            ItemPropertiesAccessor.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+            ItemPropertiesAccessor.register(shieldItem.get(), ResourceLocation.parse("minecraft:blocking"), blockFn);
         }
-    }
-
-    public static void onClientTick() {
-        Player player = Minecraft.getInstance().player;
-        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking() && player.isUsingItem())
-            player.stopUsingItem();
-    }
-
-    public static void onLoggingOut() {
-        ShieldDataLoader.clearAll();
     }
 
     public static void copyOptionalResourcePackIfMissing() {

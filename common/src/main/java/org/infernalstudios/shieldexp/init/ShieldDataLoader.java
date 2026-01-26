@@ -4,11 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.core.registries.BuiltInRegistries;
 import org.infernalstudios.shieldexp.Constants;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
 import org.jetbrains.annotations.NotNull;
@@ -20,29 +20,13 @@ import java.util.Map;
 
 public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
     public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    public static Map<ResourceLocation, JsonElement> FILE_MAP = new HashMap<>();
     public static final Map<String, Map<String, Double>> SHIELD_STATS = new ShieldStatsMap();
-
     public static final List<Map.Entry<ResourceLocation, JsonElement>> toSync = new ArrayList<>();
-
     public static final String DEFAULT_SHIELD_NAME = Constants.MOD_ID + ":default";
+    public static Map<ResourceLocation, JsonElement> FILE_MAP = new HashMap<>();
 
     public ShieldDataLoader() {
         super(GSON, "shields");
-    }
-
-    @Override
-    public void apply(@NotNull Map<ResourceLocation, JsonElement> files, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profilerFiller) {
-        FILE_MAP = files;
-        toSync.clear();
-
-        for (ResourceLocation name : FILE_MAP.keySet()) {
-            if (BuiltInRegistries.ITEM.containsKey(name) || name.toString().equals(DEFAULT_SHIELD_NAME)) {
-                JsonElement data = files.get(name);
-                parse(name, data.getAsJsonObject());
-            }
-        }
-        toSync.addAll(files.entrySet());
     }
 
     public static void parse(ResourceLocation name, JsonObject data) {
@@ -64,8 +48,18 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
         }
     }
 
-    public static void clearAll() {
-        SHIELD_STATS.clear();
+    @Override
+    public void apply(@NotNull Map<ResourceLocation, JsonElement> files, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profilerFiller) {
+        FILE_MAP = files;
+        toSync.clear();
+
+        for (ResourceLocation name : FILE_MAP.keySet()) {
+            if (BuiltInRegistries.ITEM.containsKey(name) || name.toString().equals(DEFAULT_SHIELD_NAME)) {
+                JsonElement data = files.get(name);
+                parse(name, data.getAsJsonObject());
+            }
+        }
+        toSync.addAll(files.entrySet());
     }
 
     private static class ShieldStatsMap extends HashMap<String, Map<String, Double>> {

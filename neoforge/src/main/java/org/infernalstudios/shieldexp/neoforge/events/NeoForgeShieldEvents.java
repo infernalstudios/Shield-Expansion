@@ -1,19 +1,17 @@
-package org.infernalstudios.shieldexp.forge.events;
+package org.infernalstudios.shieldexp.neoforge.events;
 
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.infernalstudios.shieldexp.Constants;
 import org.infernalstudios.shieldexp.events.ShieldEvents;
-import org.infernalstudios.shieldexp.events.TooltipEvents;
 
-@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ForgeShieldEvents {
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+public class NeoForgeShieldEvents {
 
     @SubscribeEvent
     public static void onStartUsing(LivingEntityUseItemEvent.Start event) {
@@ -38,16 +36,14 @@ public class ForgeShieldEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            ShieldEvents.onPlayerTick(event.player);
-        }
+    public static void onPlayerTick(PlayerTickEvent.Post event) {
+        ShieldEvents.onPlayerTick(event.getEntity());
     }
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingAttackEvent event) {
-        if (ShieldEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getAmount())) {
-            event.setCanceled(true);
+    public static void onLivingHurt(LivingDamageEvent.Pre event) {
+        if (ShieldEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getNewDamage())) {
+            event.setNewDamage(0);
         }
     }
 
@@ -58,10 +54,5 @@ public class ForgeShieldEvents {
                 event.setCanceled(true);
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void onTooltip(ItemTooltipEvent event) {
-        TooltipEvents.addTooltip(event.getItemStack(), event.getEntity(), event.getToolTip());
     }
 }
