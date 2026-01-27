@@ -20,12 +20,12 @@ public class NeoForgeNetworkHelper implements INetworkHelper {
                 SyncShields.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(() -> payload.handle(context.player()))
         );
-        registrar.playToClient(
+        registrar.playToServer(
                 SyncBlocking.TYPE,
                 SyncBlocking.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(() -> payload.handle(context.player()))
         );
-        registrar.playToServer(
+        registrar.playBidirectional(
                 SyncConfig.TYPE,
                 SyncConfig.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(() -> payload.handle(context.player()))

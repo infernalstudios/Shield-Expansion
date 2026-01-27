@@ -58,7 +58,7 @@ public class SyncConfig implements IPacket {
 
     @Override
     public void handle(Player player) {
-        if (player.hasPermissions(2)) {
+        if (player.level().isClientSide || player.hasPermissions(2)) {
             ShieldExpansionConfig.STASHING_COOLDOWN = this.stashingCooldown;
             ShieldExpansionConfig.GENERAL_COOLDOWN = this.generalCooldown;
             ShieldExpansionConfig.SPEED_MODIFICATION = this.speedModification;
