@@ -20,6 +20,8 @@ public class ShieldExpansionConfig {
     public static List<String> SHIELD_LIST = new ArrayList<>();
     public static List<String> SHIELD_BLACKLIST = new ArrayList<>();
 
+    public static boolean ITEM_ONLY_MODE = false;
+
     public static boolean TOOLTIPS = true;
 
     public static boolean TOOLTIP_COOLDOWN = true;
@@ -53,6 +55,7 @@ public class ShieldExpansionConfig {
             if (data != null) {
                 SHIELD_LIST = data.shieldList;
                 SHIELD_BLACKLIST = data.shieldBlacklist;
+                ITEM_ONLY_MODE = data.itemOnlyMode;
                 STASHING_COOLDOWN = data.stashingCooldown;
                 GENERAL_COOLDOWN = data.generalCooldown;
                 SPEED_MODIFICATION = data.speedModification;
@@ -76,6 +79,7 @@ public class ShieldExpansionConfig {
         ConfigData data = new ConfigData();
         data.shieldList = SHIELD_LIST;
         data.shieldBlacklist = SHIELD_BLACKLIST;
+        data.itemOnlyMode = ITEM_ONLY_MODE;
         data.stashingCooldown = STASHING_COOLDOWN;
         data.generalCooldown = GENERAL_COOLDOWN;
         data.speedModification = SPEED_MODIFICATION;
@@ -134,6 +138,7 @@ public class ShieldExpansionConfig {
     private static class ConfigData {
         List<String> shieldList = new ArrayList<>();
         List<String> shieldBlacklist = new ArrayList<>();
+        boolean itemOnlyMode = false;
         boolean stashingCooldown = true;
         boolean generalCooldown = true;
         boolean speedModification = true;

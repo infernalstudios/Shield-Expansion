@@ -3,7 +3,6 @@ package org.infernalstudios.shieldexp;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
@@ -18,7 +17,7 @@ import org.infernalstudios.shieldexp.platform.NeoForgeRegistryHelper;
 @Mod(Constants.MOD_ID)
 public class ShieldExpansionMod {
 
-    public ShieldExpansionMod(IEventBus modEventBus, ModContainer modContainer) {
+    public ShieldExpansionMod(IEventBus modEventBus) {
         CommonClass.init();
 
         modEventBus.addListener(this::addCreative);

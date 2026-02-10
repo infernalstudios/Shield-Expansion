@@ -15,6 +15,9 @@
   "config.shieldexp.option.cooldown": "Shield Cooldowns",
   "config.shieldexp.tooltip.cooldown": "Enable shield cooldowns mechanisms.",
 
+  "config.shieldexp.option.item_only_mode": "Item Only Mode",
+  "config.shieldexp.tooltip.item_only_mode": "Disable all Shield Expansion behaviour (for use with other shield mods like Guarding).",
+
   "config.shieldexp.option.speed_modifier": "Speed Adjustment",
   "config.shieldexp.tooltip.speed_modifier": "Enable the speed adjustment to make blocking faster (reduces the vanilla movement penalty).",
 

@@ -44,6 +44,12 @@ public class ClothConfigIntegration {
                 .setSaveConsumer(list -> ShieldExpansionConfig.SHIELD_BLACKLIST = list)
                 .build());
 
+        modifiers.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.item_only_mode"), ShieldExpansionConfig.ITEM_ONLY_MODE)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("config.shieldexp.tooltip.item_only_mode"))
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.ITEM_ONLY_MODE = newValue)
+                .build());
+
         modifiers.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.lowering_cooldown"), ShieldExpansionConfig.STASHING_COOLDOWN)
                 .setDefaultValue(true)
                 .setTooltip(Component.translatable("config.shieldexp.tooltip.lowering_cooldown"))

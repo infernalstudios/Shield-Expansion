@@ -32,6 +32,8 @@ public class ShieldEvents {
     public static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "blocking_speed");
 
     public static boolean onStartUsing(Entity entity, ItemStack stack) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return false;
+
         Item item = stack.getItem();
         if (entity instanceof Player player && player.getCooldowns().isOnCooldown(item)) {
             return true;
@@ -61,6 +63,8 @@ public class ShieldEvents {
     }
 
     public static void onStopUsing(Entity entity, ItemStack stack) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
+
         Item item = stack.getItem();
         if (entity instanceof Player player && ShieldExpansionConfig.isShield(item)) {
             removeBlocking(player);
@@ -70,6 +74,8 @@ public class ShieldEvents {
     }
 
     public static void onUseTick(Entity entity, ItemStack stack) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
+
         Item item = stack.getItem();
         if (entity instanceof Player player && ShieldExpansionConfig.isShield(item) && LivingEntityAccess.get(player).getBlocking() && player.attackAnim > 0) {
             removeBlocking(player);
@@ -80,6 +86,8 @@ public class ShieldEvents {
     }
 
     public static void onPlayerTick(Player player) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
+
         Item item = player.getUseItem().getItem();
         Item lastShield = LivingEntityAccess.get(player).getLastShield().getItem();
 
@@ -102,6 +110,8 @@ public class ShieldEvents {
     }
 
     public static boolean onLivingHurt(LivingEntity entity, DamageSource source, float amount) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return false;
+
         if (!(entity instanceof Player player)) return false;
 
         if (validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
@@ -192,6 +202,8 @@ public class ShieldEvents {
     }
 
     public static boolean onProjectileImpact(Entity entity, Entity projectile) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return false;
+
         if (entity instanceof Player player && validateBlocking(player)) {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);

@@ -7,8 +7,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.infernalstudios.shieldexp.Constants;
@@ -52,9 +52,9 @@ public class NeoForgeShieldEvents {
     }
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingDamageEvent.Pre event) {
-        if (ShieldEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getNewDamage())) {
-            event.setNewDamage(0);
+    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        if (ShieldEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getAmount())) {
+            event.setCanceled(true);
         }
     }
 
@@ -73,7 +73,7 @@ public class NeoForgeShieldEvents {
             Services.NETWORK.sendToPlayer(serverPlayer, new SyncConfig());
 
             Map<ResourceLocation, JsonElement> shieldMap = new HashMap<>();
-            for (Map.Entry<net.minecraft.resources.ResourceLocation, JsonElement> entry : ShieldDataLoader.toSync) {
+            for (Map.Entry<ResourceLocation, JsonElement> entry : ShieldDataLoader.toSync) {
                 shieldMap.put(entry.getKey(), entry.getValue());
             }
             Services.NETWORK.sendToPlayer(serverPlayer, new SyncShields(shieldMap));
