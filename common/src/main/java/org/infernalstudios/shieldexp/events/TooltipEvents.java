@@ -11,6 +11,8 @@ import java.util.List;
 
 public class TooltipEvents {
     public static void addTooltip(ItemStack stack, Player player, List<Component> tooltip) {
+        if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
+
         Item item = stack.getItem();
         if (player != null && ShieldExpansionConfig.isShield(item) && ShieldExpansionConfig.TOOLTIPS) {
             tooltip.add(Component.literal(" "));

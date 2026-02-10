@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
 
 public class SyncConfig implements IPacket {
+    private final boolean itemOnlyMode;
     private final boolean stashingCooldown;
     private final boolean generalCooldown;
     private final boolean speedModification;
@@ -13,6 +14,7 @@ public class SyncConfig implements IPacket {
     private final boolean lenientStamina;
 
     public SyncConfig() {
+        this.itemOnlyMode = ShieldExpansionConfig.ITEM_ONLY_MODE;
         this.stashingCooldown = ShieldExpansionConfig.STASHING_COOLDOWN;
         this.generalCooldown = ShieldExpansionConfig.GENERAL_COOLDOWN;
         this.speedModification = ShieldExpansionConfig.SPEED_MODIFICATION;
@@ -22,6 +24,7 @@ public class SyncConfig implements IPacket {
     }
 
     public SyncConfig(FriendlyByteBuf buf) {
+        this.itemOnlyMode = buf.readBoolean();
         this.stashingCooldown = buf.readBoolean();
         this.generalCooldown = buf.readBoolean();
         this.speedModification = buf.readBoolean();
@@ -32,6 +35,7 @@ public class SyncConfig implements IPacket {
 
     @Override
     public void encode(FriendlyByteBuf buf) {
+        buf.writeBoolean(itemOnlyMode);
         buf.writeBoolean(stashingCooldown);
         buf.writeBoolean(generalCooldown);
         buf.writeBoolean(speedModification);
@@ -43,6 +47,7 @@ public class SyncConfig implements IPacket {
     @Override
     public void handle(Player player) {
         if (player.level().isClientSide || player.hasPermissions(2)) {
+            ShieldExpansionConfig.ITEM_ONLY_MODE = this.itemOnlyMode;
             ShieldExpansionConfig.STASHING_COOLDOWN = this.stashingCooldown;
             ShieldExpansionConfig.GENERAL_COOLDOWN = this.generalCooldown;
             ShieldExpansionConfig.SPEED_MODIFICATION = this.speedModification;

@@ -6,8 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingIncomingDamageEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,7 +56,7 @@ public class ForgeShieldEvents {
     }
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingAttackEvent event) {
+    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
         if (ShieldEvents.onLivingHurt(event.getEntity(), event.getSource(), event.getAmount())) {
             event.setCanceled(true);
         }
