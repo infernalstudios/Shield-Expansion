@@ -1,7 +1,3 @@
-### Added
-
-- Added new "item only" config option to fully disable mod behaviour.
-
 ### Fixed
 
-- Fixed shield cooldown not working properly.
+- Fixed food and spyglasses acting like shields on 1.20.1.
