@@ -31,6 +31,10 @@ public class ShieldExpansionConfig {
     public static boolean TOOLTIP_PARRY_WINDOW = true;
     public static boolean TOOLTIP_BLAST_RESISTANCE = false;
 
+    public static boolean HUD_INDICATOR = true;
+    public static int HUD_X_OFFSET = 0;
+    public static int HUD_Y_OFFSET = 0;
+
     public static boolean STASHING_COOLDOWN = true;
     public static boolean GENERAL_COOLDOWN = true;
     public static boolean SPEED_MODIFICATION = true;
@@ -69,6 +73,9 @@ public class ShieldExpansionConfig {
                 TOOLTIP_PARRY_DAMAGE = data.tooltipParryDamage;
                 TOOLTIP_PARRY_WINDOW = data.tooltipParryWindow;
                 TOOLTIP_BLAST_RESISTANCE = data.tooltipBlastResistance;
+                HUD_INDICATOR = data.hudIndicator;
+                HUD_X_OFFSET = data.hudXOffset;
+                HUD_Y_OFFSET = data.hudYOffset;
             }
         } catch (IOException e) {
             Constants.LOG.error("Failed to load config", e);
@@ -86,6 +93,16 @@ public class ShieldExpansionConfig {
         data.advancedExplosions = ADVANCED_EXPLOSIONS;
         data.lenientParry = LENIENT_PARRY;
         data.lenientStamina = LENIENT_STAMINA;
+        data.tooltips = TOOLTIPS;
+        data.tooltipCooldown = TOOLTIP_COOLDOWN;
+        data.tooltipStamina = TOOLTIP_STAMINA;
+        data.tooltipSpeed = TOOLTIP_SPEED;
+        data.tooltipParryDamage = TOOLTIP_PARRY_DAMAGE;
+        data.tooltipParryWindow = TOOLTIP_PARRY_WINDOW;
+        data.tooltipBlastResistance = TOOLTIP_BLAST_RESISTANCE;
+        data.hudIndicator = HUD_INDICATOR;
+        data.hudXOffset = HUD_X_OFFSET;
+        data.hudYOffset = HUD_Y_OFFSET;
 
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
             GSON.toJson(data, writer);
@@ -153,5 +170,8 @@ public class ShieldExpansionConfig {
         boolean tooltipParryDamage = false;
         boolean tooltipParryWindow = true;
         boolean tooltipBlastResistance = false;
+        boolean hudIndicator = true;
+        int hudXOffset = 0;
+        int hudYOffset = 0;
     }
 }

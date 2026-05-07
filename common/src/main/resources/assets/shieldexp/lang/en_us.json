@@ -30,6 +30,14 @@
   "config.shieldexp.option.lenient_stamina_mode": "Lenient Stamina",
   "config.shieldexp.tooltip.lenient_stamina_mode": "Double the available shield stamina.",
 
+  "config.shieldexp.option.hud_indicator": "HUD Shield Indicator",
+  "config.shieldexp.tooltip.hud_indicator": "Shows a stamina and cooldown indicator for your shield to the left of the crosshair.",
+
+  "config.shieldexp.option.hud_x_offset": "HUD X Offset",
+  "config.shieldexp.tooltip.hud_x_offset": "Horizontal offset for the shield HUD indicator. Default is 0.",
+  "config.shieldexp.option.hud_y_offset": "HUD Y Offset",
+  "config.shieldexp.tooltip.hud_y_offset": "Vertical offset for the shield HUD indicator. Default is 0.",
+
   "config.shieldexp.category.tooltips": "Tooltips",
 
   "config.shieldexp.option.enable_tooltips": "Enable Tooltips",

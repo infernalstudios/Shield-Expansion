@@ -121,6 +121,24 @@ public class ClothConfigIntegration {
                 .setSaveConsumer(newValue -> ShieldExpansionConfig.TOOLTIP_BLAST_RESISTANCE = newValue)
                 .build());
 
+        tooltips.addEntry(entryBuilder.startBooleanToggle(Component.translatable("config.shieldexp.option.hud_indicator"), ShieldExpansionConfig.HUD_INDICATOR)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.shieldexp.tooltip.hud_indicator"))
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.HUD_INDICATOR = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startIntField(Component.translatable("config.shieldexp.option.hud_x_offset"), ShieldExpansionConfig.HUD_X_OFFSET)
+                .setDefaultValue(0)
+                .setTooltip(Component.translatable("config.shieldexp.tooltip.hud_x_offset"))
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.HUD_X_OFFSET = newValue)
+                .build());
+
+        tooltips.addEntry(entryBuilder.startIntField(Component.translatable("config.shieldexp.option.hud_y_offset"), ShieldExpansionConfig.HUD_Y_OFFSET)
+                .setDefaultValue(0)
+                .setTooltip(Component.translatable("config.shieldexp.tooltip.hud_y_offset"))
+                .setSaveConsumer(newValue -> ShieldExpansionConfig.HUD_Y_OFFSET = newValue)
+                .build());
+
         return builder.build();
     }
 }
