@@ -1,7 +1,3 @@
 ### Added
 
-- Added new "item only" config option to fully disable mod behaviour.
-
-### Fixed
-
-- Fixed shield cooldown not working properly.
+- Added crosshair tooltip for displaying shield stamina and related config options (offsets, enabled).

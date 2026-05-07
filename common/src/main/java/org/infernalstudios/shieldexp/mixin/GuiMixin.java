@@ -63,8 +63,8 @@ public class GuiMixin {
                 RenderSystem.enableBlend();
                 RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-                int y = guiGraphics.guiHeight() / 2 - 7 + ShieldExpansionConfig.HUD_Y_OFFSET;
-                int x = guiGraphics.guiWidth() / 2 - 28 + ShieldExpansionConfig.HUD_X_OFFSET;
+                int y = guiGraphics.guiHeight() / 2 - 9 + ShieldExpansionConfig.HUD_Y_OFFSET;
+                int x = guiGraphics.guiWidth() / 2 - 23 + ShieldExpansionConfig.HUD_X_OFFSET;
 
                 if (readiness >= 1.0F) {
                     guiGraphics.blitSprite(SHIELD_INDICATOR_FULL, x, y, 16, 16);
