@@ -33,6 +33,9 @@ public class GuiMixin {
         if (!ShieldExpansionConfig.HUD_INDICATOR) return;
 
         Minecraft mc = Minecraft.getInstance();
+
+        if (!mc.options.getCameraType().isFirstPerson()) return;
+
         Player player = mc.player;
         if (player == null) return;
 

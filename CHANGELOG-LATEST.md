@@ -1,3 +1,3 @@
-### Added
+### Fixed
 
-- Added crosshair tooltip for displaying shield stamina and related config options (offsets, enabled).
+- Fixed crosshair shield icon displaying in 3rd person.
