@@ -1,7 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 neoForge {
@@ -58,10 +58,11 @@ publishMods {
         projectId = "583318"
         minecraftVersions.add("${minecraft_version}")
 
-        optional { slug = "cloth-config" }
-        optional { slug = "mining-master" }
-        optional { slug = "savage-and-ravage" }
-        optional { slug = "better-combat-by-daedelus" }
+        client = true
+        server = true
+        optional("cloth-config")
+        optional("mining-master")
+        optional("better-combat-by-daedelus")
     }
 
     modrinth {
@@ -69,9 +70,8 @@ publishMods {
         projectId = "sjxWxSao"
         minecraftVersions.add("${minecraft_version}")
 
-        optional { slug = "cloth-config" }
-        optional { slug = "mining-master" }
-        optional { slug = "savage-and-ravage" }
-        optional { slug = "better-combat" }
+        optional("cloth-config")
+        optional("mining-master")
+        optional("better-combat")
     }
 }
