@@ -11,33 +11,33 @@ public interface LivingEntityAccess {
     /**
      * Returns the remaining ticks where parrying is possible.
      */
-    int getParryWindow();
+    int shieldexp$getParryWindow();
 
     /**
      * Sets the amount of next ticks where parrying is possible.
      */
-    void setParryWindow(int parry);
+    void shieldexp$setParryWindow(int parry);
 
-    int getBlockedCooldown();
+    int shieldexp$getBlockedCooldown();
 
-    void setBlockedCooldown(int block);
+    void shieldexp$setBlockedCooldown(int block);
 
     /**
      * Returns true if the player is currently in the blocking state.
      */
-    boolean getBlocking();
+    boolean shieldexp$getBlocking();
 
     /**
      * Sets the blocking state of the player to the given bool value.
      */
-    void setBlocking(boolean bool);
+    void shieldexp$setBlocking(boolean bool);
 
-    int getUsedStamina();
+    int shieldexp$getUsedStamina();
 
-    void setUsedStamina(int stamina);
+    void shieldexp$setUsedStamina(int stamina);
 
-    ItemStack getLastShield();
+    ItemStack shieldexp$getLastShield();
 
-    void setLastShield(ItemStack shield);
+    void shieldexp$setLastShield(ItemStack shield);
 
 }

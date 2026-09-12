@@ -57,7 +57,7 @@ public class GuiMixin {
                 int maxStamina = ShieldEvents.getShieldValue(shieldItem, "stamina").intValue();
                 if (ShieldExpansionConfig.lenientStaminaEnabled()) maxStamina *= 2;
 
-                int usedStamina = LivingEntityAccess.get(player).getUsedStamina();
+                int usedStamina = LivingEntityAccess.get(player).shieldexp$getUsedStamina();
                 readiness = Math.max(0.0F, 1.0F - ((float) usedStamina / maxStamina));
                 show = true;
             }

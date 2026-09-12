@@ -4,10 +4,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import org.infernalstudios.shieldexp.network.IPacket;
-import org.infernalstudios.shieldexp.network.SyncBlocking;
-import org.infernalstudios.shieldexp.network.SyncConfig;
-import org.infernalstudios.shieldexp.network.SyncShields;
+import org.infernalstudios.shieldexp.network.*;
 import org.infernalstudios.shieldexp.platform.services.INetworkHelper;
 
 public class NeoForgeNetworkHelper implements INetworkHelper {
@@ -18,6 +15,11 @@ public class NeoForgeNetworkHelper implements INetworkHelper {
         registrar.playToClient(
                 SyncShields.TYPE,
                 SyncShields.STREAM_CODEC,
+                (payload, context) -> context.enqueueWork(() -> payload.handle(context.player()))
+        );
+        registrar.playToClient(
+                SyncStamina.TYPE,
+                SyncStamina.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(() -> payload.handle(context.player()))
         );
         registrar.playToServer(

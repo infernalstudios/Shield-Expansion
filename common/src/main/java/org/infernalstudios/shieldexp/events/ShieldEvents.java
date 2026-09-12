@@ -43,9 +43,9 @@ public class ShieldEvents {
             int parryTicks = getShieldValue(item, "parryTicks").intValue();
             if (ShieldExpansionConfig.lenientParryEnabled()) parryTicks = parryTicks * 2;
 
-            LivingEntityAccess.get(player).setParryWindow(parryTicks);
-            LivingEntityAccess.get(player).setBlockedCooldown(10);
-            LivingEntityAccess.get(player).setUsedStamina(0);
+            LivingEntityAccess.get(player).shieldexp$setParryWindow(parryTicks);
+            LivingEntityAccess.get(player).shieldexp$setBlockedCooldown(10);
+            LivingEntityAccess.get(player).shieldexp$setUsedStamina(0);
 
             AttributeModifier speedModifier = new AttributeModifier(
                     SPEED_MODIFIER_ID,
@@ -56,8 +56,8 @@ public class ShieldEvents {
             if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER_ID) && ShieldExpansionConfig.speedModifierEnabled())
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
 
-            if (!LivingEntityAccess.get(player).getBlocking())
-                LivingEntityAccess.get(player).setBlocking(true);
+            if (!LivingEntityAccess.get(player).shieldexp$getBlocking())
+                LivingEntityAccess.get(player).shieldexp$setBlocking(true);
         }
         return false;
     }
@@ -68,7 +68,7 @@ public class ShieldEvents {
         Item item = stack.getItem();
         if (entity instanceof Player player && ShieldExpansionConfig.isShield(item)) {
             removeBlocking(player);
-            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && ShieldExpansionConfig.stashingCooldownEnabled() && ShieldExpansionConfig.cooldownEnabled())
+            if (LivingEntityAccess.get(player).shieldexp$getBlockedCooldown() <= 0 && ShieldExpansionConfig.stashingCooldownEnabled() && ShieldExpansionConfig.cooldownEnabled())
                 player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
         }
     }
@@ -77,9 +77,9 @@ public class ShieldEvents {
         if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
 
         Item item = stack.getItem();
-        if (entity instanceof Player player && ShieldExpansionConfig.isShield(item) && LivingEntityAccess.get(player).getBlocking() && player.attackAnim > 0) {
+        if (entity instanceof Player player && ShieldExpansionConfig.isShield(item) && LivingEntityAccess.get(player).shieldexp$getBlocking() && player.attackAnim > 0) {
             removeBlocking(player);
-            if (LivingEntityAccess.get(player).getBlockedCooldown() <= 0 && ShieldExpansionConfig.stashingCooldownEnabled() && ShieldExpansionConfig.cooldownEnabled())
+            if (LivingEntityAccess.get(player).shieldexp$getBlockedCooldown() <= 0 && ShieldExpansionConfig.stashingCooldownEnabled() && ShieldExpansionConfig.cooldownEnabled())
                 player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
             player.stopUsingItem();
         }
@@ -89,24 +89,24 @@ public class ShieldEvents {
         if (ShieldExpansionConfig.ITEM_ONLY_MODE) return;
 
         Item item = player.getUseItem().getItem();
-        Item lastShield = LivingEntityAccess.get(player).getLastShield().getItem();
+        Item lastShield = LivingEntityAccess.get(player).shieldexp$getLastShield().getItem();
 
         if (!ShieldExpansionConfig.isShield(item)) {
             removeBlocking(player);
         }
 
-        if (!(ShieldExpansionConfig.isShield(player.getMainHandItem().getItem()) || ShieldExpansionConfig.isShield(player.getOffhandItem().getItem())) && LivingEntityAccess.get(player).getBlocking()) {
+        if (!(ShieldExpansionConfig.isShield(player.getMainHandItem().getItem()) || ShieldExpansionConfig.isShield(player.getOffhandItem().getItem())) && LivingEntityAccess.get(player).shieldexp$getBlocking()) {
             removeBlocking(player);
             player.stopUsingItem();
         }
 
         if (lastShield != item && ShieldExpansionConfig.isShield(lastShield) && ShieldExpansionConfig.stashingCooldownEnabled() && ShieldExpansionConfig.cooldownEnabled() && player.isUsingItem())
-            if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).getBlockedCooldown() <= 0)
+            if (!player.getCooldowns().isOnCooldown(lastShield) && LivingEntityAccess.get(player).shieldexp$getBlockedCooldown() <= 0)
                 player.getCooldowns().addCooldown(lastShield, getShieldValue(lastShield, "cooldownTicks").intValue());
 
         if (ShieldExpansionConfig.isShield(item))
-            LivingEntityAccess.get(player).setLastShield(item.getDefaultInstance());
-        else LivingEntityAccess.get(player).setLastShield(new ItemStack(Items.AIR));
+            LivingEntityAccess.get(player).shieldexp$setLastShield(item.getDefaultInstance());
+        else LivingEntityAccess.get(player).shieldexp$setLastShield(new ItemStack(Items.AIR));
     }
 
     public static boolean onLivingHurt(LivingEntity entity, DamageSource source, float amount) {
@@ -122,7 +122,7 @@ public class ShieldEvents {
                 CriteriaTriggers.ENTITY_HURT_PLAYER.trigger(serverPlayer, source, amount, 0.0F, true);
             }
 
-            if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+            if (LivingEntityAccess.get(player).shieldexp$getParryWindow() > 0) {
                 player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 Entity directEntity = source.getDirectEntity();
                 if (directEntity instanceof LivingEntity livingEntity) {
@@ -155,7 +155,7 @@ public class ShieldEvents {
         player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
 
         float damageTaken = 0.0F;
-        if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+        if (LivingEntityAccess.get(player).shieldexp$getParryWindow() > 0) {
             player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
             damageItem(player, (int) usedDurability);
             if (ShieldExpansionConfig.cooldownEnabled()) {
@@ -212,7 +212,7 @@ public class ShieldEvents {
                 CriteriaTriggers.ENTITY_HURT_PLAYER.trigger(serverPlayer, new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.ARROW)), 0.0F, 0.0F, true);
             }
 
-            if (LivingEntityAccess.get(player).getParryWindow() > 0) {
+            if (LivingEntityAccess.get(player).shieldexp$getParryWindow() > 0) {
                 player.level().playSound(null, player.getOnPos(), SoundsInit.PARRY_SOUND.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.0D));
                 projectile.syncPacketPositionCodec(projectile.getX(), projectile.getY(), projectile.getZ());
@@ -228,14 +228,14 @@ public class ShieldEvents {
 
     public static void removeBlocking(Player player) {
         player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_ID);
-        if (LivingEntityAccess.get(player).getBlocking())
-            LivingEntityAccess.get(player).setBlocking(false);
-        LivingEntityAccess.get(player).setParryWindow(0);
+        if (LivingEntityAccess.get(player).shieldexp$getBlocking())
+            LivingEntityAccess.get(player).shieldexp$setBlocking(false);
+        LivingEntityAccess.get(player).shieldexp$setParryWindow(0);
     }
 
     public static boolean validateBlocking(Player player) {
         return ShieldExpansionConfig.isShield(player.getUseItem().getItem())
-                && LivingEntityAccess.get(player).getBlocking()
+                && LivingEntityAccess.get(player).shieldexp$getBlocking()
                 && player.attackAnim == 0
                 && !player.getCooldowns().isOnCooldown(player.getUseItem().getItem());
     }
@@ -247,10 +247,10 @@ public class ShieldEvents {
 
     public static void stamina(Player player, Item item, int stamina) {
         if (ShieldExpansionConfig.cooldownEnabled()) {
-            LivingEntityAccess.get(player).setUsedStamina(LivingEntityAccess.get(player).getUsedStamina() + stamina);
+            LivingEntityAccess.get(player).shieldexp$setUsedStamina(LivingEntityAccess.get(player).shieldexp$getUsedStamina() + stamina);
             int maxStamina = getShieldValue(item, "stamina").intValue();
             if (ShieldExpansionConfig.lenientStaminaEnabled()) maxStamina = maxStamina * 2;
-            if (LivingEntityAccess.get(player).getUsedStamina() >= maxStamina) {
+            if (LivingEntityAccess.get(player).shieldexp$getUsedStamina() >= maxStamina) {
                 player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
                 removeBlocking(player);
                 player.stopUsingItem();
