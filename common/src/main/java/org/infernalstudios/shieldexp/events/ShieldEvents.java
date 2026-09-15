@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -16,9 +17,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import org.infernalstudios.shieldexp.Constants;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.config.ShieldExpansionConfig;
@@ -114,7 +119,12 @@ public class ShieldEvents {
 
         if (!(entity instanceof Player player)) return false;
 
-        if (validateBlocking(player) && (source.getMsgId().equals("player") || source.getMsgId().equals("mob"))) {
+        if (validateBlocking(player) && player.isDamageSourceBlocked(source)) {
+            if (source.is(DamageTypeTags.IS_EXPLOSION) || source.getMsgId().contains("explosion")) {
+                handleExplosion(player, source, amount);
+                return true;
+            }
+
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
 
@@ -133,15 +143,10 @@ public class ShieldEvents {
                 }
                 damageItem(player, 1);
             } else {
-                damageItem(player, (int) amount);
+                damageItem(player, Math.max(1, (int) amount));
                 if (amount > 5) stamina(player, item, 3);
                 else if (amount > 0) stamina(player, item, 2);
             }
-            return true;
-        }
-
-        if (validateBlocking(player) && source.getMsgId().contains("explosion")) {
-            handleExplosion(player, source, amount);
             return true;
         }
 
@@ -201,10 +206,24 @@ public class ShieldEvents {
         }
     }
 
+    public static boolean canBlockProjectile(Player player, Entity projectile) {
+        if (projectile instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) {
+            return false;
+        }
+        Vec3 viewVec = player.calculateViewVector(0.0F, player.getYHeadRot());
+        Vec3 diff = projectile.position().vectorTo(player.position());
+        diff = new Vec3(diff.x, 0.0, diff.z);
+        if (diff.lengthSqr() > 1.0E-7) {
+            diff = diff.normalize();
+            return diff.dot(viewVec) < 0.0;
+        }
+        return false;
+    }
+
     public static boolean onProjectileImpact(Entity entity, Entity projectile) {
         if (ShieldExpansionConfig.ITEM_ONLY_MODE) return false;
 
-        if (entity instanceof Player player && validateBlocking(player)) {
+        if (entity instanceof Player player && validateBlocking(player) && canBlockProjectile(player, projectile)) {
             Item item = player.getUseItem().getItem();
             player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.0f, 1.0f);
 
@@ -218,6 +237,10 @@ public class ShieldEvents {
                 projectile.syncPacketPositionCodec(projectile.getX(), projectile.getY(), projectile.getZ());
                 damageItem(player, 1);
             } else {
+                if (projectile instanceof Projectile proj) {
+                    proj.deflect(ProjectileDeflection.REVERSE, player, proj.getOwner(), false);
+                    proj.setDeltaMovement(proj.getDeltaMovement().scale(0.2));
+                }
                 damageItem(player, 1);
                 stamina(player, item, 1);
             }
@@ -259,13 +282,16 @@ public class ShieldEvents {
     }
 
     public static void damageItem(Player player, int amount) {
-        EquipmentSlot slot = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+        InteractionHand hand = player.getUsedItemHand();
+        EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
 
         if (player.level() instanceof ServerLevel serverLevel) {
-            player.getUseItem().hurtAndBreak(amount, serverLevel, player instanceof ServerPlayer sp ? sp : null, (item) -> {
+            player.getUseItem().hurtAndBreak(Math.max(amount, 1), serverLevel, player instanceof ServerPlayer sp ? sp : null, (item) -> {
                 player.onEquippedItemBroken(item, slot);
-                removeBlocking(player);
+                player.setItemSlot(slot, ItemStack.EMPTY);
                 player.stopUsingItem();
+                removeBlocking(player);
+                player.level().playSound(null, player.getOnPos(), SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 0.8F, 0.8F + player.level().random.nextFloat() * 0.4F);
             });
         }
     }
