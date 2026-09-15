@@ -1,14 +1,60 @@
 {
-  "shieldexp.tooltip.instructions": "Talimatlar için Shift tuşunu basılı tut",
-  "shieldexp.tooltip.instructions.parry": "Saldırıları savuşturmak için vurulmadan hemen önce kalkanını kaldır!",
+  "config.shieldexp.title": "Shield Expansion Yapılandırması",
+  "config.shieldexp.category.shield_list": "Kalkan Listeleri",
+  "config.shieldexp.category.modifiers": "Değiştiriciler",
+
+  "config.shieldexp.option.shield_list": "Kalkan Beyaz Listesi",
+  "config.shieldexp.tooltip.shield_list": "Kalkan olarak kabul edilen eşyaların listesi. Veri paketleri tarafından otomatik olarak doldurulur.",
+
+  "config.shieldexp.option.shield_blacklist": "Kalkan Kara Listesi",
+  "config.shieldexp.tooltip.shield_blacklist": "Beyaz listede olsalar bile yok sayılacak eşyaların listesi.",
+
+  "config.shieldexp.option.lowering_cooldown": "İndirme Bekleme Süresi",
+  "config.shieldexp.tooltip.lowering_cooldown": "Kalkanı elinizle indirdiğinizde uygulanan bekleme süresini etkinleştirir.",
+
+  "config.shieldexp.option.cooldown": "Kalkan Bekleme Süreleri",
+  "config.shieldexp.tooltip.cooldown": "Kalkan bekleme süresi mekaniklerini etkinleştirir.",
+
+  "config.shieldexp.option.item_only_mode": "Yalnızca Eşya Modu",
+  "config.shieldexp.tooltip.item_only_mode": "Tüm Shield Expansion davranışlarını devre dışı bırakır (Guarding gibi diğer kalkan modlarıyla kullanmak içindir).",
+
+  "config.shieldexp.option.speed_modifier": "Hız Ayarlaması",
+  "config.shieldexp.tooltip.speed_modifier": "Engellemeyi hızlandırmak için hız ayarlamasını etkinleştirir (orijinal oyundaki hareket cezasını azaltır).",
+
+  "config.shieldexp.option.harder_explosions": "Gelişmiş Patlamalar",
+  "config.shieldexp.tooltip.harder_explosions": "Kalkanlar, patlama hasarının yalnızca Patlama Direnci niteliğine bağlı bir kısmını engeller.",
+
+  "config.shieldexp.option.lenient_parry_mode": "Esnek Savuşturma",
+  "config.shieldexp.tooltip.lenient_parry_mode": "Savuşturma zamanlama aralığını iki katına çıkarır.",
+
+  "config.shieldexp.option.lenient_stamina_mode": "Esnek Dayanıklılık",
+  "config.shieldexp.tooltip.lenient_stamina_mode": "Mevcut kalkan dayanıklılığını iki katına çıkarır.",
+
+  "config.shieldexp.option.hud_indicator": "HUD Kalkan Göstergesi",
+  "config.shieldexp.tooltip.hud_indicator": "Hedef göstergesinin solunda kalkanınız için bir dayanıklılık ve bekleme süresi göstergesi görüntüler.",
+
+  "config.shieldexp.option.hud_x_offset": "HUD X Kaydırması",
+  "config.shieldexp.tooltip.hud_x_offset": "Kalkan HUD göstergesi için yatay kaydırma. Varsayılan değer: 0.",
+  "config.shieldexp.option.hud_y_offset": "HUD Y Kaydırması",
+  "config.shieldexp.tooltip.hud_y_offset": "Kalkan HUD göstergesi için dikey kaydırma. Varsayılan değer: 0.",
+
+  "config.shieldexp.category.tooltips": "İpuçları",
+
+  "config.shieldexp.option.enable_tooltips": "İpuçlarını Etkinleştir",
+  "config.shieldexp.option.tooltip_cooldown": "Bekleme Süresini Göster",
+  "config.shieldexp.option.tooltip_stamina": "Dayanıklılığı Göster",
+  "config.shieldexp.option.tooltip_speed": "Hız Değiştiricisini Göster",
+  "config.shieldexp.option.tooltip_parry_damage": "Savuşturma Hasarını Göster",
+  "config.shieldexp.option.tooltip_parry_window": "Savuşturma Aralığını Göster",
+  "config.shieldexp.option.tooltip_blast_resistance": "Patlama Direncini Göster",
 
   "shieldexp.tooltip.attribute": "Kalkan olarak kullanıldığında:",
-  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Bekleme Süresi",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %s Bekleme Süresi",
   "shieldexp.tooltip.attribute.speed_factor_slow": " Yavaş Hareket",
   "shieldexp.tooltip.attribute.speed_factor_fast": " Hızlı Hareket",
   "shieldexp.tooltip.attribute.parry_damage": " %s Savuşturma Hasarı",
-  "shieldexp.tooltip.attribute.parry_ticks": " %ss Savuşturma Süresi",
-  "shieldexp.tooltip.attribute.stamina": " %s Dayanma Gücü",
+  "shieldexp.tooltip.attribute.parry_ticks": " %s Savuşturma Aralığı",
+  "shieldexp.tooltip.attribute.stamina": " %s Dayanıklılık",
   "shieldexp.tooltip.attribute.blast_resistance": " %s Patlama Direnci",
 
   "item.shieldexp.wooden_shield": "Ahşap Kalkan",
@@ -16,16 +62,18 @@
   "item.shieldexp.iron_shield": "Demir Kalkan",
   "item.shieldexp.diamond_shield": "Elmas Kalkan",
   "item.shieldexp.netherite_shield": "Netherit Kalkan",
-  "item.shieldexp.paragon_shield": "Paragon Kalkanı",
-  "item.shieldexp.griefer_shield": "Griefer Kalkanı",
+  "item.shieldexp.paragon_shield": "Kusursuz Kalkan",
+  "item.shieldexp.griefer_shield": "Bozguncu Kalkan",
+
+  "tag.item.shieldexp.shields": "Kalkanlar",
 
   "sounds.shieldexp.parry_sound": "Başarılı savuşturma",
 
-  "death.attack.partialblast": "%1$s havaya uçtu çünkü kalkanı patlamaya dayanamadı.",
+  "death.attack.partialblast": "%1$s, kalkanı patlamaya dayanamadığı için havaya uçtu",
 
-  "shieldexp.advancements.get_diamond_shield.title": "Elmas Kırılmaz",
-  "shieldexp.advancements.get_diamond_shield.description": "Elmas Kalkan üret",
+  "shieldexp.advancements.get_diamond_shield.title": "Elmas Kırılmazdır",
+  "shieldexp.advancements.get_diamond_shield.description": "Bir Elmas Kalkan yap",
 
-  "shieldexp.advancements.get_netherite_shield.title": "Hareket Ettirilemeyen Nesne",
-  "shieldexp.advancements.get_netherite_shield.description": "Netherit Kalkan üret"
+  "shieldexp.advancements.get_netherite_shield.title": "Sarsılmaz Cisim",
+  "shieldexp.advancements.get_netherite_shield.description": "Bir Netherit Kalkan yap"
 }
